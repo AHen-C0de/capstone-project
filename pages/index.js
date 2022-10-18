@@ -5,7 +5,7 @@ import Head from "next/head";
 import ShoppingList from "../components/ShoppingList";
 
 export default function Home() {
-  const [shoppingListItems, setShoppingListItems] = useState(shoppingListDB);
+  const [shoppingListItems, setShoppingListItems] = useState(SHOPPING_LIST_DB);
 
   return (
     <>
