@@ -4,11 +4,12 @@ export default function ListItem({ id, text, isChecked, onToggle }) {
   return (
     <StyledListElement isChecked={isChecked}>
       <StyledCheckBox
+        id={id}
         type="checkbox"
         defaultChecked={isChecked}
         onClick={() => onToggle(id)}
       />
-      {text}
+      <label htmlFor={id}>{text}</label>
     </StyledListElement>
   );
 }
