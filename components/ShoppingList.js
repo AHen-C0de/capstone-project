@@ -12,13 +12,13 @@ export default function ShoppingList({ items }) {
             <ListItem key={id} text={name} isChecked={checked} />
           ))}
       </ul>
-      <ol>
+      <ul>
         {items
           .filter((item) => item.checked)
           .map(({ id, name, checked }) => (
             <ListItem key={id} text={name} isChecked={checked} />
           ))}
-      </ol>
+      </ul>
     </div>
   );
 }

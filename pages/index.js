@@ -23,7 +23,7 @@ export default function Home() {
   );
 }
 
-let shoppingListDB = [
+const SHOPPING_LIST_DB = [
   {
     id: nanoid(),
     name: "Brot",
