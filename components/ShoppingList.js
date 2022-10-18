@@ -1,20 +1,22 @@
 import styled from "styled-components";
 
+import ListItem from "./ListItem";
+
 export default function ShoppingList() {
   return (
     <div>
       <ul>
         {" "}
         {/*unchecked items */}
-        <li>Bananen</li>
-        <li>Brot</li>
-        <li>Marmelade</li>
+        <ListItem />
+        <ListItem />
+        <ListItem />
       </ul>
       <ol>
         {" "}
         {/*checked items */}
-        <li>Milch</li>
-        <li>Tomaten</li>
+        <ListItem />
+        <ListItem />
       </ol>
     </div>
   );
