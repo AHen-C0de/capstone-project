@@ -1,9 +1,13 @@
 import styled from "styled-components";
 
-export default function ListItem({ text, isChecked }) {
+export default function ListItem({ id, text, isChecked, onToggle }) {
   return (
     <StyledListElement isChecked={isChecked}>
-      <input type="checkbox" defaultChecked={isChecked} />
+      <input
+        type="checkbox"
+        defaultChecked={isChecked}
+        onClick={() => onToggle(id)}
+      />
       {text}
     </StyledListElement>
   );
