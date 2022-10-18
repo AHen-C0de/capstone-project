@@ -1,9 +1,9 @@
-export default function ListItem() {
+export default function ListItem({ name }) {
   return (
     <li>
       <label>
         <input type="checkbox" />
-        test item
+        {name}
       </label>
     </li>
   );

@@ -14,7 +14,7 @@ export default function Home() {
 
       <main>
         <h1>MyShoppingManager</h1>
-        <ShoppingList />
+        <ShoppingList items={shoppingListItems} />
       </main>
     </div>
   );
