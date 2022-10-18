@@ -1,9 +1,12 @@
 import { nanoid } from "nanoid";
+import { useState } from "react";
 
 import Head from "next/head";
 import ShoppingList from "../components/ShoppingList";
 
 export default function Home() {
+  const [shoppingListItems, setShoppingListItems] = useState(shoppingListDB);
+
   return (
     <div>
       <Head>
@@ -20,7 +23,7 @@ export default function Home() {
   );
 }
 
-const shoppingListItems = [
+const shoppingListDB = [
   {
     id: nanoid(),
     name: "Brot",

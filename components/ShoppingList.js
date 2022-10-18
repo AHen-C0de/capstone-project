@@ -3,8 +3,6 @@ import styled from "styled-components";
 import ListItem from "./ListItem";
 
 export default function ShoppingList({ items }) {
-  console.log(items);
-
   return (
     <div>
       <ul>
