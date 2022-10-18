@@ -8,15 +8,15 @@ export default function ShoppingList({ items }) {
       <ul>
         {items
           .filter((item) => !item.checked)
-          .map(({ id, name }) => (
-            <ListItem key={id} name={name} />
+          .map(({ id, name, checked }) => (
+            <ListItem key={id} name={name} checked={checked} />
           ))}
       </ul>
       <ol>
         {items
           .filter((item) => item.checked)
-          .map(({ id, name }) => (
-            <ListItem key={id} name={name} />
+          .map(({ id, name, checked }) => (
+            <ListItem key={id} name={name} checked={checked} />
           ))}
       </ol>
     </div>
