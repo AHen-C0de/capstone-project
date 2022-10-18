@@ -1,16 +1,14 @@
 import styled from "styled-components";
 
-export default function ListItem({ name, isChecked }) {
+export default function ListItem({ text, isChecked }) {
   return (
-    <li>
-      <StyledLabel isChecked={isChecked}>
-        <input type="checkbox" defaultChecked={isChecked} />
-        {name}
-      </StyledLabel>
-    </li>
+    <StyledListElement isChecked={isChecked}>
+      <input type="checkbox" defaultChecked={isChecked} />
+      {text}
+    </StyledListElement>
   );
 }
 
-const StyledLabel = styled.label`
+const StyledListElement = styled.li`
   text-decoration: ${({ isChecked }) => (isChecked ? "line-through" : "none")};
 `;
