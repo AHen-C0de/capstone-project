@@ -8,14 +8,12 @@ export default function Home() {
   const [shoppingListItems, setShoppingListItems] = useState(SHOPPING_LIST_DB);
 
   function toggleItemCheckedState(id) {
-    const tmp = shoppingListItems.filter((item) => item.id === id);
-    console.log(tmp);
+    const updatedtems = shoppingListItems.filter((item) => item.id !== id);
+    const toggledItem = shoppingListItems.find((item) => item.id === id);
+    toggledItem.checked = !toggledItem.checked;
+    updatedtems.unshift(toggledItem);
 
-    const toggledItems = shoppingListItems.map((item) =>
-      item.id === id ? { ...item, checked: !item.checked } : item
-    );
-
-    setShoppingListItems(toggledItems);
+    setShoppingListItems(updatedtems);
   }
 
   return (
