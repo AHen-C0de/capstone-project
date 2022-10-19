@@ -11,6 +11,12 @@ export default function Edit() {
   const [editedShoppingListItems, setEditedShoppingListItems] =
     useState(SHOPPING_LIST_DB);
 
+  function deleteItem(id) {
+    setEditedShoppingListItems((previousItems) =>
+      previousItems.filter((item) => item.id !== id)
+    );
+  }
+
   return (
     <>
       <Head>
@@ -21,7 +27,10 @@ export default function Edit() {
 
       <main>
         <Header>Liste bearbeiten</Header>
-        <ShoppingListEditor items={editedShoppingListItems} />
+        <ShoppingListEditor
+          items={editedShoppingListItems}
+          onDelete={deleteItem}
+        />
         <NavigationBar />
       </main>
     </>

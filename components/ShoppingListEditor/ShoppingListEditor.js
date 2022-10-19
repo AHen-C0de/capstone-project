@@ -2,14 +2,14 @@ import styled from "styled-components";
 
 import ListContainer from "../ListContainer";
 
-export default function ShoppingListEditor({ items }) {
+export default function ShoppingListEditor({ items, onDelete }) {
   return (
     <ListContainer>
       <List>
         {items.map(({ id, name }) => (
           <ListItemContent key={id}>
             <p>{name}</p>
-            <DeleteButton>Löschen</DeleteButton>
+            <DeleteButton onClick={() => onDelete(id)}>Löschen</DeleteButton>
           </ListItemContent>
         ))}
       </List>
