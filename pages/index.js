@@ -3,6 +3,7 @@ import { useState } from "react";
 
 import Head from "next/head";
 import Header from "../components/Header";
+import NavigationBar from "../components/NavigationBar";
 import ShoppingList from "../components/ShoppingList";
 
 export default function Home() {
@@ -31,6 +32,7 @@ export default function Home() {
           items={shoppingListItems}
           onToggleItemChecked={toggleItemChecked}
         />
+        <NavigationBar />
       </main>
     </>
   );
