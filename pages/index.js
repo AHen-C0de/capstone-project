@@ -3,7 +3,7 @@ import { useState } from "react";
 
 import Head from "next/head";
 import Header from "../components/Header";
-import NavigationBar from "../components/NavigationBar";
+import NavigationBar from "../components/NavigationBar/NavigationBar";
 import ShoppingList from "../components/ShoppingList";
 
 export default function Home() {

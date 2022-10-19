@@ -1,6 +1,6 @@
 import Head from "next/head";
 import Header from "../components/Header";
-import NavigationBar from "../components/NavigationBar";
+import NavigationBar from "../components/NavigationBar/NavigationBar";
 
 export default function Edit() {
   return (
