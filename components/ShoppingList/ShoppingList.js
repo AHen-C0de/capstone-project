@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import ListContainer from "./ListContainer";
+import ListContainer from "../ListContainer";
 import ListItem from "./ListItem";
 
 export default function ShoppingList({ items, onToggleItemChecked }) {

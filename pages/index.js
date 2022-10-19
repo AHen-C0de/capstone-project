@@ -4,7 +4,7 @@ import { useState } from "react";
 import Head from "next/head";
 import Header from "../components/Header";
 import NavigationBar from "../components/NavigationBar/NavigationBar";
-import ShoppingList from "../components/ShoppingList";
+import ShoppingList from "../components/ShoppingList/ShoppingList";
 
 export default function Home() {
   const [shoppingListItems, setShoppingListItems] = useState(SHOPPING_LIST_DB);
