@@ -5,7 +5,7 @@ import Header from "../components/Header";
 import NavigationBar from "../components/NavigationBar/NavigationBar";
 import ShoppingList from "../components/ShoppingList/ShoppingList";
 
-import SHOPPING_LIST_DB from "./db.js";
+import SHOPPING_LIST_DB from "../services/db.js";
 
 export default function Home() {
   const [shoppingListItems, setShoppingListItems] = useState(SHOPPING_LIST_DB);
