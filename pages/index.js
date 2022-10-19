@@ -1,10 +1,11 @@
-import { nanoid } from "nanoid";
 import { useState } from "react";
 
 import Head from "next/head";
 import Header from "../components/Header";
 import NavigationBar from "../components/NavigationBar/NavigationBar";
 import ShoppingList from "../components/ShoppingList/ShoppingList";
+
+import SHOPPING_LIST_DB from "./db.js";
 
 export default function Home() {
   const [shoppingListItems, setShoppingListItems] = useState(SHOPPING_LIST_DB);
@@ -39,31 +40,3 @@ export default function Home() {
     </>
   );
 }
-
-const SHOPPING_LIST_DB = [
-  {
-    id: nanoid(),
-    name: "Brot",
-    checked: false,
-  },
-  {
-    id: nanoid(),
-    name: "Bananen",
-    checked: false,
-  },
-  {
-    id: nanoid(),
-    name: "Marmelade",
-    checked: false,
-  },
-  {
-    id: nanoid(),
-    name: "Milch",
-    checked: true,
-  },
-  {
-    id: nanoid(),
-    name: "Salat",
-    checked: true,
-  },
-];

@@ -3,6 +3,8 @@ import Header from "../components/Header";
 import NavigationBar from "../components/NavigationBar/NavigationBar";
 import ShoppingListEditor from "../components/ShoppingListEditor/ShoppingListEditor";
 
+import SHOPPING_LIST_DB from "./db.js";
+
 export default function Edit() {
   return (
     <>
