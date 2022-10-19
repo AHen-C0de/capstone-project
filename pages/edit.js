@@ -1,6 +1,7 @@
 import Head from "next/head";
 import Header from "../components/Header";
 import NavigationBar from "../components/NavigationBar/NavigationBar";
+import ShoppingListEditor from "../components/ShoppingListEditor/ShoppingListEditor";
 
 export default function Edit() {
   return (
@@ -13,7 +14,7 @@ export default function Edit() {
 
       <main>
         <Header>Liste bearbeiten</Header>
-        <p>Page is currently under construction</p>
+        <ShoppingListEditor />
         <NavigationBar />
       </main>
     </>
