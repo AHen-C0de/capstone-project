@@ -2,8 +2,7 @@ import { createGlobalStyle } from "styled-components";
 
 const GlobalStyle = createGlobalStyle`
       :root {
-          --text-primary: #0c2c4d;
-          --background-primary: #edf0f5;
+          --color-primary: #0b7d54
       }
   
       /* noto-sans-regular - latin */

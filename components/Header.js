@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 const Header = styled.h1`
-  background-color: #0b7d54;
+  background-color: var(--color-primary);
   color: white;
   padding: 0.6rem;
   font-family: "Lily Script One";

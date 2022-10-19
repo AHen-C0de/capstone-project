@@ -3,22 +3,25 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 
 export default function NavigationBar() {
+  const { pathname } = useRouter();
+
   return (
     <NavBar>
       <Link href="/" passHref>
-        <StyledLink>Home</StyledLink>
+        <StyledLink active={pathname === "/"}>Home</StyledLink>
       </Link>
       <Link href="/edit" passHref>
-        <StyledLink>Edit</StyledLink>
+        <StyledLink active={pathname === "/edit"}>Edit</StyledLink>
       </Link>
     </NavBar>
   );
 }
 
 const NavBar = styled.nav`
-  background-color: #0b7d54;
+  background-color: var(--color-primary);
 `;
 
 const StyledLink = styled.a`
-  background-color: red;
+  color: white;
+  background-color: ${({ active }) => (active ? "aquamarine" : "none")};
 `;
