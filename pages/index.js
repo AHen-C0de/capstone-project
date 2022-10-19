@@ -32,8 +32,10 @@ export default function Home() {
           items={shoppingListItems}
           onToggleItemChecked={toggleItemChecked}
         />
-        <NavigationBar />
       </main>
+      <footer>
+        <NavigationBar />
+      </footer>
     </>
   );
 }
