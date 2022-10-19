@@ -2,8 +2,7 @@ import { createGlobalStyle } from "styled-components";
 
 const GlobalStyle = createGlobalStyle`
       :root {
-          --text-primary: #0c2c4d;
-          --background-primary: #edf0f5;
+          --color-primary: #0b7d54
       }
   
       /* noto-sans-regular - latin */
@@ -14,6 +13,15 @@ const GlobalStyle = createGlobalStyle`
     src: local(''),
         url('/fonts/noto-sans-v27-latin-regular.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
         url('/fonts/noto-sans-v27-latin-regular.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+    }
+    /* lily-script-one-regular - latin */
+    @font-face {
+    font-family: 'Lily Script One';
+    font-style: normal;
+    font-weight: 400;
+    src: local(''),
+        url('/fonts/lily-script-one-v15-latin-regular.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+        url('/fonts/lily-script-one-v15-latin-regular.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
     }
 
       * {

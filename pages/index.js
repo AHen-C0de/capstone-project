@@ -2,6 +2,8 @@ import { nanoid } from "nanoid";
 import { useState } from "react";
 
 import Head from "next/head";
+import Header from "../components/Header";
+import NavigationBar from "../components/NavigationBar/NavigationBar";
 import ShoppingList from "../components/ShoppingList";
 
 export default function Home() {
@@ -25,11 +27,12 @@ export default function Home() {
       </Head>
 
       <main>
-        <h1>MyShoppingManager</h1>
+        <Header>MyShoppingManager</Header>
         <ShoppingList
           items={shoppingListItems}
           onToggleItemChecked={toggleItemChecked}
         />
+        <NavigationBar />
       </main>
     </>
   );
