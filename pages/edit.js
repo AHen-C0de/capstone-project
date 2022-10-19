@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 import Head from "next/head";
 import Header from "../components/Header";
 import NavigationBar from "../components/NavigationBar/NavigationBar";
@@ -6,6 +8,9 @@ import ShoppingListEditor from "../components/ShoppingListEditor/ShoppingListEdi
 import SHOPPING_LIST_DB from "./db.js";
 
 export default function Edit() {
+  const [editedShoppingListItems, setEditedShoppingListItems] =
+    useState(SHOPPING_LIST_DB);
+
   return (
     <>
       <Head>
@@ -16,7 +21,7 @@ export default function Edit() {
 
       <main>
         <Header>Liste bearbeiten</Header>
-        <ShoppingListEditor />
+        <ShoppingListEditor items={editedShoppingListItems} />
         <NavigationBar />
       </main>
     </>
