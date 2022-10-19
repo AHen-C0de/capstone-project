@@ -7,7 +7,7 @@ import ShoppingList from "../components/ShoppingList";
 export default function Home() {
   const [shoppingListItems, setShoppingListItems] = useState(SHOPPING_LIST_DB);
 
-  function toggleItemCheckedState(id) {
+  function toggleItemChecked(id) {
     const updatedtems = shoppingListItems.filter((item) => item.id !== id);
     const toggledItem = shoppingListItems.find((item) => item.id === id);
     toggledItem.checked = !toggledItem.checked;
@@ -28,7 +28,7 @@ export default function Home() {
         <h1>MyShoppingManager</h1>
         <ShoppingList
           items={shoppingListItems}
-          onToggle={toggleItemCheckedState}
+          onToggleItemChecked={toggleItemChecked}
         />
       </main>
     </>

@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 import ListItem from "./ListItem";
 
-export default function ShoppingList({ items, onToggle }) {
+export default function ShoppingList({ items, onToggleItemChecked }) {
   return (
     <ListWrapper>
       <StyledList>
@@ -14,7 +14,7 @@ export default function ShoppingList({ items, onToggle }) {
               id={id}
               text={name}
               isChecked={checked}
-              onToggle={onToggle}
+              onToggleItemChecked={onToggleItemChecked}
             />
           ))}
       </StyledList>
@@ -27,7 +27,7 @@ export default function ShoppingList({ items, onToggle }) {
               id={id}
               text={name}
               isChecked={checked}
-              onToggle={onToggle}
+              onToggleItemChecked={onToggleItemChecked}
             />
           ))}
       </StyledList>

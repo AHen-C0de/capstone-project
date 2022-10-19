@@ -1,13 +1,13 @@
 import styled from "styled-components";
 
-export default function ListItem({ id, text, isChecked, onToggle }) {
+export default function ListItem({ id, text, isChecked, onToggleItemChecked }) {
   return (
     <StyledListElement isChecked={isChecked}>
       <StyledCheckBox
         id={id}
         type="checkbox"
         defaultChecked={isChecked}
-        onClick={() => onToggle(id)}
+        onClick={() => onToggleItemChecked(id)}
       />
       <label htmlFor={id}>{text}</label>
     </StyledListElement>
