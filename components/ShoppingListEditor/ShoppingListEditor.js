@@ -1,21 +1,36 @@
 import styled from "styled-components";
+import { useRef, useState } from "react";
 
 import ListContainer from "../ListContainer";
 
 export default function ShoppingListEditor({ items, onDelete, onAdd }) {
+  const inputRef = useRef();
+  const [itemName, setItemName] = useState("");
+
   function submitForm(event) {
     event.preventDefault();
     const formData = new FormData(event.target);
     const itemName = Object.fromEntries(formData).item;
 
     onAdd(itemName);
+    setItemName("");
+    inputRef.current.focus(); //set focus on input field
   }
 
   return (
     <ListContainer>
       <StyledForm aria-label="add items" onSubmit={submitForm}>
         <label htmlFor="item">Item</label>
-        <input type="text" name="item" id="item" aria-label="item name" />
+        <input
+          type="text"
+          name="item"
+          id="item"
+          aria-label="item name"
+          placeholder="Brot"
+          ref={inputRef} // set ref to set autofocus after submit
+          value={itemName}
+          onChange={(event) => setItemName(event.target.value)}
+        />
         <button type="submit">submit</button>
       </StyledForm>
       <Line />
