@@ -1,11 +1,15 @@
 import styled from "styled-components";
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 
 import ListContainer from "../ListContainer";
 
 export default function ShoppingListEditor({ items, onDelete, onAdd }) {
   const inputRef = useRef();
   const [itemName, setItemName] = useState("");
+
+  useEffect(() => {
+    inputRef.current.focus();
+  }, []); // set focus on item input after page load
 
   function submitForm(event) {
     event.preventDefault();
