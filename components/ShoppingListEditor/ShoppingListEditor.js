@@ -5,6 +5,11 @@ import ListContainer from "../ListContainer";
 export default function ShoppingListEditor({ items, onDelete }) {
   return (
     <ListContainer>
+      <StyledForm>
+        <label htmlFor="item">Item</label>
+        <input type="text" name="item" id="item" />
+      </StyledForm>
+      <Line />
       <List>
         {items.map(({ id, name }) => (
           <ListItemContent key={id}>
@@ -16,6 +21,19 @@ export default function ShoppingListEditor({ items, onDelete }) {
     </ListContainer>
   );
 }
+
+const StyledForm = styled.form`
+  display: flex;
+  flex-direction: column;
+`;
+
+const Line = styled.div`
+  width: 90%;
+  height: 0.2rem;
+  border-radius: 1rem;
+  background-color: black;
+  align-self: center;
+`;
 
 const List = styled.ul`
   list-style: none;
