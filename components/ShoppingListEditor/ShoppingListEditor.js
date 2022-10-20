@@ -5,9 +5,9 @@ import ListContainer from "../ListContainer";
 export default function ShoppingListEditor({ items, onDelete }) {
   return (
     <ListContainer>
-      <StyledForm>
+      <StyledForm aria-label="add items">
         <label htmlFor="item">Item</label>
-        <input type="text" name="item" id="item" />
+        <input type="text" name="item" id="item" aria-label="item name" />
       </StyledForm>
       <Line />
       <List>
