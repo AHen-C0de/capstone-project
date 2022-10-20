@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { nanoid } from "nanoid";
 
 import GlobalStyle from "../components/GlobalStyle";
 import { shopping_list_DB } from "../services/db.js";
@@ -21,6 +22,17 @@ function MyApp({ Component, pageProps }) {
     );
   }
 
+  function addItem(itemName) {
+    setShoppingListItems((previousItems) => [
+      ...previousItems,
+      {
+        id: nanoid(),
+        name: itemName,
+        checked: false,
+      },
+    ]);
+  }
+
   return (
     <>
       <GlobalStyle />
@@ -29,6 +41,7 @@ function MyApp({ Component, pageProps }) {
         items={shoppingListItems}
         onToggleItemChecked={toggleItemChecked}
         onDelete={deleteItem}
+        onAdd={addItem}
       />
     </>
   );

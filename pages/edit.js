@@ -3,7 +3,7 @@ import Header from "../components/Header";
 import NavigationBar from "../components/NavigationBar/NavigationBar";
 import ShoppingListEditor from "../components/ShoppingListEditor/ShoppingListEditor";
 
-export default function Edit({ items, onDelete }) {
+export default function Edit({ items, onDelete, onAdd }) {
   return (
     <>
       <Head>
@@ -14,7 +14,7 @@ export default function Edit({ items, onDelete }) {
 
       <Header>Liste bearbeiten</Header>
       <main>
-        <ShoppingListEditor items={items} onDelete={onDelete} />
+        <ShoppingListEditor items={items} onDelete={onDelete} onAdd={onAdd} />
       </main>
       <NavigationBar />
     </>

@@ -2,12 +2,21 @@ import styled from "styled-components";
 
 import ListContainer from "../ListContainer";
 
-export default function ShoppingListEditor({ items, onDelete }) {
+export default function ShoppingListEditor({ items, onDelete, onAdd }) {
+  function submitForm(event) {
+    event.preventDefault();
+    const formData = new FormData(event.target);
+    const itemName = Object.fromEntries(formData).item;
+
+    onAdd(itemName);
+  }
+
   return (
     <ListContainer>
-      <StyledForm aria-label="add items">
+      <StyledForm aria-label="add items" onSubmit={submitForm}>
         <label htmlFor="item">Item</label>
         <input type="text" name="item" id="item" aria-label="item name" />
+        <button type="submit">submit</button>
       </StyledForm>
       <Line />
       <List>
