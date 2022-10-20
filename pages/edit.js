@@ -4,7 +4,6 @@ import Head from "next/head";
 import Header from "../components/Header";
 import NavigationBar from "../components/NavigationBar/NavigationBar";
 import ShoppingListEditor from "../components/ShoppingListEditor/ShoppingListEditor";
-import Button_Done from "../components/buttons/Button_Done";
 
 import SHOPPING_LIST_DB from "../services/db.js";
 
@@ -32,7 +31,6 @@ export default function Edit() {
           items={editedShoppingListItems}
           onDelete={deleteItem}
         />
-        <Button_Done />
         <NavigationBar />
       </main>
     </>
