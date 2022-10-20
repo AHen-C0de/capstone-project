@@ -1,6 +1,14 @@
 import styled from "styled-components";
 
-const Header = styled.h1`
+export default function Header({ children }) {
+  return (
+    <header>
+      <StyledHeadline>{children}</StyledHeadline>
+    </header>
+  );
+}
+
+const StyledHeadline = styled.h1`
   background-color: var(--color-primary);
   color: white;
   padding: 0.6rem;
@@ -8,5 +16,3 @@ const Header = styled.h1`
   font-weight: normal;
   text-align: center;
 `;
-
-export default Header;

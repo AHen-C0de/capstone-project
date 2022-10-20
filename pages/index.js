@@ -12,13 +12,11 @@ export default function Home({ items, onToggleItemChecked }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
+      <Header>MyShoppingManager</Header>
       <main>
-        <Header>MyShoppingManager</Header>
         <ShoppingList items={items} onToggleItemChecked={onToggleItemChecked} />
       </main>
-      <footer>
-        <NavigationBar />
-      </footer>
+      <NavigationBar />
     </>
   );
 }

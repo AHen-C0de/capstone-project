@@ -12,11 +12,11 @@ export default function Edit({ items, onDelete }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
+      <Header>Liste bearbeiten</Header>
       <main>
-        <Header>Liste bearbeiten</Header>
         <ShoppingListEditor items={items} onDelete={onDelete} />
-        <NavigationBar />
       </main>
+      <NavigationBar />
     </>
   );
 }
