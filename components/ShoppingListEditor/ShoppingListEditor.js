@@ -14,9 +14,9 @@ export default function ShoppingListEditor({ items, onDelete, onAdd }) {
     event.preventDefault();
     const form = event.target;
     const formData = new FormData(form);
-    const item_name = Object.fromEntries(formData).item;
+    const ItemName = Object.fromEntries(formData).item;
 
-    const trimmedItemName = item_name.trim(); //remove white spaces at beginning and end of the name
+    const trimmedItemName = ItemName.trim(); //remove white spaces at beginning and end of the name
 
     // --- Check user input ---
     if (trimmedItemName === "") {

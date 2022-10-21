@@ -8,24 +8,16 @@ function MyApp({ Component, pageProps }) {
   const [shoppingListItems, setShoppingListItems] = useState(shopping_list_DB);
 
   function toggleItemChecked(id) {
-    const idx = null;
-    const updatedItems = shoppingListItems.map((item, index) => {
-      if (item.id === id) {
-        idx = index;
-        return { ...item, checked: !item.checked };
-      } else {
-        return { ...item };
-      }
-    });
+    //separate to-toggle-item from the array, to put it at first idx after being changed
+    //this will render toggled item on top of the list after mapping
+    const unchangedItems = shoppingListItems.filter((item) => item.id !== id);
+    const toggledItem = shoppingListItems.find((item) => item.id === id);
 
-    updatedItems.unshift(updatedItems.splice(idx, 1)[0]);
-
-    // const updatedItems = shoppingListItems.filter((item) => item.id !== id);
-    // const toggledItem = shoppingListItems.find((item) => item.id === id);
-    // toggledItem.checked = !toggledItem.checked;
-    // updatedItems.unshift(toggledItem);
-
-    setShoppingListItems(updatedItems);
+    const updatedList = [
+      { ...toggledItem, checked: !toggledItem.checked },
+      ...unchangedItems,
+    ];
+    setShoppingListItems(updatedList);
   }
 
   function deleteItem(id) {
