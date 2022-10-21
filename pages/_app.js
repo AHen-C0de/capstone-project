@@ -8,10 +8,22 @@ function MyApp({ Component, pageProps }) {
   const [shoppingListItems, setShoppingListItems] = useState(shopping_list_DB);
 
   function toggleItemChecked(id) {
-    const updatedItems = shoppingListItems.filter((item) => item.id !== id);
-    const toggledItem = shoppingListItems.find((item) => item.id === id);
-    toggledItem.checked = !toggledItem.checked;
-    updatedItems.unshift(toggledItem);
+    const idx = null;
+    const updatedItems = shoppingListItems.map((item, index) => {
+      if (item.id === id) {
+        idx = index;
+        return { ...item, checked: !item.checked };
+      } else {
+        return { ...item };
+      }
+    });
+
+    updatedItems.unshift(updatedItems.splice(idx, 1)[0]);
+
+    // const updatedItems = shoppingListItems.filter((item) => item.id !== id);
+    // const toggledItem = shoppingListItems.find((item) => item.id === id);
+    // toggledItem.checked = !toggledItem.checked;
+    // updatedItems.unshift(toggledItem);
 
     setShoppingListItems(updatedItems);
   }

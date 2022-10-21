@@ -5,19 +5,20 @@ import ListContainer from "../ListContainer";
 
 export default function ShoppingListEditor({ items, onDelete, onAdd }) {
   const inputRef = useRef();
-  const [itemName, setItemName] = useState("");
 
   useEffect(() => {
     inputRef.current.focus();
-  }, []); // set focus on item input after page load
+  }, []); //set focus on item input after page load
 
   function submitForm(event) {
     event.preventDefault();
-    const formData = new FormData(event.target);
-    const itemName = Object.fromEntries(formData).item;
+    const form = event.target;
+    const formData = new FormData(form);
+    const item_name = Object.fromEntries(formData).item;
 
-    const trimmedItemName = itemName.trim(); //remove white spaces at beginning and end of the name
+    const trimmedItemName = item_name.trim(); //remove white spaces at beginning and end of the name
 
+    // --- Check user input ---
     if (trimmedItemName === "") {
       alert("Type an item name!");
       return;
@@ -32,7 +33,7 @@ export default function ShoppingListEditor({ items, onDelete, onAdd }) {
     }
 
     onAdd(trimmedItemName);
-    setItemName("");
+    form.reset();
     inputRef.current.focus(); //set focus on input field
   }
 
@@ -47,8 +48,6 @@ export default function ShoppingListEditor({ items, onDelete, onAdd }) {
           aria-label="item name"
           placeholder="Brot"
           ref={inputRef} // set ref to set autofocus after submit
-          value={itemName}
-          onChange={(event) => setItemName(event.target.value)}
         />
         <button type="submit">submit</button>
       </StyledForm>
