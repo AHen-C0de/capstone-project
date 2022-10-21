@@ -16,9 +16,19 @@ export default function ShoppingListEditor({ items, onDelete, onAdd }) {
     const formData = new FormData(event.target);
     const itemName = Object.fromEntries(formData).item;
 
-    onAdd(itemName);
-    setItemName("");
-    inputRef.current.focus(); //set focus on input field
+    if (itemName === "") {
+      alert("Type an item name!");
+    } else if (
+      items.find(
+        (item) => item.name.toLowerCase() === itemName.toLowerCase()
+      ) !== undefined
+    ) {
+      alert("Item already on the list!");
+    } else {
+      onAdd(itemName);
+      setItemName("");
+      inputRef.current.focus(); //set focus on input field
+    }
   }
 
   return (
