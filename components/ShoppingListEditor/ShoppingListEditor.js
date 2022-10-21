@@ -16,19 +16,24 @@ export default function ShoppingListEditor({ items, onDelete, onAdd }) {
     const formData = new FormData(event.target);
     const itemName = Object.fromEntries(formData).item;
 
-    if (itemName === "") {
+    const trimmedItemName = itemName.trim(); //remove white spaces at beginning and end of the name
+
+    if (trimmedItemName === "") {
       alert("Type an item name!");
-    } else if (
+      return;
+    }
+    if (
       items.find(
-        (item) => item.name.toLowerCase() === itemName.toLowerCase()
+        (item) => item.name.toLowerCase() === trimmedItemName.toLowerCase()
       ) !== undefined
     ) {
       alert("Item already on the list!");
-    } else {
-      onAdd(itemName);
-      setItemName("");
-      inputRef.current.focus(); //set focus on input field
+      return;
     }
+
+    onAdd(trimmedItemName);
+    setItemName("");
+    inputRef.current.focus(); //set focus on input field
   }
 
   return (
