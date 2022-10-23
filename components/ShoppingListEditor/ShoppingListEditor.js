@@ -47,6 +47,7 @@ export default function ShoppingListEditor({ items, onDelete, onAdd }) {
           id="item"
           aria-label="item name"
           placeholder="Brot"
+          maxLength="30"
           ref={inputRef} // set ref to set autofocus after submit
         />
         <button type="submit">submit</button>
@@ -55,7 +56,7 @@ export default function ShoppingListEditor({ items, onDelete, onAdd }) {
       <List>
         {items.map(({ id, name }) => (
           <ListItemContent key={id}>
-            <p>{name}</p>
+            <ItemName>{name}</ItemName>
             <DeleteButton onClick={() => onDelete(id)}>Löschen</DeleteButton>
           </ListItemContent>
         ))}
@@ -79,13 +80,21 @@ const Line = styled.div`
 
 const List = styled.ul`
   list-style: none;
-  line-height: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 `;
 
 const ListItemContent = styled.li`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  align-items: center;
+`;
+
+const ItemName = styled.p`
+  word-break: break-word;
+  line-height: normal;
 `;
 
 const DeleteButton = styled.button`

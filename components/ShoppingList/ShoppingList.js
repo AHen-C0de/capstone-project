@@ -38,4 +38,11 @@ export default function ShoppingList({ items, onToggleItemChecked }) {
 
 const StyledList = styled.ul`
   list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  &:first-child {
+    margin-bottom: 1rem;
+  }
 `;
