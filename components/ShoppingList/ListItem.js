@@ -9,15 +9,22 @@ export default function ListItem({ id, text, isChecked, onToggleItemChecked }) {
         defaultChecked={isChecked}
         onClick={() => onToggleItemChecked(id)}
       />
-      <label htmlFor={id}>{text}</label>
+      <StyledLabel htmlFor={id}>{text}</StyledLabel>
     </StyledListElement>
   );
 }
 
 const StyledListElement = styled.li`
   text-decoration: ${({ isChecked }) => (isChecked ? "line-through" : "none")};
+  display: flex;
+  flex-direction: row;
 `;
 
 const StyledCheckBox = styled.input`
   margin-right: 0.5rem;
+`;
+
+const StyledLabel = styled.label`
+  word-break: break-word;
+  line-height: normal;
 `;

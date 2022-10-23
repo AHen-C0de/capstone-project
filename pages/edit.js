@@ -1,22 +1,9 @@
-import { useState } from "react";
-
 import Head from "next/head";
 import Header from "../components/Header";
 import NavigationBar from "../components/NavigationBar/NavigationBar";
 import ShoppingListEditor from "../components/ShoppingListEditor/ShoppingListEditor";
 
-import SHOPPING_LIST_DB from "../services/db.js";
-
-export default function Edit() {
-  const [editedShoppingListItems, setEditedShoppingListItems] =
-    useState(SHOPPING_LIST_DB);
-
-  function deleteItem(id) {
-    setEditedShoppingListItems((previousItems) =>
-      previousItems.filter((item) => item.id !== id)
-    );
-  }
-
+export default function Edit({ items, onDelete, onAdd }) {
   return (
     <>
       <Head>
@@ -25,14 +12,11 @@ export default function Edit() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
+      <Header>Liste bearbeiten</Header>
       <main>
-        <Header>Liste bearbeiten</Header>
-        <ShoppingListEditor
-          items={editedShoppingListItems}
-          onDelete={deleteItem}
-        />
-        <NavigationBar />
+        <ShoppingListEditor items={items} onDelete={onDelete} onAdd={onAdd} />
       </main>
+      <NavigationBar />
     </>
   );
 }

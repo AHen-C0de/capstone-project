@@ -1,6 +1,6 @@
 import { nanoid } from "nanoid";
 
-const SHOPPING_LIST_DB = [
+let shopping_list_DB = [
   {
     id: nanoid(),
     name: "Brot",
@@ -28,4 +28,4 @@ const SHOPPING_LIST_DB = [
   },
 ];
 
-export default SHOPPING_LIST_DB;
+export { shopping_list_DB };

@@ -4,10 +4,12 @@ import NavigationItem from "./NavigationItem";
 
 export default function NavigationBar() {
   return (
-    <NavBar>
-      <NavigationItem path="/">Home</NavigationItem>
-      <NavigationItem path="/edit">Edit</NavigationItem>
-    </NavBar>
+    <footer>
+      <NavBar>
+        <NavigationItem path="/">Home</NavigationItem>
+        <NavigationItem path="/edit">Edit</NavigationItem>
+      </NavBar>
+    </footer>
   );
 }
 
