@@ -1,29 +1,72 @@
 import { nanoid } from "nanoid";
 
-let shopping_list_DB = [
+const ITEMS_DB = [
   {
     id: nanoid(),
     name: "Brot",
-    checked: false,
   },
   {
     id: nanoid(),
     name: "Bananen",
-    checked: false,
   },
   {
     id: nanoid(),
     name: "Marmelade",
-    checked: false,
   },
   {
     id: nanoid(),
     name: "Milch",
-    checked: true,
   },
   {
     id: nanoid(),
     name: "Salat",
+  },
+  {
+    id: nanoid(),
+    name: "Kartofflen",
+  },
+  {
+    id: nanoid(),
+    name: "Reis",
+  },
+  {
+    id: nanoid(),
+    name: "Cornflakes",
+  },
+  {
+    id: nanoid(),
+    name: "Butter",
+  },
+  {
+    id: nanoid(),
+    name: "Nudeln",
+  },
+];
+
+const shopping_list_DB = [
+  {
+    id: nanoid(),
+    item_id: ITEMS_DB[0].id,
+    checked: false,
+  },
+  {
+    id: nanoid(),
+    item_id: ITEMS_DB[1].id,
+    checked: false,
+  },
+  {
+    id: nanoid(),
+    item_id: ITEMS_DB[2].id,
+    checked: false,
+  },
+  {
+    id: nanoid(),
+    item_id: ITEMS_DB[3].id,
+    checked: true,
+  },
+  {
+    id: nanoid(),
+    item_id: ITEMS_DB[4].id,
     checked: true,
   },
 ];
