@@ -2,10 +2,12 @@ import styled from "styled-components";
 import { useRef, useState, useEffect } from "react";
 
 import ListContainer from "../ListContainer";
+import InputDropDown from "./InputDropDown";
 import { getAllItemsFromDB } from "/services/db.js";
 
 export default function ShoppingListEditor({ items, onDelete, onAdd }) {
   const [allItems, setAllItems] = useState(getAllItemsFromDB);
+  const [dropDownItems, setDropDownItems] = useState([]);
   const inputRef = useRef();
 
   useEffect(() => {
@@ -13,7 +15,6 @@ export default function ShoppingListEditor({ items, onDelete, onAdd }) {
   }, []); //set focus on item input after page load
 
   function matchInput(value) {
-    console.log(value);
     const editedValue = value.trim().toLowerCase(); //trim() -> remove white spaces at beginning and end of the name
 
     if (editedValue !== "") {
@@ -21,6 +22,7 @@ export default function ShoppingListEditor({ items, onDelete, onAdd }) {
         item.name.toLowerCase().startsWith(editedValue)
       );
       console.log(matchedItems);
+      setDropDownItems(matchedItems);
     }
   }
 
@@ -65,6 +67,7 @@ export default function ShoppingListEditor({ items, onDelete, onAdd }) {
           ref={inputRef} // set ref to set autofocus after submit
           onChange={(event) => matchInput(event.target.value)}
         />
+        <InputDropDown optionElements={dropDownItems} />
         <button type="submit">submit</button>
       </StyledForm>
       <Line />
