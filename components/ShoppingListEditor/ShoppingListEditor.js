@@ -2,13 +2,27 @@ import styled from "styled-components";
 import { useRef, useState, useEffect } from "react";
 
 import ListContainer from "../ListContainer";
+import { getAllItemsFromDB } from "/services/db.js";
 
 export default function ShoppingListEditor({ items, onDelete, onAdd }) {
+  const [allItems, setAllItems] = useState(getAllItemsFromDB);
   const inputRef = useRef();
 
   useEffect(() => {
     inputRef.current.focus();
   }, []); //set focus on item input after page load
+
+  function matchInput(value) {
+    console.log(value);
+    const editedValue = value.trim().toLowerCase(); //trim() -> remove white spaces at beginning and end of the name
+
+    if (editedValue !== "") {
+      const matchedItems = allItems.filter((item) =>
+        item.name.toLowerCase().startsWith(editedValue)
+      );
+      console.log(matchedItems);
+    }
+  }
 
   function submitForm(event) {
     event.preventDefault();
@@ -49,6 +63,7 @@ export default function ShoppingListEditor({ items, onDelete, onAdd }) {
           placeholder="Brot"
           maxLength="30"
           ref={inputRef} // set ref to set autofocus after submit
+          onChange={(event) => matchInput(event.target.value)}
         />
         <button type="submit">submit</button>
       </StyledForm>

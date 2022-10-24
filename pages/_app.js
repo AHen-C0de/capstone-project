@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import { nanoid } from "nanoid";
 
-import GlobalStyle from "../components/GlobalStyle";
-import { getShoppingListFromDB } from "../services/db.js";
+import GlobalStyle from "/components/GlobalStyle";
+import { getShoppingListFromDB } from "/services/db.js";
 
 function MyApp({ Component, pageProps }) {
   const [shoppingListItems, setShoppingListItems] = useState([]);
