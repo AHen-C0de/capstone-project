@@ -26,36 +26,39 @@ export default function ShoppingListEditor({ items, onDelete, onAdd }) {
     }
   }
 
-  function submitForm(event) {
-    event.preventDefault();
-    const form = event.target;
-    const formData = new FormData(form);
-    const itemName = Object.fromEntries(formData).item;
+  // function submitForm(event) {
+  //   event.preventDefault();
+  //   const form = event.target;
+  //   const formData = new FormData(form);
+  //   const itemName = Object.fromEntries(formData).item;
 
-    const trimmedItemName = itemName.trim(); //remove white spaces at beginning and end of the name
+  //   const trimmedItemName = itemName.trim(); //remove white spaces at beginning and end of the name
 
-    // --- Check user input ---
-    if (trimmedItemName === "") {
-      alert("Type an item name!");
-      return;
-    }
-    if (
-      items.find(
-        (item) => item.name.toLowerCase() === trimmedItemName.toLowerCase()
-      ) !== undefined
-    ) {
-      alert("Item already on the list!");
-      return;
-    }
+  //   // --- Check user input ---
+  //   if (trimmedItemName === "") {
+  //     alert("Type an item name!");
+  //     return;
+  //   }
+  //   if (
+  //     items.find(
+  //       (item) => item.name.toLowerCase() === trimmedItemName.toLowerCase()
+  //     ) !== undefined
+  //   ) {
+  //     alert("Item already on the list!");
+  //     return;
+  //   }
 
-    onAdd(trimmedItemName);
-    form.reset();
-    inputRef.current.focus(); //set focus on input field
-  }
+  //   onAdd(trimmedItemName);
+  //   form.reset();
+  //   inputRef.current.focus(); //set focus on input field
+  // }
 
   return (
     <ListContainer>
-      <StyledForm aria-label="add items" onSubmit={submitForm}>
+      <StyledForm
+        aria-label="add items"
+        onSubmit={(event) => event.preventDefault()}
+      >
         <label htmlFor="item">Item</label>
         <input
           type="text"
@@ -67,8 +70,11 @@ export default function ShoppingListEditor({ items, onDelete, onAdd }) {
           ref={inputRef} // set ref to set autofocus after submit
           onChange={(event) => matchInput(event.target.value)}
         />
-        <InputDropDown optionElements={dropDownItems} />
-        <button type="submit">submit</button>
+        <InputDropDown
+          optionElements={dropDownItems}
+          ariaLabel="add item"
+          onAdd={onAdd}
+        />
       </StyledForm>
       <Line />
       <List>
