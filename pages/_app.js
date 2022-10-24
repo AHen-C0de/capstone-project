@@ -1,11 +1,16 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { nanoid } from "nanoid";
 
 import GlobalStyle from "../components/GlobalStyle";
-import { shopping_list_DB } from "../services/db.js";
+import { getShoppingListFromDB } from "../services/db.js";
 
 function MyApp({ Component, pageProps }) {
-  const [shoppingListItems, setShoppingListItems] = useState(shopping_list_DB);
+  const [shoppingListItems, setShoppingListItems] = useState([]);
+
+  //set state via useEffect(), instead of setting it directly in useState,
+  //because of "React Hydration Error";
+  //also see "https://nextjs.org/docs/messages/react-hydration-error"
+  useEffect(() => setShoppingListItems(getShoppingListFromDB), []);
 
   function toggleItemChecked(id) {
     //separate to-toggle-item from the array, to put it at first idx after being changed
