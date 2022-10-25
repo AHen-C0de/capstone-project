@@ -31,13 +31,14 @@ function MyApp({ Component, pageProps }) {
     );
   }
 
-  function addItem(itemName) {
+  function addItem(item) {
     setShoppingListItems((previousItems) => [
       ...previousItems,
       {
         id: nanoid(),
-        name: itemName,
+        item_id: item.id,
         checked: false,
+        name: item.name,
       },
     ]);
   }

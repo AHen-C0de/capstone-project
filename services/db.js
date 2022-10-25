@@ -49,6 +49,10 @@ const ITEMS_DB = [
     id: nanoid(),
     name: "Tomaten",
   },
+  {
+    id: nanoid(),
+    name: "Eier",
+  },
 ];
 
 const SHOPPINGLIST_DB = [

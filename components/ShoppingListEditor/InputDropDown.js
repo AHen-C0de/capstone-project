@@ -5,10 +5,7 @@ export default function InputDropDown({ optionElements, ariaLabel, onAdd }) {
     <List>
       {optionElements.map((element) => (
         <li key={element.id}>
-          <StyledButton
-            aria-label={ariaLabel}
-            onClick={() => onAdd(element.name)}
-          >
+          <StyledButton aria-label={ariaLabel} onClick={() => onAdd(element)}>
             {element.name}
           </StyledButton>
         </li>

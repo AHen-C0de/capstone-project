@@ -10,34 +10,33 @@ export default function ShoppingListEditor({ items, onDelete, onAdd }) {
   const [dropDownItems, setDropDownItems] = useState([]);
   const inputRef = useRef();
 
-  console.log(items);
-
+  //set focus on item input after page load
   useEffect(() => {
     inputRef.current.focus();
-  }, []); //set focus on item input after page load
+  }, []);
+
+  //reset dropDownItems state, when shopping list (items) changed,
+  //to remove buttons from screen after submit
+  useEffect(() => {
+    setDropDownItems([]);
+  }, [items]);
 
   function matchInput(value) {
     const editedValue = value.trim().toLowerCase(); //trim() -> remove white spaces at beginning and end of the name
-
     //clear drop down when clearing input field
     if (editedValue === "") {
       setDropDownItems([]);
       return;
     }
-
     const matchedItems = allItems.filter((item) =>
       item.name.toLowerCase().startsWith(editedValue)
     );
-    //console.log("matched", matchedItems);
-
     //filter out matched items, that are already on the shopping list
     const uniqueMatchedItems = matchedItems.filter((matchedItem) => {
       return (
         items.find((item) => matchedItem.id === item.item_id) === undefined
       );
     });
-    //console.log("unique", uniqueMatchedItems);
-
     setDropDownItems(uniqueMatchedItems);
   }
 
@@ -49,11 +48,14 @@ export default function ShoppingListEditor({ items, onDelete, onAdd }) {
 
   return (
     <ListContainer>
-      <StyledForm aria-label="add items" onSubmit={(event) => onSubmit(event)}>
+      <StyledForm
+        aria-label="add items"
+        onSubmit={(event) => onSubmit(event)}
+        autoComplete="off"
+      >
         <label htmlFor="item">Item</label>
         <input
           type="text"
-          name="item"
           id="item"
           aria-label="item name"
           placeholder="Brot"
