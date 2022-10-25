@@ -21,12 +21,18 @@ export default function ShoppingListEditor({ items, onDelete, onAdd }) {
     setDropDownItems([]);
   }, [items]);
 
-  function matchInput(value) {
+  function handelItemInput(event) {
+    const inputString = event.target.value;
+    const uniqueMatchedItems = matchInputWithItems(inputString);
+    setDropDownItems(uniqueMatchedItems);
+  }
+
+  function matchInputWithItems(value) {
+    console.log("run fun matchInput()");
     const editedValue = value.trim().toLowerCase(); //trim() -> remove white spaces at beginning and end of the name
     //clear drop down when clearing input field
     if (editedValue === "") {
-      setDropDownItems([]);
-      return;
+      return [];
     }
     const matchedItems = allItems.filter((item) =>
       item.name.toLowerCase().startsWith(editedValue)
@@ -37,7 +43,8 @@ export default function ShoppingListEditor({ items, onDelete, onAdd }) {
         items.find((item) => matchedItem.id === item.item_id) === undefined
       );
     });
-    setDropDownItems(uniqueMatchedItems);
+    console.log(uniqueMatchedItems);
+    return uniqueMatchedItems;
   }
 
   function onSubmit(event) {
@@ -61,7 +68,7 @@ export default function ShoppingListEditor({ items, onDelete, onAdd }) {
           placeholder="Brot"
           maxLength="30"
           ref={inputRef} // set ref to set autofocus after submit
-          onChange={(event) => matchInput(event.target.value)}
+          onInput={(event) => handelItemInput(event)} //don't use onChange() -> it ignores some events!!!
         />
         <InputDropDown
           optionElements={dropDownItems}
