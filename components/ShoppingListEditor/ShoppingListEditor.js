@@ -30,6 +30,8 @@ export default function ShoppingListEditor({ items, onDelete, onAdd }) {
   }, [items]);
 
   //...when loosing focus of input field
+  //-> setDropDownReset state needed to allow clicking drop down buttons,
+  //which also removes focus on input field
   useEffect(() => {
     if (dropDownReset) {
       setDropDownItems([]);
