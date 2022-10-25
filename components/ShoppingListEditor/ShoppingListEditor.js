@@ -9,6 +9,9 @@ export default function ShoppingListEditor({ items, onDelete, onAdd }) {
   const [allItems, setAllItems] = useState(getAllItemsFromDB);
   const [dropDownItems, setDropDownItems] = useState([]);
   const inputRef = useRef();
+  const dropDownRef = useRef();
+
+  console.log(inputRef);
 
   //set focus on item input after page load
   useEffect(() => {
@@ -19,16 +22,16 @@ export default function ShoppingListEditor({ items, onDelete, onAdd }) {
   //to remove buttons from screen after submit
   useEffect(() => {
     setDropDownItems([]);
+    //triggerDropDown("to");
   }, [items]);
 
-  function handelItemInput(event) {
-    const inputString = event.target.value;
-    const uniqueMatchedItems = matchInputWithItems(inputString);
+  function triggerDropDown(value) {
+    //const inputString = event.target.value;
+    const uniqueMatchedItems = matchInputWithItems(value);
     setDropDownItems(uniqueMatchedItems);
   }
 
   function matchInputWithItems(value) {
-    console.log("run fun matchInput()");
     const editedValue = value.trim().toLowerCase(); //trim() -> remove white spaces at beginning and end of the name
     //clear drop down when clearing input field
     if (editedValue === "") {
@@ -43,7 +46,6 @@ export default function ShoppingListEditor({ items, onDelete, onAdd }) {
         items.find((item) => matchedItem.id === item.item_id) === undefined
       );
     });
-    console.log(uniqueMatchedItems);
     return uniqueMatchedItems;
   }
 
@@ -67,13 +69,19 @@ export default function ShoppingListEditor({ items, onDelete, onAdd }) {
           aria-label="item name"
           placeholder="Brot"
           maxLength="30"
-          ref={inputRef} // set ref to set autofocus after submit
-          onInput={(event) => handelItemInput(event)} //don't use onChange() -> it ignores some events!!!
+          ref={inputRef} //set ref to set autofocus after submit
+          onInput={(event) => triggerDropDown(event.target.value)} //don't use onChange() -> it ignores some events!!!
+          //onFocus={(event) => triggerDropDown(event.target.value)}
+          // onBlur={() => {
+          //   if ()
+          // }
+          //   setDropDownItems([])} //to close drop down, when losing focus
         />
         <InputDropDown
           optionElements={dropDownItems}
           ariaLabel="add item"
           onAdd={onAdd}
+          ref={dropDownRef}
         />
       </StyledForm>
       <Line />
