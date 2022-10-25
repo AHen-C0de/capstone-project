@@ -17,13 +17,25 @@ export default function ShoppingListEditor({ items, onDelete, onAdd }) {
   function matchInput(value) {
     const editedValue = value.trim().toLowerCase(); //trim() -> remove white spaces at beginning and end of the name
 
-    if (editedValue !== "") {
-      const matchedItems = allItems.filter((item) =>
-        item.name.toLowerCase().startsWith(editedValue)
-      );
-      console.log(matchedItems);
-      setDropDownItems(matchedItems);
+    //clear drop down when clearing input field
+    if (editedValue === "") {
+      setDropDownItems([]);
+      return;
     }
+
+    const matchedItems = allItems.filter((item) =>
+      item.name.toLowerCase().startsWith(editedValue)
+    );
+    console.log("matched", matchedItems);
+
+    const uniqueMatchedItems = matchedItems.filter((matchedItem) => {
+      return (
+        items.find((item) => matchedItem.id === item.item_id) === undefined
+      );
+    });
+    console.log("unique", uniqueMatchedItems);
+
+    setDropDownItems(uniqueMatchedItems);
   }
 
   // function submitForm(event) {

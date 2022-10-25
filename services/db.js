@@ -83,9 +83,8 @@ function getShoppingListFromDB() {
   const shoppingItems = SHOPPINGLIST_DB.map((shoppingItem) => {
     const name = ITEMS_DB.find((item) => item.id === shoppingItem.item_id).name;
     return {
-      id: shoppingItem.id,
+      ...shoppingItem,
       name: name,
-      checked: shoppingItem.checked,
     };
   });
   return shoppingItems;
