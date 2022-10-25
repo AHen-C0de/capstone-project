@@ -7,31 +7,44 @@ import { getAllItemsFromDB } from "/services/db.js";
 
 export default function ShoppingListEditor({ items, onDelete, onAdd }) {
   const [allItems, setAllItems] = useState(getAllItemsFromDB);
+  const [itemInput, setItemInput] = useState("");
   const [dropDownItems, setDropDownItems] = useState([]);
+  const [dropDownReset, setDropDownReset] = useState(false);
   const inputRef = useRef();
-  const dropDownRef = useRef();
-
-  console.log(inputRef);
 
   //set focus on item input after page load
   useEffect(() => {
     inputRef.current.focus();
   }, []);
 
-  //reset dropDownItems state, when shopping list (items) changed,
-  //to remove buttons from screen after submit
+  //open drop down when typing into input field
   useEffect(() => {
+    triggerDropDown();
+  }, [itemInput]);
+
+  //reset dropDownItems state, to remove dropDown buttons from screen,...
+  //...when shopping list (items) changed
+  useEffect(() => {
+    setItemInput("");
     setDropDownItems([]);
-    //triggerDropDown("to");
   }, [items]);
 
-  function triggerDropDown(value) {
-    //const inputString = event.target.value;
-    const uniqueMatchedItems = matchInputWithItems(value);
-    setDropDownItems(uniqueMatchedItems);
+  //...when loosing focus of input field
+  useEffect(() => {
+    if (dropDownReset) {
+      setDropDownItems([]);
+      setDropDownReset(false);
+    }
+  }, [dropDownReset]);
+
+  //evoke rendering drop down buttons for items that match input
+  function triggerDropDown() {
+    const matchedDropDownItems = matchInput(itemInput);
+    setDropDownItems(matchedDropDownItems);
   }
 
-  function matchInputWithItems(value) {
+  //match input with all available items from DB
+  function matchInput(value) {
     const editedValue = value.trim().toLowerCase(); //trim() -> remove white spaces at beginning and end of the name
     //clear drop down when clearing input field
     if (editedValue === "") {
@@ -70,18 +83,15 @@ export default function ShoppingListEditor({ items, onDelete, onAdd }) {
           placeholder="Brot"
           maxLength="30"
           ref={inputRef} //set ref to set autofocus after submit
-          onInput={(event) => triggerDropDown(event.target.value)} //don't use onChange() -> it ignores some events!!!
-          //onFocus={(event) => triggerDropDown(event.target.value)}
-          // onBlur={() => {
-          //   if ()
-          // }
-          //   setDropDownItems([])} //to close drop down, when losing focus
+          value={itemInput}
+          onInput={(event) => setItemInput(event.target.value)} //don't use onChange() -> it ignores some events!!!
+          onFocus={triggerDropDown}
+          onBlur={() => setDropDownReset(true)} //to close drop down, when losing focus
         />
         <InputDropDown
           optionElements={dropDownItems}
           ariaLabel="add item"
           onAdd={onAdd}
-          ref={dropDownRef}
         />
       </StyledForm>
       <Line />
