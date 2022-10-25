@@ -1,11 +1,19 @@
 import styled from "styled-components";
 
-export default function InputDropDown({ optionElements, ariaLabel, onAdd }) {
+export default function InputDropDown({
+  optionElements,
+  ariaLabel,
+  onAdd,
+  hide,
+}) {
   return (
     <List>
       {optionElements.map((element) => (
-        <li key={element.id}>
-          <StyledButton aria-label={ariaLabel} onClick={() => onAdd(element)}>
+        <li key={element.id} hidden={hide}>
+          <StyledButton
+            aria-label={ariaLabel}
+            onMouseDown={() => onAdd(element)}
+          >
             {element.name}
           </StyledButton>
         </li>

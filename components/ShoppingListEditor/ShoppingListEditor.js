@@ -17,31 +17,33 @@ export default function ShoppingListEditor({ items, onDelete, onAdd }) {
     inputRef.current.focus();
   }, []);
 
-  //open drop down when typing into input field
-  useEffect(() => {
-    triggerDropDown();
-  }, [itemInput]);
-
   //reset dropDownItems state, to remove dropDown buttons from screen,...
   //...when shopping list (items) changed
-  useEffect(() => {
-    setItemInput("");
-    setDropDownItems([]);
-  }, [items]);
+  // useEffect(() => {
+  //   setItemInput("");
+  //   setDropDownItems([]);
+  // }, [items]);
 
   //...when loosing focus of input field
   //-> setDropDownReset state needed to allow clicking drop down buttons,
   //which also removes focus on input field
-  useEffect(() => {
-    if (dropDownReset) {
-      setDropDownItems([]);
-      setDropDownReset(false);
-    }
-  }, [dropDownReset]);
+  // useEffect(() => {
+  //   if (dropDownReset) {
+  //     setDropDownItems([]);
+  //     setDropDownReset(false);
+  //   }
+  // }, [dropDownReset]);
+
+  //open drop down when typing into input field
+  function handleItemInput(event) {
+    const inputString = event.target.value;
+    setItemInput(inputString);
+    triggerDropDown(inputString);
+  }
 
   //evoke rendering drop down buttons for items that match input
-  function triggerDropDown() {
-    const matchedDropDownItems = matchInput(itemInput);
+  function triggerDropDown(inputString) {
+    const matchedDropDownItems = matchInput(inputString);
     setDropDownItems(matchedDropDownItems);
   }
 
@@ -86,9 +88,12 @@ export default function ShoppingListEditor({ items, onDelete, onAdd }) {
           maxLength="30"
           ref={inputRef} //set ref to set autofocus after submit
           value={itemInput}
-          onInput={(event) => setItemInput(event.target.value)} //don't use onChange() -> it ignores some events!!!
-          onFocus={triggerDropDown}
-          onBlur={() => setDropDownReset(true)} //to close drop down, when losing focus
+          onInput={(event) => handleItemInput(event)} //don't use onChange() -> it ignores some events!!!
+          //onFocus={() => ...}
+          onBlur={() => {
+            console.log("onBlur");
+            setDropDownItems([]);
+          }} //to close drop down, when losing focus
         />
         <InputDropDown
           optionElements={dropDownItems}
