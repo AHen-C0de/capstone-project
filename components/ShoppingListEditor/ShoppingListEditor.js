@@ -10,6 +10,8 @@ export default function ShoppingListEditor({ items, onDelete, onAdd }) {
   const [dropDownItems, setDropDownItems] = useState([]);
   const inputRef = useRef();
 
+  console.log(items);
+
   useEffect(() => {
     inputRef.current.focus();
   }, []); //set focus on item input after page load
@@ -26,51 +28,28 @@ export default function ShoppingListEditor({ items, onDelete, onAdd }) {
     const matchedItems = allItems.filter((item) =>
       item.name.toLowerCase().startsWith(editedValue)
     );
-    console.log("matched", matchedItems);
+    //console.log("matched", matchedItems);
 
+    //filter out matched items, that are already on the shopping list
     const uniqueMatchedItems = matchedItems.filter((matchedItem) => {
       return (
         items.find((item) => matchedItem.id === item.item_id) === undefined
       );
     });
-    console.log("unique", uniqueMatchedItems);
+    //console.log("unique", uniqueMatchedItems);
 
     setDropDownItems(uniqueMatchedItems);
   }
 
-  // function submitForm(event) {
-  //   event.preventDefault();
-  //   const form = event.target;
-  //   const formData = new FormData(form);
-  //   const itemName = Object.fromEntries(formData).item;
-
-  //   const trimmedItemName = itemName.trim(); //remove white spaces at beginning and end of the name
-
-  //   // --- Check user input ---
-  //   if (trimmedItemName === "") {
-  //     alert("Type an item name!");
-  //     return;
-  //   }
-  //   if (
-  //     items.find(
-  //       (item) => item.name.toLowerCase() === trimmedItemName.toLowerCase()
-  //     ) !== undefined
-  //   ) {
-  //     alert("Item already on the list!");
-  //     return;
-  //   }
-
-  //   onAdd(trimmedItemName);
-  //   form.reset();
-  //   inputRef.current.focus(); //set focus on input field
-  // }
+  function onSubmit(event) {
+    event.preventDefault();
+    event.target.reset();
+    inputRef.current.focus();
+  }
 
   return (
     <ListContainer>
-      <StyledForm
-        aria-label="add items"
-        onSubmit={(event) => event.preventDefault()}
-      >
+      <StyledForm aria-label="add items" onSubmit={(event) => onSubmit(event)}>
         <label htmlFor="item">Item</label>
         <input
           type="text"
