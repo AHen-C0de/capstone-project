@@ -4,15 +4,20 @@ export default function InputDropDown({
   optionElements,
   ariaLabel,
   onAdd,
-  hide,
+  onReset,
 }) {
+  function handleClick(element) {
+    onAdd(element);
+    onReset();
+  }
+
   return (
     <List>
       {optionElements.map((element) => (
-        <li key={element.id} hidden={hide}>
+        <li key={element.id}>
           <StyledButton
             aria-label={ariaLabel}
-            onMouseDown={() => onAdd(element)}
+            onMouseDown={() => handleClick(element)} //use onMouseDown to trigger click BEFORE onBlur effect on input field triggers
           >
             {element.name}
           </StyledButton>

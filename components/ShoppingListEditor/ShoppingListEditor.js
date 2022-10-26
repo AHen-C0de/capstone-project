@@ -9,30 +9,13 @@ export default function ShoppingListEditor({ items, onDelete, onAdd }) {
   const [allItems, setAllItems] = useState(getAllItemsFromDB);
   const [itemInput, setItemInput] = useState("");
   const [dropDownItems, setDropDownItems] = useState([]);
-  const [dropDownReset, setDropDownReset] = useState(false);
+  const [isFocusInput, setIsFocusInput] = useState(false);
   const inputRef = useRef();
 
   //set focus on item input after page load
   useEffect(() => {
     inputRef.current.focus();
   }, []);
-
-  //reset dropDownItems state, to remove dropDown buttons from screen,...
-  //...when shopping list (items) changed
-  // useEffect(() => {
-  //   setItemInput("");
-  //   setDropDownItems([]);
-  // }, [items]);
-
-  //...when loosing focus of input field
-  //-> setDropDownReset state needed to allow clicking drop down buttons,
-  //which also removes focus on input field
-  // useEffect(() => {
-  //   if (dropDownReset) {
-  //     setDropDownItems([]);
-  //     setDropDownReset(false);
-  //   }
-  // }, [dropDownReset]);
 
   //open drop down when typing into input field
   function handleItemInput(event) {
@@ -66,18 +49,31 @@ export default function ShoppingListEditor({ items, onDelete, onAdd }) {
     return uniqueMatchedItems;
   }
 
-  function onSubmit(event) {
-    event.preventDefault();
-    event.target.reset();
-    inputRef.current.focus();
+  function onAddReset() {
+    setItemInput("");
+    setDropDownItems([]);
+    setIsFocusInput(true); //to focus item input after adding item to list
+  }
+
+  function handleDelete(id) {
+    onDelete(id);
+    setItemInput("");
+    setDropDownItems([]);
+  }
+
+  function handleBlur() {
+    setDropDownItems([]);
+    if (isFocusInput) {
+      inputRef.current.focus();
+      setIsFocusInput(false);
+    }
   }
 
   return (
     <ListContainer>
       <StyledForm
         aria-label="add items"
-        onSubmit={(event) => onSubmit(event)}
-        autoComplete="off"
+        autoComplete="off" //turn off auto completions for typing input suggested by the browser
       >
         <label htmlFor="item">Item</label>
         <input
@@ -89,16 +85,15 @@ export default function ShoppingListEditor({ items, onDelete, onAdd }) {
           ref={inputRef} //set ref to set autofocus after submit
           value={itemInput}
           onInput={(event) => handleItemInput(event)} //don't use onChange() -> it ignores some events!!!
-          //onFocus={() => ...}
-          onBlur={() => {
-            console.log("onBlur");
-            setDropDownItems([]);
-          }} //to close drop down, when losing focus
+          onFocus={() => triggerDropDown(itemInput)}
+          //close drop down, when losing focus
+          onBlur={handleBlur}
         />
         <InputDropDown
           optionElements={dropDownItems}
           ariaLabel="add item"
           onAdd={onAdd}
+          onReset={onAddReset}
         />
       </StyledForm>
       <Line />
@@ -106,7 +101,9 @@ export default function ShoppingListEditor({ items, onDelete, onAdd }) {
         {items.map(({ id, name }) => (
           <ListItemContent key={id}>
             <ItemName>{name}</ItemName>
-            <DeleteButton onClick={() => onDelete(id)}>Löschen</DeleteButton>
+            <DeleteButton onClick={() => handleDelete(id)}>
+              Löschen
+            </DeleteButton>
           </ListItemContent>
         ))}
       </List>
