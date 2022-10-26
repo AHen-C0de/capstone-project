@@ -23,7 +23,7 @@ const shoppingListItems = [
   },
 ];
 
-describe("edit page", () => {
+describe("ShoppingListEditor", () => {
   it("renders all items from current shopping list and their delete button", () => {
     render(<ShoppingListEditor items={shoppingListItems} />);
 
