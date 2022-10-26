@@ -50,7 +50,8 @@ export default function ShoppingListEditor({ items, onDelete, onAdd }) {
     return matchedItems;
   }
 
-  function onAddReset() {
+  function handleAddItem(element) {
+    onAdd(element);
     setItemInput("");
     setDropDownItems([]);
     setIsFocusInput(true); //to focus item input after adding item to list
@@ -64,6 +65,9 @@ export default function ShoppingListEditor({ items, onDelete, onAdd }) {
 
   function handleBlur() {
     setDropDownItems([]);
+    //since onBlur event is automatically fired after clicking a dropDown button
+    //and handleBlur() triggers AFTER handleAddItem(), isFocusItem state
+    //is set to true within handleAddItem() and used here to re-focus the input
     if (isFocusInput) {
       inputRef.current.focus();
       setIsFocusInput(false);
@@ -94,8 +98,7 @@ export default function ShoppingListEditor({ items, onDelete, onAdd }) {
           <InputDropDown
             optionElements={dropDownItems}
             ariaLabel="add item"
-            onAdd={onAdd}
-            onReset={onAddReset}
+            onAddItem={handleAddItem}
           />
         )}
       </StyledForm>
