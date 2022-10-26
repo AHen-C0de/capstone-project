@@ -32,8 +32,6 @@ function MyApp({ Component, pageProps }) {
   }
 
   function addItem(item) {
-    console.log("onAdd function was triggered");
-
     setShoppingListItems((previousItems) => [
       ...previousItems,
       {

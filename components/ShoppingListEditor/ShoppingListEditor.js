@@ -12,6 +12,8 @@ export default function ShoppingListEditor({ items, onDelete, onAdd }) {
   const [isFocusInput, setIsFocusInput] = useState(false);
   const inputRef = useRef();
 
+  console.log(dropDownItems);
+
   //set focus on item input after page load
   useEffect(() => {
     inputRef.current.focus();
@@ -32,21 +34,22 @@ export default function ShoppingListEditor({ items, onDelete, onAdd }) {
 
   //match input with all available items from DB
   function matchInput(value) {
-    const editedValue = value.trim().toLowerCase(); //trim() -> remove white spaces at beginning and end of the name
+    const editedValue = value.trim().toLowerCase();
     //clear drop down when clearing input field
     if (editedValue === "") {
       return [];
     }
-    const matchedItems = allItems.filter((item) =>
+
+    //filter out items from allItems, that are already on the shopping list
+    const usedItemIds = items.map((usedItem) => usedItem.item_id);
+    const availableItems = allItems.filter(
+      (DBitem) => !usedItemIds.includes(DBitem.id)
+    );
+
+    const matchedItems = availableItems.filter((item) =>
       item.name.toLowerCase().startsWith(editedValue)
     );
-    //filter out matched items, that are already on the shopping list
-    const uniqueMatchedItems = matchedItems.filter((matchedItem) => {
-      return (
-        items.find((item) => matchedItem.id === item.item_id) === undefined
-      );
-    });
-    return uniqueMatchedItems;
+    return matchedItems;
   }
 
   function onAddReset() {
@@ -89,12 +92,14 @@ export default function ShoppingListEditor({ items, onDelete, onAdd }) {
           //close drop down, when losing focus
           onBlur={handleBlur}
         />
-        <InputDropDown
-          optionElements={dropDownItems}
-          ariaLabel="add item"
-          onAdd={onAdd}
-          onReset={onAddReset}
-        />
+        {dropDownItems.length > 0 && (
+          <InputDropDown
+            optionElements={dropDownItems}
+            ariaLabel="add item"
+            onAdd={onAdd}
+            onReset={onAddReset}
+          />
+        )}
       </StyledForm>
       <Line />
       <List>
