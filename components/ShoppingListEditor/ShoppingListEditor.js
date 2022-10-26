@@ -12,8 +12,6 @@ export default function ShoppingListEditor({ items, onDelete, onAdd }) {
   const [isFocusInput, setIsFocusInput] = useState(false);
   const inputRef = useRef();
 
-  console.log(dropDownItems);
-
   //set focus on item input after page load
   useEffect(() => {
     inputRef.current.focus();
