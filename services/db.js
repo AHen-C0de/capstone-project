@@ -23,7 +23,7 @@ const ITEMS_DB = [
   },
   {
     id: nanoid(),
-    name: "Kartofflen",
+    name: "Kartoffeln",
   },
   {
     id: nanoid(),

@@ -79,11 +79,13 @@ export default function ShoppingListEditor({ items, onDelete, onAdd }) {
       <StyledForm
         aria-label="add items"
         autoComplete="off" //turn off auto completions for typing input suggested by the browser
+        onSubmit={(event) => event.preventDefault()}
       >
         <label htmlFor="item">Item</label>
         <input
           type="text"
           id="item"
+          name="item"
           aria-label="item name"
           placeholder="Brot"
           maxLength="30"
