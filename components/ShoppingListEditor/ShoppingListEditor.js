@@ -16,7 +16,7 @@ export default function ShoppingListEditor({ items, onDelete, onAdd }) {
   const [dropDownItems, setDropDownItems] = useState([]);
   const [dropDownRecipes, setDropDownRecipes] = useState([]);
   const [recipeItems, setRecipeItems] = useState([]);
-  const [isFocusInput, setIsFocusInput] = useState(false);
+  const [isFocusItemInput, setIsFocusItemInput] = useState(false);
   const [isShowRecipePopUp, setIsShowRecipePopUp] = useState(false);
   const inputRef = useRef();
 
@@ -88,13 +88,7 @@ export default function ShoppingListEditor({ items, onDelete, onAdd }) {
     onAdd(element);
     setItemInput("");
     setDropDownItems([]);
-    setIsFocusInput(true); //to focus item input after adding item to list
-  }
-
-  function handleDelete(id) {
-    onDelete(id);
-    setItemInput("");
-    setDropDownItems([]);
+    setIsFocusItemInput(true); //to focus item input after adding item to list
   }
 
   function handleBlur() {
@@ -103,9 +97,9 @@ export default function ShoppingListEditor({ items, onDelete, onAdd }) {
     //since onBlur event is automatically fired after clicking a dropDown button
     //and handleBlur() triggers AFTER handleAddItem(), isFocusItem state
     //is set to true within handleAddItem() and used here to re-focus the input
-    if (isFocusInput) {
+    if (isFocusItemInput) {
       inputRef.current.focus();
-      setIsFocusInput(false);
+      setIsFocusItemInput(false);
     }
   }
 
@@ -172,9 +166,7 @@ export default function ShoppingListEditor({ items, onDelete, onAdd }) {
           {items.map(({ id, name }) => (
             <ListItemContent key={id}>
               <ItemName>{name}</ItemName>
-              <DeleteButton onClick={() => handleDelete(id)}>
-                Löschen
-              </DeleteButton>
+              <DeleteButton onClick={() => onDelete(id)}>Löschen</DeleteButton>
             </ListItemContent>
           ))}
         </List>
