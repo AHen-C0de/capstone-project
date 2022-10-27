@@ -21,8 +21,8 @@ export default function ShoppingListEditor({ items, onDelete, onAdd }) {
   const inputRef = useRef();
 
   //console.log(recipes);
-  //console.log(dropDownItems);
-  //console.log(dropDownRecipes);
+  console.log("input string", recipeInput);
+  console.log("drop down", dropDownRecipes);
 
   //set focus on item input after page load
   useEffect(() => {
@@ -155,7 +155,7 @@ export default function ShoppingListEditor({ items, onDelete, onAdd }) {
             maxLength="30"
             value={recipeInput}
             onInput={(event) => handleRecipeInput(event)} //don't use onChange() -> it ignores some events!!!
-            onFocus={() => triggerRecipeDropDown(itemInput)}
+            onFocus={() => triggerRecipeDropDown(recipeInput)}
             //close drop down, when losing focus
             onBlur={handleBlur}
           />
