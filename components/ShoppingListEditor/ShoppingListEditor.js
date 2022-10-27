@@ -3,14 +3,17 @@ import { useRef, useState, useEffect } from "react";
 
 import ListContainer from "../ListContainer";
 import InputDropDown from "./InputDropDown";
-import { getAllItemsFromDB } from "/services/db.js";
+import { getAllItemsFromDB, getRecipesFromDB } from "/services/db.js";
 
 export default function ShoppingListEditor({ items, onDelete, onAdd }) {
   const [allItems, setAllItems] = useState(getAllItemsFromDB);
+  const [recipes, setRecipes] = useState(getRecipesFromDB);
   const [itemInput, setItemInput] = useState("");
   const [dropDownItems, setDropDownItems] = useState([]);
   const [isFocusInput, setIsFocusInput] = useState(false);
   const inputRef = useRef();
+
+  console.log();
 
   //set focus on item input after page load
   useEffect(() => {
@@ -85,9 +88,8 @@ export default function ShoppingListEditor({ items, onDelete, onAdd }) {
         <input
           type="text"
           id="item"
-          name="item"
           aria-label="item name"
-          placeholder="Brot"
+          placeholder="Suche ein Item..."
           maxLength="30"
           ref={inputRef} //set ref to set autofocus after submit
           value={itemInput}
@@ -95,6 +97,27 @@ export default function ShoppingListEditor({ items, onDelete, onAdd }) {
           onFocus={() => triggerDropDown(itemInput)}
           //close drop down, when losing focus
           onBlur={handleBlur}
+        />
+        {dropDownItems.length > 0 && (
+          <InputDropDown
+            optionElements={dropDownItems}
+            ariaLabel="add item"
+            onAddItem={handleAddItem}
+          />
+        )}
+        <label htmlFor="recipeItems">Items für Rezepte</label>
+        <input
+          type="text"
+          id="recipeItems"
+          aria-label="recipe name"
+          placeholder="Suche ein Rezept..."
+          maxLength="30"
+          //ref={inputRef} //set ref to set autofocus after submit
+          //value={itemInput}
+          //onInput={(event) => handleItemInput(event)} //don't use onChange() -> it ignores some events!!!
+          //onFocus={() => triggerDropDown(itemInput)}
+          //close drop down, when losing focus
+          //onBlur={handleBlur}
         />
         {dropDownItems.length > 0 && (
           <InputDropDown

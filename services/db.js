@@ -91,7 +91,7 @@ const ITEMS_DB = [
   },
 ];
 
-const RECIPE_ITEMS_DB = [
+const RECIPES_DB = [
   {
     id: nanoid(),
     name: "Bratkartoffeln",
@@ -184,8 +184,8 @@ function getAllItemsFromDB() {
   return ITEMS_DB;
 }
 
-function getRecipeItemsFromDB() {
-  return RECIPE_ITEMS_DB;
+function getRecipesFromDB() {
+  return RECIPES_DB;
 }
 
-export { getShoppingListFromDB, getAllItemsFromDB, getRecipeItemsFromDB };
+export { getShoppingListFromDB, getAllItemsFromDB, getRecipesFromDB };
