@@ -15,12 +15,14 @@ export default function ShoppingListEditor({ items, onDelete, onAdd }) {
   //rendering
   const [dropDownItems, setDropDownItems] = useState([]);
   const [dropDownRecipes, setDropDownRecipes] = useState([]);
+  const [recipeItems, setRecipeItems] = useState([]);
   const [isFocusInput, setIsFocusInput] = useState(false);
   const [isShowRecipePopUp, setIsShowRecipePopUp] = useState(false);
   const inputRef = useRef();
 
   //console.log(recipes);
-  //console.log(recipeInput);
+  //console.log(dropDownItems);
+  //console.log(dropDownRecipes);
 
   //set focus on item input after page load
   useEffect(() => {
@@ -97,6 +99,7 @@ export default function ShoppingListEditor({ items, onDelete, onAdd }) {
 
   function handleBlur() {
     setDropDownItems([]);
+    setDropDownRecipes([]);
     //since onBlur event is automatically fired after clicking a dropDown button
     //and handleBlur() triggers AFTER handleAddItem(), isFocusItem state
     //is set to true within handleAddItem() and used here to re-focus the input
@@ -106,8 +109,12 @@ export default function ShoppingListEditor({ items, onDelete, onAdd }) {
     }
   }
 
-  function openPopUp() {
+  function openPopUp(recipe) {
     setIsShowRecipePopUp(true);
+    const recipeItems = allItems.filter((item) =>
+      recipe.item_ids.includes(item.id)
+    );
+    setRecipeItems(recipeItems);
   }
 
   return (
@@ -146,12 +153,11 @@ export default function ShoppingListEditor({ items, onDelete, onAdd }) {
             aria-label="recipe name"
             placeholder="Suche ein Rezept..."
             maxLength="30"
-            //ref={inputRef} //set ref to set autofocus after submit
             value={recipeInput}
             onInput={(event) => handleRecipeInput(event)} //don't use onChange() -> it ignores some events!!!
-            //onFocus={() => triggerDropDown(itemInput)}
+            onFocus={() => triggerRecipeDropDown(itemInput)}
             //close drop down, when losing focus
-            //onBlur={handleBlur}
+            onBlur={handleBlur}
           />
           {dropDownRecipes.length > 0 && (
             <InputDropDown
@@ -176,6 +182,13 @@ export default function ShoppingListEditor({ items, onDelete, onAdd }) {
       {isShowRecipePopUp && (
         <Modal>
           <RecipePopUp>
+            <List>
+              {recipeItems.map(({ id, name }) => (
+                <ListItemContent key={id}>
+                  <ItemName>{name}</ItemName>
+                </ListItemContent>
+              ))}
+            </List>
             <button onClick={() => setIsShowRecipePopUp(false)}>
               Schließen
             </button>
@@ -240,7 +253,7 @@ const Modal = styled.div`
 
 const RecipePopUp = styled.article`
   width: 80%;
-  height: 50%;
+  padding: 1rem;
   background-color: white;
   position: absolute;
   border-radius: 1rem;

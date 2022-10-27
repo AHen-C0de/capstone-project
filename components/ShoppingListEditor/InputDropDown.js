@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export default function InputDropDown({
-  optionElements,
+  optionElements, //= available items, when used for item input & recipes when used for recipe input
   ariaLabel,
   onButtonClick,
 }) {

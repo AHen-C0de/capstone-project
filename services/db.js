@@ -89,6 +89,10 @@ const ITEMS_DB = [
     id: nanoid(),
     name: "Käse",
   },
+  {
+    id: nanoid(),
+    name: "Gemüsebrühe",
+  },
 ];
 
 const RECIPES_DB = [
@@ -124,6 +128,7 @@ const RECIPES_DB = [
       ITEMS_DB.find((item) => item.name === "Zucchini").id,
       ITEMS_DB.find((item) => item.name === "Paprika").id,
       ITEMS_DB.find((item) => item.name === "Mozzarella").id,
+      ITEMS_DB.find((item) => item.name === "Gemüsebrühe").id,
     ],
   },
   {
