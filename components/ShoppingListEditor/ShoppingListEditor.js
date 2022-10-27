@@ -2,62 +2,116 @@ import styled from "styled-components";
 import { useRef, useState, useEffect } from "react";
 
 import ListContainer from "../ListContainer";
+import InputDropDown from "./InputDropDown";
+import { getAllItemsFromDB } from "/services/db.js";
 
 export default function ShoppingListEditor({ items, onDelete, onAdd }) {
+  const [allItems, setAllItems] = useState(getAllItemsFromDB);
+  const [itemInput, setItemInput] = useState("");
+  const [dropDownItems, setDropDownItems] = useState([]);
+  const [isFocusInput, setIsFocusInput] = useState(false);
   const inputRef = useRef();
 
+  //set focus on item input after page load
   useEffect(() => {
     inputRef.current.focus();
-  }, []); //set focus on item input after page load
+  }, []);
 
-  function submitForm(event) {
-    event.preventDefault();
-    const form = event.target;
-    const formData = new FormData(form);
-    const itemName = Object.fromEntries(formData).item;
+  //open drop down when typing into input field
+  function handleItemInput(event) {
+    const inputString = event.target.value;
+    setItemInput(inputString);
+    triggerDropDown(inputString);
+  }
 
-    const trimmedItemName = itemName.trim(); //remove white spaces at beginning and end of the name
+  //evoke rendering drop down buttons for items that match input
+  function triggerDropDown(inputString) {
+    const matchedDropDownItems = matchInput(inputString);
+    setDropDownItems(matchedDropDownItems);
+  }
 
-    // --- Check user input ---
-    if (trimmedItemName === "") {
-      alert("Type an item name!");
-      return;
+  //match input with all available items from DB
+  function matchInput(value) {
+    const editedValue = value.trim().toLowerCase();
+    //clear drop down when clearing input field
+    if (editedValue === "") {
+      return [];
     }
-    if (
-      items.find(
-        (item) => item.name.toLowerCase() === trimmedItemName.toLowerCase()
-      ) !== undefined
-    ) {
-      alert("Item already on the list!");
-      return;
-    }
 
-    onAdd(trimmedItemName);
-    form.reset();
-    inputRef.current.focus(); //set focus on input field
+    //filter out items from allItems, that are already on the shopping list
+    const usedItemIds = items.map((usedItem) => usedItem.item_id);
+    const availableItems = allItems.filter(
+      (DBitem) => !usedItemIds.includes(DBitem.id)
+    );
+
+    const matchedItems = availableItems.filter((item) =>
+      item.name.toLowerCase().startsWith(editedValue)
+    );
+    return matchedItems;
+  }
+
+  function handleAddItem(element) {
+    onAdd(element);
+    setItemInput("");
+    setDropDownItems([]);
+    setIsFocusInput(true); //to focus item input after adding item to list
+  }
+
+  function handleDelete(id) {
+    onDelete(id);
+    setItemInput("");
+    setDropDownItems([]);
+  }
+
+  function handleBlur() {
+    setDropDownItems([]);
+    //since onBlur event is automatically fired after clicking a dropDown button
+    //and handleBlur() triggers AFTER handleAddItem(), isFocusItem state
+    //is set to true within handleAddItem() and used here to re-focus the input
+    if (isFocusInput) {
+      inputRef.current.focus();
+      setIsFocusInput(false);
+    }
   }
 
   return (
     <ListContainer>
-      <StyledForm aria-label="add items" onSubmit={submitForm}>
+      <StyledForm
+        aria-label="add items"
+        autoComplete="off" //turn off auto completions for typing input suggested by the browser
+        onSubmit={(event) => event.preventDefault()}
+      >
         <label htmlFor="item">Item</label>
         <input
           type="text"
-          name="item"
           id="item"
+          name="item"
           aria-label="item name"
           placeholder="Brot"
           maxLength="30"
-          ref={inputRef} // set ref to set autofocus after submit
+          ref={inputRef} //set ref to set autofocus after submit
+          value={itemInput}
+          onInput={(event) => handleItemInput(event)} //don't use onChange() -> it ignores some events!!!
+          onFocus={() => triggerDropDown(itemInput)}
+          //close drop down, when losing focus
+          onBlur={handleBlur}
         />
-        <button type="submit">submit</button>
+        {dropDownItems.length > 0 && (
+          <InputDropDown
+            optionElements={dropDownItems}
+            ariaLabel="add item"
+            onAddItem={handleAddItem}
+          />
+        )}
       </StyledForm>
       <Line />
       <List>
         {items.map(({ id, name }) => (
           <ListItemContent key={id}>
             <ItemName>{name}</ItemName>
-            <DeleteButton onClick={() => onDelete(id)}>Löschen</DeleteButton>
+            <DeleteButton onClick={() => handleDelete(id)}>
+              Löschen
+            </DeleteButton>
           </ListItemContent>
         ))}
       </List>

@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import { nanoid } from "nanoid";
 
-import GlobalStyle from "../components/GlobalStyle";
-import { getShoppingListFromDB } from "../services/db.js";
+import GlobalStyle from "/components/GlobalStyle";
+import { getShoppingListFromDB } from "/services/db.js";
 
 function MyApp({ Component, pageProps }) {
   const [shoppingListItems, setShoppingListItems] = useState([]);
@@ -31,13 +31,14 @@ function MyApp({ Component, pageProps }) {
     );
   }
 
-  function addItem(itemName) {
+  function addItem(item) {
     setShoppingListItems((previousItems) => [
       ...previousItems,
       {
         id: nanoid(),
-        name: itemName,
+        item_id: item.id,
         checked: false,
+        name: item.name,
       },
     ]);
   }

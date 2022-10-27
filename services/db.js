@@ -23,7 +23,7 @@ const ITEMS_DB = [
   },
   {
     id: nanoid(),
-    name: "Kartofflen",
+    name: "Kartoffeln",
   },
   {
     id: nanoid(),
@@ -40,6 +40,18 @@ const ITEMS_DB = [
   {
     id: nanoid(),
     name: "Nudeln",
+  },
+  {
+    id: nanoid(),
+    name: "Toast",
+  },
+  {
+    id: nanoid(),
+    name: "Tomaten",
+  },
+  {
+    id: nanoid(),
+    name: "Eier",
   },
 ];
 
@@ -75,9 +87,8 @@ function getShoppingListFromDB() {
   const shoppingItems = SHOPPINGLIST_DB.map((shoppingItem) => {
     const name = ITEMS_DB.find((item) => item.id === shoppingItem.item_id).name;
     return {
-      id: shoppingItem.id,
+      ...shoppingItem,
       name: name,
-      checked: shoppingItem.checked,
     };
   });
   return shoppingItems;
