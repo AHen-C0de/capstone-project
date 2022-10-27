@@ -151,7 +151,7 @@ export default function ShoppingListEditor({ items, onDelete, onAdd }) {
           <InputDropDown
             optionElements={dropDownRecipes}
             ariaLabel="open recipe items"
-            onAddItem={handleAddItem}
+            //onAddItem={handleAddItem}
           />
         )}
       </StyledForm>

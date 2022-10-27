@@ -13,7 +13,10 @@ export default function InputDropDown({
             aria-label={ariaLabel}
             onMouseDown={() => onAddItem(element)} //use onMouseDown to trigger click BEFORE onBlur effect on input field triggers
           >
-            {element.name}
+            <ElementText>{element.name}</ElementText>
+            {element.hasOwnProperty("variant") && element.variant !== "" && (
+              <VariantText>{`- ${element.variant} -`}</VariantText>
+            )}
           </StyledButton>
         </li>
       ))}
@@ -30,4 +33,12 @@ const List = styled.ul`
 
 const StyledButton = styled.button`
   width: 100%;
+`;
+
+const ElementText = styled.p`
+  font-size: 1rem;
+`;
+
+const VariantText = styled.p`
+  font-style: italic;
 `;
