@@ -2,7 +2,8 @@ import { createGlobalStyle } from "styled-components";
 
 const GlobalStyle = createGlobalStyle`
       :root {
-          --color-primary: #0b7d54
+        --background-primary: #ffffff;
+        --background-secondary: #0b7d54;
       }
   
       /* noto-sans-regular - latin */
@@ -33,7 +34,7 @@ const GlobalStyle = createGlobalStyle`
       body {
           font-family: 'Noto Sans', sans-serif;
           background-color: var(--background-primary);
-          color: var(--text-primary);
+          
       }
   `;
 

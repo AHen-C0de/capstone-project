@@ -3,7 +3,7 @@ import styled from "styled-components";
 export default function InputDropDown({
   optionElements,
   ariaLabel,
-  onAddItem,
+  onButtonClick,
 }) {
   return (
     <List>
@@ -11,7 +11,7 @@ export default function InputDropDown({
         <li key={element.id}>
           <StyledButton
             aria-label={ariaLabel}
-            onMouseDown={() => onAddItem(element)} //use onMouseDown to trigger click BEFORE onBlur effect on input field triggers
+            onMouseDown={() => onButtonClick(element)} //use onMouseDown to trigger click BEFORE onBlur effect on input field triggers
           >
             <ElementText>{element.name}</ElementText>
             {element.hasOwnProperty("variant") && element.variant !== "" && (

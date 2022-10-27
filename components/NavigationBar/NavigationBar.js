@@ -14,5 +14,5 @@ export default function NavigationBar() {
 }
 
 const NavBar = styled.nav`
-  background-color: var(--color-primary);
+  background-color: var(--background-secondary);
 `;

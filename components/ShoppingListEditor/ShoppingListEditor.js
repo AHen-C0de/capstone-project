@@ -16,6 +16,7 @@ export default function ShoppingListEditor({ items, onDelete, onAdd }) {
   const [dropDownItems, setDropDownItems] = useState([]);
   const [dropDownRecipes, setDropDownRecipes] = useState([]);
   const [isFocusInput, setIsFocusInput] = useState(false);
+  const [isShowRecipePopUp, setIsShowRecipePopUp] = useState(false);
   const inputRef = useRef();
 
   //console.log(recipes);
@@ -105,68 +106,83 @@ export default function ShoppingListEditor({ items, onDelete, onAdd }) {
     }
   }
 
+  function openPopUp() {
+    setIsShowRecipePopUp(true);
+  }
+
   return (
-    <ListContainer>
-      <StyledForm
-        aria-label="add items"
-        autoComplete="off" //turn off auto completions for typing input suggested by the browser
-        onSubmit={(event) => event.preventDefault()}
-      >
-        <label htmlFor="item">Item</label>
-        <input
-          type="text"
-          id="item"
-          aria-label="item name"
-          placeholder="Suche ein Item..."
-          maxLength="30"
-          ref={inputRef} //set ref to set autofocus after submit
-          value={itemInput}
-          onInput={(event) => handleItemInput(event)} //don't use onChange() -> it ignores some events!!!
-          onFocus={() => triggerItemDropDown(itemInput)}
-          //close drop down, when losing focus
-          onBlur={handleBlur}
-        />
-        {dropDownItems.length > 0 && (
-          <InputDropDown
-            optionElements={dropDownItems}
-            ariaLabel="add item"
-            onAddItem={handleAddItem}
+    <>
+      <ListContainer isBlur={isShowRecipePopUp}>
+        <StyledForm
+          aria-label="add items"
+          autoComplete="off" //turn off auto completions for typing input suggested by the browser
+          onSubmit={(event) => event.preventDefault()}
+        >
+          <label htmlFor="item">Item</label>
+          <input
+            type="text"
+            id="item"
+            aria-label="item name"
+            placeholder="Suche ein Item..."
+            maxLength="30"
+            ref={inputRef} //set ref to set autofocus after submit
+            value={itemInput}
+            onInput={(event) => handleItemInput(event)} //don't use onChange() -> it ignores some events!!!
+            onFocus={() => triggerItemDropDown(itemInput)}
+            //close drop down, when losing focus
+            onBlur={handleBlur}
           />
-        )}
-        <label htmlFor="recipeItems">Items für Rezepte</label>
-        <input
-          type="text"
-          id="recipeItems"
-          aria-label="recipe name"
-          placeholder="Suche ein Rezept..."
-          maxLength="30"
-          //ref={inputRef} //set ref to set autofocus after submit
-          value={recipeInput}
-          onInput={(event) => handleRecipeInput(event)} //don't use onChange() -> it ignores some events!!!
-          //onFocus={() => triggerDropDown(itemInput)}
-          //close drop down, when losing focus
-          //onBlur={handleBlur}
-        />
-        {dropDownRecipes.length > 0 && (
-          <InputDropDown
-            optionElements={dropDownRecipes}
-            ariaLabel="open recipe items"
-            //onAddItem={handleAddItem}
+          {dropDownItems.length > 0 && (
+            <InputDropDown
+              optionElements={dropDownItems}
+              ariaLabel="add item"
+              onButtonClick={handleAddItem}
+            />
+          )}
+          <label htmlFor="recipeItems">Items für Rezepte</label>
+          <input
+            type="text"
+            id="recipeItems"
+            aria-label="recipe name"
+            placeholder="Suche ein Rezept..."
+            maxLength="30"
+            //ref={inputRef} //set ref to set autofocus after submit
+            value={recipeInput}
+            onInput={(event) => handleRecipeInput(event)} //don't use onChange() -> it ignores some events!!!
+            //onFocus={() => triggerDropDown(itemInput)}
+            //close drop down, when losing focus
+            //onBlur={handleBlur}
           />
-        )}
-      </StyledForm>
-      <Line />
-      <List>
-        {items.map(({ id, name }) => (
-          <ListItemContent key={id}>
-            <ItemName>{name}</ItemName>
-            <DeleteButton onClick={() => handleDelete(id)}>
-              Löschen
-            </DeleteButton>
-          </ListItemContent>
-        ))}
-      </List>
-    </ListContainer>
+          {dropDownRecipes.length > 0 && (
+            <InputDropDown
+              optionElements={dropDownRecipes}
+              ariaLabel="open recipe items"
+              onButtonClick={openPopUp}
+            />
+          )}
+        </StyledForm>
+        <Line />
+        <List>
+          {items.map(({ id, name }) => (
+            <ListItemContent key={id}>
+              <ItemName>{name}</ItemName>
+              <DeleteButton onClick={() => handleDelete(id)}>
+                Löschen
+              </DeleteButton>
+            </ListItemContent>
+          ))}
+        </List>
+      </ListContainer>
+      {isShowRecipePopUp && (
+        <Modal>
+          <RecipePopUp>
+            <button onClick={() => setIsShowRecipePopUp(false)}>
+              Schließen
+            </button>
+          </RecipePopUp>
+        </Modal>
+      )}
+    </>
   );
 }
 
@@ -205,4 +221,29 @@ const ItemName = styled.p`
 const DeleteButton = styled.button`
   background-color: red;
   height: 1.5rem;
+`;
+
+const Modal = styled.div`
+  position: fixed;
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgb(0, 0, 0); /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+`;
+
+const RecipePopUp = styled.article`
+  width: 80%;
+  height: 50%;
+  background-color: white;
+  position: absolute;
+  border-radius: 1rem;
+  justify-self: center;
+  z-index: 20;
 `;

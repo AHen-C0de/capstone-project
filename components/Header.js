@@ -9,7 +9,7 @@ export default function Header({ children }) {
 }
 
 const StyledHeadline = styled.h1`
-  background-color: var(--color-primary);
+  background-color: var(--background-secondary);
   color: white;
   padding: 0.6rem;
   font-family: "Lily Script One";
