@@ -30,28 +30,19 @@ export default function ShoppingListEditor({ items, onDelete, onAdd }) {
   }, []);
 
   //open drop down when typing into input field
-  function handleItemInput(event) {
+  function handleInput(event, inputSetter, dropDownSetter, inputMatcher) {
     const inputString = event.target.value;
-    setItemInput(inputString);
-    triggerItemDropDown(inputString);
-  }
-  function handleRecipeInput(event) {
-    const inputString = event.target.value;
-    setRecipeInput(inputString);
-    triggerRecipeDropDown(inputString);
+    inputSetter(inputString);
+    triggerDropDown(inputString, dropDownSetter, inputMatcher);
   }
 
-  //evoke rendering drop down buttons for items that match input
-  function triggerItemDropDown(inputString) {
-    const matchedItems = matchItemInput(inputString);
-    setDropDownItems(matchedItems);
-  }
-  function triggerRecipeDropDown(inputString) {
-    const matchedRecipes = matchRecipeInput(inputString);
-    setDropDownRecipes(matchedRecipes);
+  //evoke rendering drop down buttons for elements that match input
+  function triggerDropDown(inputString, dropDownSetter, inputMatcher) {
+    const matchedElements = inputMatcher(inputString);
+    dropDownSetter(matchedElements);
   }
 
-  //match item input with all available items from DB
+  //match item input with all items from DB
   function matchItemInput(value) {
     const editedValue = value.trim().toLowerCase();
     //clear drop down when clearing input field
@@ -71,7 +62,7 @@ export default function ShoppingListEditor({ items, onDelete, onAdd }) {
     return matchedItems;
   }
 
-  //match recipe input with all available recipes from DB
+  //match recipe input with all recipes from DB
   function matchRecipeInput(value) {
     const editedValue = value.trim().toLowerCase();
     //clear drop down when clearing input field
@@ -128,8 +119,12 @@ export default function ShoppingListEditor({ items, onDelete, onAdd }) {
             maxLength="30"
             ref={inputRef} //set ref to set autofocus after submit
             value={itemInput}
-            onInput={(event) => handleItemInput(event)} //don't use onChange() -> it ignores some events!!!
-            onFocus={() => triggerItemDropDown(itemInput)}
+            onInput={(event) =>
+              handleInput(event, setItemInput, setDropDownItems, matchItemInput)
+            } //don't use onChange() -> it ignores some events!!!
+            onFocus={() =>
+              triggerDropDown(itemInput, setDropDownItems, matchItemInput)
+            }
             //close drop down, when losing focus
             onBlur={handleBlur}
           />
@@ -148,8 +143,17 @@ export default function ShoppingListEditor({ items, onDelete, onAdd }) {
             placeholder="Suche ein Rezept..."
             maxLength="30"
             value={recipeInput}
-            onInput={(event) => handleRecipeInput(event)} //don't use onChange() -> it ignores some events!!!
-            onFocus={() => triggerRecipeDropDown(recipeInput)}
+            onInput={(event) =>
+              handleInput(
+                event,
+                setRecipeInput,
+                setDropDownRecipes,
+                matchRecipeInput
+              )
+            } //don't use onChange() -> it ignores some events!!!
+            onFocus={() =>
+              triggerDropDown(recipeInput, setDropDownRecipes, matchRecipeInput)
+            }
             //close drop down, when losing focus
             onBlur={handleBlur}
           />
