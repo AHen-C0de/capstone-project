@@ -6,14 +6,19 @@ import InputDropDown from "./InputDropDown";
 import { getAllItemsFromDB, getRecipesFromDB } from "/services/db.js";
 
 export default function ShoppingListEditor({ items, onDelete, onAdd }) {
+  //DB request
   const [allItems, setAllItems] = useState(getAllItemsFromDB);
   const [recipes, setRecipes] = useState(getRecipesFromDB);
+  //input values
   const [itemInput, setItemInput] = useState("");
+  const [recipeInput, setRecipeInput] = useState("");
+  //rendering
   const [dropDownItems, setDropDownItems] = useState([]);
   const [isFocusInput, setIsFocusInput] = useState(false);
   const inputRef = useRef();
 
-  console.log();
+  //console.log(recipes);
+  console.log(recipeInput);
 
   //set focus on item input after page load
   useEffect(() => {
@@ -25,6 +30,11 @@ export default function ShoppingListEditor({ items, onDelete, onAdd }) {
     const inputString = event.target.value;
     setItemInput(inputString);
     triggerDropDown(inputString);
+  }
+  function handleRecipeInput(event) {
+    const inputString = event.target.value;
+    setRecipeInput(inputString);
+    //triggerDropDown(inputString);
   }
 
   //evoke rendering drop down buttons for items that match input
@@ -113,8 +123,8 @@ export default function ShoppingListEditor({ items, onDelete, onAdd }) {
           placeholder="Suche ein Rezept..."
           maxLength="30"
           //ref={inputRef} //set ref to set autofocus after submit
-          //value={itemInput}
-          //onInput={(event) => handleItemInput(event)} //don't use onChange() -> it ignores some events!!!
+          value={recipeInput}
+          onInput={(event) => handleRecipeInput(event)} //don't use onChange() -> it ignores some events!!!
           //onFocus={() => triggerDropDown(itemInput)}
           //close drop down, when losing focus
           //onBlur={handleBlur}
