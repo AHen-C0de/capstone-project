@@ -14,11 +14,12 @@ export default function ShoppingListEditor({ items, onDelete, onAdd }) {
   const [recipeInput, setRecipeInput] = useState("");
   //rendering
   const [dropDownItems, setDropDownItems] = useState([]);
+  const [dropDownRecipes, setDropDownRecipes] = useState([]);
   const [isFocusInput, setIsFocusInput] = useState(false);
   const inputRef = useRef();
 
   //console.log(recipes);
-  console.log(recipeInput);
+  //console.log(recipeInput);
 
   //set focus on item input after page load
   useEffect(() => {
@@ -29,22 +30,26 @@ export default function ShoppingListEditor({ items, onDelete, onAdd }) {
   function handleItemInput(event) {
     const inputString = event.target.value;
     setItemInput(inputString);
-    triggerDropDown(inputString);
+    triggerItemDropDown(inputString);
   }
   function handleRecipeInput(event) {
     const inputString = event.target.value;
     setRecipeInput(inputString);
-    //triggerDropDown(inputString);
+    triggerRecipeDropDown(inputString);
   }
 
   //evoke rendering drop down buttons for items that match input
-  function triggerDropDown(inputString) {
-    const matchedDropDownItems = matchInput(inputString);
-    setDropDownItems(matchedDropDownItems);
+  function triggerItemDropDown(inputString) {
+    const matchedItems = matchItemInput(inputString);
+    setDropDownItems(matchedItems);
+  }
+  function triggerRecipeDropDown(inputString) {
+    const matchedRecipes = matchRecipeInput(inputString);
+    setDropDownRecipes(matchedRecipes);
   }
 
-  //match input with all available items from DB
-  function matchInput(value) {
+  //match item input with all available items from DB
+  function matchItemInput(value) {
     const editedValue = value.trim().toLowerCase();
     //clear drop down when clearing input field
     if (editedValue === "") {
@@ -61,6 +66,19 @@ export default function ShoppingListEditor({ items, onDelete, onAdd }) {
       item.name.toLowerCase().startsWith(editedValue)
     );
     return matchedItems;
+  }
+
+  //match recipe input with all available recipes from DB
+  function matchRecipeInput(value) {
+    const editedValue = value.trim().toLowerCase();
+    //clear drop down when clearing input field
+    if (editedValue === "") {
+      return [];
+    }
+    const matchedRecipes = recipes.filter((recipe) =>
+      recipe.name.toLowerCase().startsWith(editedValue)
+    );
+    return matchedRecipes;
   }
 
   function handleAddItem(element) {
@@ -104,7 +122,7 @@ export default function ShoppingListEditor({ items, onDelete, onAdd }) {
           ref={inputRef} //set ref to set autofocus after submit
           value={itemInput}
           onInput={(event) => handleItemInput(event)} //don't use onChange() -> it ignores some events!!!
-          onFocus={() => triggerDropDown(itemInput)}
+          onFocus={() => triggerItemDropDown(itemInput)}
           //close drop down, when losing focus
           onBlur={handleBlur}
         />
@@ -129,10 +147,10 @@ export default function ShoppingListEditor({ items, onDelete, onAdd }) {
           //close drop down, when losing focus
           //onBlur={handleBlur}
         />
-        {dropDownItems.length > 0 && (
+        {dropDownRecipes.length > 0 && (
           <InputDropDown
-            optionElements={dropDownItems}
-            ariaLabel="add item"
+            optionElements={dropDownRecipes}
+            ariaLabel="open recipe items"
             onAddItem={handleAddItem}
           />
         )}
