@@ -93,6 +93,9 @@ export default function ShoppingListEditor({ items, onDelete, onAdd }) {
         onAdd({ id: recipeItem.id, name: recipeItem.name });
       }
     });
+    setIsShowRecipePopUp(false);
+    setRecipeInput("");
+    inputRef.current.focus();
   }
 
   function handleBlur() {
