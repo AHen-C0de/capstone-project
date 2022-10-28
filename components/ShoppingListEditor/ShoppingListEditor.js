@@ -21,9 +21,6 @@ export default function ShoppingListEditor({ items, onDelete, onAdd }) {
   const [isShowRecipePopUp, setIsShowRecipePopUp] = useState(false);
   const inputRef = useRef();
 
-  console.log(allItems);
-  console.log(items);
-
   //set focus on item input after page load
   useEffect(() => {
     inputRef.current.focus();
