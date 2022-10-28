@@ -65,9 +65,14 @@ export default function ShoppingListEditor({ items, onDelete, onAdd }) {
     if (editedValue === "") {
       return [];
     }
-    const matchedRecipes = recipes.filter((recipe) =>
-      recipe.name.toLowerCase().startsWith(editedValue)
-    );
+    const matchedRecipes = recipes.filter((recipe) => {
+      const recipeWords = recipe.name.split(" ");
+      const matchedRecipeWord = recipeWords.find((word) =>
+        word.toLowerCase().startsWith(editedValue)
+      );
+      return matchedRecipeWord !== undefined ? true : false;
+    });
+
     return matchedRecipes;
   }
 
