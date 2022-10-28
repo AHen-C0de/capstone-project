@@ -100,7 +100,15 @@ export default function ShoppingListEditor({ items, onDelete, onAdd }) {
     const recipeItems = allItems.filter((item) =>
       recipe.item_ids.includes(item.id)
     );
-    setRecipeItems(recipeItems);
+    //add available attr. whether recipe item is already on the shopping list
+    const usedItemIds = items.map((usedItem) => usedItem.item_id);
+    const recipeItemsAndStatus = recipeItems.map((recipeItem) =>
+      usedItemIds.includes(recipeItem.id)
+        ? { ...recipeItem, isOnList: true }
+        : { ...recipeItem, isOnList: false }
+    );
+
+    setRecipeItems(recipeItemsAndStatus);
   }
 
   return (
