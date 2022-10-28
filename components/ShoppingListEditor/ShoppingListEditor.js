@@ -77,11 +77,20 @@ export default function ShoppingListEditor({ items, onDelete, onAdd }) {
     return matchedRecipes;
   }
 
-  function handleAddItem(element) {
-    onAdd(element);
+  function handleAddSingleItem(item) {
+    onAdd(item);
     setItemInput("");
     setDropDownItems([]);
     setIsFocusItemInput(true); //to focus item input after adding item to list
+  }
+
+  function handleAddRecipeItems() {
+    const toAddItemIds = recipeItems
+      .filter((recipeItem) => !recipeItem.isOnList)
+      .map((item) => item.id);
+    const toAddItems = allItems.filter((item) =>
+      toAddItemIds.includes(item.id)
+    );
   }
 
   function handleBlur() {
@@ -108,7 +117,6 @@ export default function ShoppingListEditor({ items, onDelete, onAdd }) {
         ? { ...recipeItem, isOnList: true }
         : { ...recipeItem, isOnList: false }
     );
-
     setRecipeItems(recipeItemsAndStatus);
   }
 
@@ -142,7 +150,7 @@ export default function ShoppingListEditor({ items, onDelete, onAdd }) {
             <InputDropDown
               optionElements={dropDownItems}
               ariaLabel="add item"
-              onButtonClick={handleAddItem}
+              onButtonClick={handleAddSingleItem}
             />
           )}
           <label htmlFor="recipeItems">Items für Rezepte</label>
@@ -198,7 +206,7 @@ export default function ShoppingListEditor({ items, onDelete, onAdd }) {
                 </ListItemContent>
               ))}
             </List>
-            <CheckInButton />
+            <CheckInButton onAdd={handleAddRecipeItems} />
             <button onClick={() => setIsShowRecipePopUp(false)}>
               Schließen
             </button>
