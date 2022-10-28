@@ -188,9 +188,12 @@ export default function ShoppingListEditor({ items, onDelete, onAdd }) {
         <Modal>
           <RecipePopUp>
             <List>
-              {recipeItems.map(({ id, name }) => (
+              {recipeItems.map(({ id, name, isOnList }) => (
                 <ListItemContent key={id}>
-                  <ItemName>{name}</ItemName>
+                  <RecipeTextWrapper>
+                    <RecipeItemName isOnList={isOnList}>{name}</RecipeItemName>
+                    {isOnList && <Message>- Bereits gelistet -</Message>}
+                  </RecipeTextWrapper>
                 </ListItemContent>
               ))}
             </List>
@@ -264,4 +267,22 @@ const RecipePopUp = styled.article`
   border-radius: 1rem;
   justify-self: center;
   z-index: 20;
+`;
+
+const Message = styled.p`
+  color: red;
+  font-size: 0.7rem;
+`;
+
+const RecipeItemName = styled.p`
+  word-break: break-word;
+  line-height: normal;
+  color: ${({ isOnList }) => (isOnList ? "#B0B0B0" : "black")};
+  font-style: ${({ isOnList }) => (isOnList ? "italic" : "normal")};
+`;
+
+const RecipeTextWrapper = styled.span`
+  display: flex;
+  align-items: flex-end;
+  gap: 1rem;
 `;
