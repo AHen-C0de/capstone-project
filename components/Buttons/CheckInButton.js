@@ -1,9 +1,9 @@
 import styled from "styled-components";
 import { GiCheckMark as CheckIcon } from "react-icons/gi";
 
-export default function CheckInButton({ onAdd }) {
+export default function CheckInButton({ onItemsAdd }) {
   return (
-    <StyledButton onClick={onAdd}>
+    <StyledButton onClick={onItemsAdd}>
       <p>Check-In</p>
       <CheckIcon />
     </StyledButton>

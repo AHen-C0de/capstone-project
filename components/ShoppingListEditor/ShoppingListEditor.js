@@ -21,6 +21,9 @@ export default function ShoppingListEditor({ items, onDelete, onAdd }) {
   const [isShowRecipePopUp, setIsShowRecipePopUp] = useState(false);
   const inputRef = useRef();
 
+  console.log(allItems);
+  console.log(items);
+
   //set focus on item input after page load
   useEffect(() => {
     inputRef.current.focus();
@@ -85,12 +88,11 @@ export default function ShoppingListEditor({ items, onDelete, onAdd }) {
   }
 
   function handleAddRecipeItems() {
-    const toAddItemIds = recipeItems
-      .filter((recipeItem) => !recipeItem.isOnList)
-      .map((item) => item.id);
-    const toAddItems = allItems.filter((item) =>
-      toAddItemIds.includes(item.id)
-    );
+    recipeItems.forEach((recipeItem) => {
+      if (!recipeItem.isOnList) {
+        onAdd({ id: recipeItem.id, name: recipeItem.name });
+      }
+    });
   }
 
   function handleBlur() {
@@ -206,7 +208,7 @@ export default function ShoppingListEditor({ items, onDelete, onAdd }) {
                 </ListItemContent>
               ))}
             </List>
-            <CheckInButton onAdd={handleAddRecipeItems} />
+            <CheckInButton onItemsAdd={handleAddRecipeItems} />
             <button onClick={() => setIsShowRecipePopUp(false)}>
               Schließen
             </button>
