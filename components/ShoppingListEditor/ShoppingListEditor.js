@@ -3,7 +3,7 @@ import { useRef, useState, useEffect } from "react";
 
 import ListContainer from "../ListContainer";
 import InputDropDown from "./InputDropDown";
-import { getAllItemsFromDB, getRecipesFromDB } from "/services/db.js";
+import { getAllItemsFromDB, getRecipesFromDB } from "../../services/db.js";
 
 export default function ShoppingListEditor({ items, onDelete, onAdd }) {
   //DB request
