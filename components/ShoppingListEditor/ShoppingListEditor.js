@@ -206,13 +206,17 @@ export default function ShoppingListEditor({ items, onDelete, onAdd }) {
           <RecipePopUp>
             <List>
               {recipeItems.map(({ id, name, isOnList }) => (
-                <ListItemContent key={id}>
-                  <RecipeTextWrapper>
-                    <RecipeItemName isOnList={isOnList}>{name}</RecipeItemName>
-                    {isOnList && <Message>- Bereits gelistet -</Message>}
+                <li key={id}>
+                  <RecipeItemWrapper>
+                    <RecipeItemTextWrapper>
+                      <RecipeItemName isOnList={isOnList}>
+                        {name}
+                      </RecipeItemName>
+                      {isOnList && <Message>- Bereits gelistet -</Message>}
+                    </RecipeItemTextWrapper>
                     <DeleteButton />
-                  </RecipeTextWrapper>
-                </ListItemContent>
+                  </RecipeItemWrapper>
+                </li>
               ))}
             </List>
             <CheckInButton
@@ -306,8 +310,13 @@ const RecipeItemName = styled.p`
   font-style: ${({ isOnList }) => (isOnList ? "italic" : "normal")};
 `;
 
-const RecipeTextWrapper = styled.span`
+const RecipeItemWrapper = styled.span`
   display: flex;
-  align-items: flex-end;
+  justify-content: space-between;
+`;
+
+const RecipeItemTextWrapper = styled.span`
+  display: flex;
+  align-items: center;
   gap: 1rem;
 `;
