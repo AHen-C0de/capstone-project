@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
-export default function DeleteButton() {
+export default function DeleteButton({ id, onDelete }) {
   return (
-    <StyledButton>
+    <StyledButton onClick={() => onDelete(id)}>
       {/* <Image src={TrashIcon} alt="trash-icon" /> */}
       <StyledSVG
         width="21"

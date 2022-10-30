@@ -123,6 +123,10 @@ export default function ShoppingListEditor({ items, onDelete, onAdd }) {
     setRecipeItems(recipeItemsAndStatus);
   }
 
+  function delelteRecipeItem(id) {
+    setRecipeItems(recipeItems.filter((item) => item.id !== id));
+  }
+
   return (
     <>
       <ListContainer isBlur={isShowRecipePopUp}>
@@ -209,7 +213,9 @@ export default function ShoppingListEditor({ items, onDelete, onAdd }) {
                 <li key={id}>
                   <RecipeItemWrapper>
                     <RecipeItemName isOnList={isOnList}>{name}</RecipeItemName>
-                    {!isOnList && <DeleteButton />}
+                    {!isOnList && (
+                      <DeleteButton id={id} onDelete={delelteRecipeItem} />
+                    )}
                     {isOnList && <Message>- Bereits gelistet -</Message>}
                   </RecipeItemWrapper>
                 </li>
