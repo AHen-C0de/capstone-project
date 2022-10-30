@@ -17,6 +17,8 @@ export default function ShoppingListEditor({ items, onDelete, onAdd }) {
   //rendering
   const [dropDownItems, setDropDownItems] = useState([]);
   const [dropDownRecipes, setDropDownRecipes] = useState([]);
+  const [recipeName, setRecipeName] = useState("");
+  const [recipeVariant, setRecipeVariant] = useState("");
   const [recipeItems, setRecipeItems] = useState([]);
   const [isFocusItemInput, setIsFocusItemInput] = useState(false);
   const [isShowRecipePopUp, setIsShowRecipePopUp] = useState(false);
@@ -120,6 +122,8 @@ export default function ShoppingListEditor({ items, onDelete, onAdd }) {
         ? { ...recipeItem, isOnList: true }
         : { ...recipeItem, isOnList: false }
     );
+    setRecipeName(recipe.name);
+    setRecipeVariant(recipe.variant);
     setRecipeItems(recipeItemsAndStatus);
   }
 
@@ -208,7 +212,11 @@ export default function ShoppingListEditor({ items, onDelete, onAdd }) {
       {isShowRecipePopUp && (
         <Modal>
           <RecipePopUp>
-            <List>
+            <RecipeName>{recipeName}</RecipeName>
+            {recipeVariant && (
+              <RecipeVariant>{`- ${recipeVariant} -`}</RecipeVariant>
+            )}
+            <RecipeItemsList>
               {recipeItems.map(({ id, name, isOnList }) => (
                 <li key={id}>
                   <RecipeItemWrapper>
@@ -220,7 +228,7 @@ export default function ShoppingListEditor({ items, onDelete, onAdd }) {
                   </RecipeItemWrapper>
                 </li>
               ))}
-            </List>
+            </RecipeItemsList>
             <CheckInButton
               aria-label="zu Liste hizufügen"
               onItemsAdd={handleAddRecipeItems}
@@ -303,6 +311,26 @@ const RecipePopUp = styled.article`
 const Message = styled.p`
   color: red;
   font-size: 0.7rem;
+`;
+
+const RecipeName = styled.h2`
+  font-family: "Lily Script One";
+  margin-bottom: 0.2rem;
+  font-size: 1.3rem;
+`;
+
+const RecipeVariant = styled.h3`
+  font-style: italic;
+  font-size: 1.1rem;
+  font-family: "Lily Script One";
+`;
+
+const RecipeItemsList = styled.ul`
+  margin: 1.5rem 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 `;
 
 const RecipeItemName = styled.p`
