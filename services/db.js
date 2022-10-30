@@ -176,11 +176,7 @@ const SHOPPINGLIST_DB = [
 function getShoppingListFromDB() {
   const shoppingItems = SHOPPINGLIST_DB.map((shoppingItem) => {
     const name = ITEMS_DB.find((item) => item.id === shoppingItem.item_id).name;
-    return {
-      id: shoppingItem.id,
-      name: name,
-      checked: shoppingItem.checked,
-    };
+    return { ...shoppingItem, name: name };
   });
   return shoppingItems;
 }

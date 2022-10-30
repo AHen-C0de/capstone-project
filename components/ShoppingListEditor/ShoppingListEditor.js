@@ -3,6 +3,7 @@ import { useRef, useState, useEffect } from "react";
 
 import ListContainer from "../ListContainer";
 import InputDropDown from "./InputDropDown";
+import CheckInButton from "../Buttons/CheckInButton";
 import { getAllItemsFromDB, getRecipesFromDB } from "../../services/db.js";
 
 export default function ShoppingListEditor({ items, onDelete, onAdd }) {
@@ -76,11 +77,22 @@ export default function ShoppingListEditor({ items, onDelete, onAdd }) {
     return matchedRecipes;
   }
 
-  function handleAddItem(element) {
-    onAdd(element);
+  function handleAddSingleItem(item) {
+    onAdd(item);
     setItemInput("");
     setDropDownItems([]);
     setIsFocusItemInput(true); //to focus item input after adding item to list
+  }
+
+  function handleAddRecipeItems() {
+    recipeItems.forEach((recipeItem) => {
+      if (!recipeItem.isOnList) {
+        onAdd({ id: recipeItem.id, name: recipeItem.name });
+      }
+    });
+    setIsShowRecipePopUp(false);
+    setRecipeInput("");
+    inputRef.current.focus();
   }
 
   function handleBlur() {
@@ -100,14 +112,21 @@ export default function ShoppingListEditor({ items, onDelete, onAdd }) {
     const recipeItems = allItems.filter((item) =>
       recipe.item_ids.includes(item.id)
     );
-    setRecipeItems(recipeItems);
+    //add available attr. whether recipe item is already on the shopping list
+    const usedItemIds = items.map((usedItem) => usedItem.item_id);
+    const recipeItemsAndStatus = recipeItems.map((recipeItem) =>
+      usedItemIds.includes(recipeItem.id)
+        ? { ...recipeItem, isOnList: true }
+        : { ...recipeItem, isOnList: false }
+    );
+    setRecipeItems(recipeItemsAndStatus);
   }
 
   return (
     <>
       <ListContainer isBlur={isShowRecipePopUp}>
         <StyledForm
-          aria-label="add items"
+          aria-label="Item hinzufügen"
           autoComplete="off" //turn off auto completions for typing input suggested by the browser
           onSubmit={(event) => event.preventDefault()}
         >
@@ -115,7 +134,7 @@ export default function ShoppingListEditor({ items, onDelete, onAdd }) {
           <input
             type="text"
             id="item"
-            aria-label="item name"
+            aria-label="Itemname"
             placeholder="Suche ein Item..."
             maxLength="30"
             ref={inputRef} //set ref to set autofocus after submit
@@ -132,15 +151,15 @@ export default function ShoppingListEditor({ items, onDelete, onAdd }) {
           {dropDownItems.length > 0 && (
             <InputDropDown
               optionElements={dropDownItems}
-              ariaLabel="add item"
-              onButtonClick={handleAddItem}
+              ariaLabel="Item hinzufügen"
+              onButtonClick={handleAddSingleItem}
             />
           )}
           <label htmlFor="recipeItems">Items für Rezepte</label>
           <input
             type="text"
             id="recipeItems"
-            aria-label="recipe name"
+            aria-label="Rezeptname"
             placeholder="Suche ein Rezept..."
             maxLength="30"
             value={recipeInput}
@@ -161,7 +180,7 @@ export default function ShoppingListEditor({ items, onDelete, onAdd }) {
           {dropDownRecipes.length > 0 && (
             <InputDropDown
               optionElements={dropDownRecipes}
-              ariaLabel="open recipe items"
+              ariaLabel="öffne Rezept-Items"
               onButtonClick={openPopUp}
             />
           )}
@@ -171,7 +190,12 @@ export default function ShoppingListEditor({ items, onDelete, onAdd }) {
           {items.map(({ id, name }) => (
             <ListItemContent key={id}>
               <ItemName>{name}</ItemName>
-              <DeleteButton onClick={() => onDelete(id)}>Löschen</DeleteButton>
+              <DeleteButton
+                aria-label="lösche Item"
+                onClick={() => onDelete(id)}
+              >
+                Löschen
+              </DeleteButton>
             </ListItemContent>
           ))}
         </List>
@@ -180,12 +204,16 @@ export default function ShoppingListEditor({ items, onDelete, onAdd }) {
         <Modal>
           <RecipePopUp>
             <List>
-              {recipeItems.map(({ id, name }) => (
+              {recipeItems.map(({ id, name, isOnList }) => (
                 <ListItemContent key={id}>
-                  <ItemName>{name}</ItemName>
+                  <RecipeTextWrapper>
+                    <RecipeItemName isOnList={isOnList}>{name}</RecipeItemName>
+                    {isOnList && <Message>- Bereits gelistet -</Message>}
+                  </RecipeTextWrapper>
                 </ListItemContent>
               ))}
             </List>
+            <CheckInButton onItemsAdd={handleAddRecipeItems} />
             <button onClick={() => setIsShowRecipePopUp(false)}>
               Schließen
             </button>
@@ -256,4 +284,22 @@ const RecipePopUp = styled.article`
   border-radius: 1rem;
   justify-self: center;
   z-index: 20;
+`;
+
+const Message = styled.p`
+  color: red;
+  font-size: 0.7rem;
+`;
+
+const RecipeItemName = styled.p`
+  word-break: break-word;
+  line-height: normal;
+  color: ${({ isOnList }) => (isOnList ? "#B0B0B0" : "black")};
+  font-style: ${({ isOnList }) => (isOnList ? "italic" : "normal")};
+`;
+
+const RecipeTextWrapper = styled.span`
+  display: flex;
+  align-items: flex-end;
+  gap: 1rem;
 `;
