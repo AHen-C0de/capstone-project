@@ -213,8 +213,14 @@ export default function ShoppingListEditor({ items, onDelete, onAdd }) {
                 </ListItemContent>
               ))}
             </List>
-            <CheckInButton onItemsAdd={handleAddRecipeItems} />
-            <button onClick={() => setIsShowRecipePopUp(false)}>
+            <CheckInButton
+              aria-label="zu Liste hizufügen"
+              onItemsAdd={handleAddRecipeItems}
+            />
+            <button
+              aria-label="schließen"
+              onClick={() => setIsShowRecipePopUp(false)}
+            >
               Schließen
             </button>
           </RecipePopUp>
