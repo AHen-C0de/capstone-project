@@ -126,7 +126,7 @@ export default function ShoppingListEditor({ items, onDelete, onAdd }) {
     <>
       <ListContainer isBlur={isShowRecipePopUp}>
         <StyledForm
-          aria-label="add items"
+          aria-label="Item hinzufügen"
           autoComplete="off" //turn off auto completions for typing input suggested by the browser
           onSubmit={(event) => event.preventDefault()}
         >
@@ -134,7 +134,7 @@ export default function ShoppingListEditor({ items, onDelete, onAdd }) {
           <input
             type="text"
             id="item"
-            aria-label="item name"
+            aria-label="Itemname"
             placeholder="Suche ein Item..."
             maxLength="30"
             ref={inputRef} //set ref to set autofocus after submit
@@ -151,7 +151,7 @@ export default function ShoppingListEditor({ items, onDelete, onAdd }) {
           {dropDownItems.length > 0 && (
             <InputDropDown
               optionElements={dropDownItems}
-              ariaLabel="add item"
+              ariaLabel="Item hinzufügen"
               onButtonClick={handleAddSingleItem}
             />
           )}
@@ -159,7 +159,7 @@ export default function ShoppingListEditor({ items, onDelete, onAdd }) {
           <input
             type="text"
             id="recipeItems"
-            aria-label="recipe name"
+            aria-label="Rezeptname"
             placeholder="Suche ein Rezept..."
             maxLength="30"
             value={recipeInput}
@@ -180,7 +180,7 @@ export default function ShoppingListEditor({ items, onDelete, onAdd }) {
           {dropDownRecipes.length > 0 && (
             <InputDropDown
               optionElements={dropDownRecipes}
-              ariaLabel="open recipe items"
+              ariaLabel="öffne Rezept-Items"
               onButtonClick={openPopUp}
             />
           )}
@@ -190,7 +190,12 @@ export default function ShoppingListEditor({ items, onDelete, onAdd }) {
           {items.map(({ id, name }) => (
             <ListItemContent key={id}>
               <ItemName>{name}</ItemName>
-              <DeleteButton onClick={() => onDelete(id)}>Löschen</DeleteButton>
+              <DeleteButton
+                aria-label="lösche Item"
+                onClick={() => onDelete(id)}
+              >
+                Löschen
+              </DeleteButton>
             </ListItemContent>
           ))}
         </List>
