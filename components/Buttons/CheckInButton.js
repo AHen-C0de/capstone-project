@@ -18,4 +18,9 @@ const StyledButton = styled.button`
   font-size: 1.1rem;
   display: flex;
   gap: 0.5rem;
+  cursor: pointer;
+
+  &:hover {
+    background-color: var(--background-secondary-hover);
+  }
 `;

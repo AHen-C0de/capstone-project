@@ -4,6 +4,7 @@ import { useRef, useState, useEffect } from "react";
 import ListContainer from "../ListContainer";
 import InputDropDown from "./InputDropDown";
 import CheckInButton from "../Buttons/CheckInButton";
+import DeleteButton from "../Buttons/DeleteButton";
 import { getAllItemsFromDB, getRecipesFromDB } from "../../services/db.js";
 
 export default function ShoppingListEditor({ items, onDelete, onAdd }) {
@@ -190,12 +191,12 @@ export default function ShoppingListEditor({ items, onDelete, onAdd }) {
           {items.map(({ id, name }) => (
             <ListItemContent key={id}>
               <ItemName>{name}</ItemName>
-              <DeleteButton
+              <ItemDeleteButton
                 aria-label="lösche Item"
                 onClick={() => onDelete(id)}
               >
                 Löschen
-              </DeleteButton>
+              </ItemDeleteButton>
             </ListItemContent>
           ))}
         </List>
@@ -209,6 +210,7 @@ export default function ShoppingListEditor({ items, onDelete, onAdd }) {
                   <RecipeTextWrapper>
                     <RecipeItemName isOnList={isOnList}>{name}</RecipeItemName>
                     {isOnList && <Message>- Bereits gelistet -</Message>}
+                    <DeleteButton />
                   </RecipeTextWrapper>
                 </ListItemContent>
               ))}
@@ -262,7 +264,7 @@ const ItemName = styled.p`
   line-height: normal;
 `;
 
-const DeleteButton = styled.button`
+const ItemDeleteButton = styled.button`
   background-color: red;
   height: 1.5rem;
 `;
