@@ -1,3 +1,4 @@
+const esModules = ["lodash-es", "nanoid"].join("|");
 const nextJest = require("next/jest");
 
 const createJestConfig = nextJest({
@@ -15,6 +16,11 @@ const customJestConfig = {
     "^@/pages/(.*)$": "<rootDir>/pages/$1",
   },
   testEnvironment: "jest-environment-jsdom",
+  transformIgnorePatterns: [`/node_modules/(?!${esModules})`],
+  moduleNameMapper: {
+    "^lodash-es(/(.*)|$)": "lodash$1",
+    "^nanoid(/(.*)|$)": "nanoid$1",
+  },
 };
 
 // createJestConfig is exported this way to ensure that next/jest can load the Next.js config which is async
