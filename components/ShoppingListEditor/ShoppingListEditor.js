@@ -208,13 +208,9 @@ export default function ShoppingListEditor({ items, onDelete, onAdd }) {
               {recipeItems.map(({ id, name, isOnList }) => (
                 <li key={id}>
                   <RecipeItemWrapper>
-                    <RecipeItemTextWrapper>
-                      <RecipeItemName isOnList={isOnList}>
-                        {name}
-                      </RecipeItemName>
-                      {isOnList && <Message>- Bereits gelistet -</Message>}
-                    </RecipeItemTextWrapper>
-                    <DeleteButton />
+                    <RecipeItemName isOnList={isOnList}>{name}</RecipeItemName>
+                    {!isOnList && <DeleteButton />}
+                    {isOnList && <Message>- Bereits gelistet -</Message>}
                   </RecipeItemWrapper>
                 </li>
               ))}
@@ -313,10 +309,4 @@ const RecipeItemName = styled.p`
 const RecipeItemWrapper = styled.span`
   display: flex;
   justify-content: space-between;
-`;
-
-const RecipeItemTextWrapper = styled.span`
-  display: flex;
-  align-items: center;
-  gap: 1rem;
 `;
