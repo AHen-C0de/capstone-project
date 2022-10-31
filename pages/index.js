@@ -3,7 +3,7 @@ import Header from "../components/Header";
 import NavigationBar from "../components/NavigationBar/NavigationBar";
 import ShoppingList from "../components/ShoppingList/ShoppingList";
 
-export default function Home({ items, onToggleItemChecked }) {
+export default function Home({ listItems, onToggleItemChecked }) {
   return (
     <>
       <Head>
@@ -14,7 +14,10 @@ export default function Home({ items, onToggleItemChecked }) {
 
       <Header>MyShoppingManager</Header>
       <main>
-        <ShoppingList items={items} onToggleItemChecked={onToggleItemChecked} />
+        <ShoppingList
+          listItems={listItems}
+          onToggleItemChecked={onToggleItemChecked}
+        />
       </main>
       <NavigationBar />
     </>

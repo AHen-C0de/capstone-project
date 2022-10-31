@@ -2,12 +2,14 @@ import styled from "styled-components";
 import { useState, useRef, useEffect } from "react";
 
 import DropDown from "./DropDown";
-import { getAllItemsFromDB, getRecipesFromDB } from "../../services/db.js";
 
-export default function Form({ listItems, onAdd }) {
-  //DB request
-  const [allItems, setAllItems] = useState(getAllItemsFromDB);
-  const [recipes, setRecipes] = useState(getRecipesFromDB);
+export default function Form({
+  allItems,
+  recipes,
+  listItems,
+  onAdd,
+  onOpenModal,
+}) {
   //input values
   const [itemInput, setItemInput] = useState("");
   const [recipeInput, setRecipeInput] = useState("");
@@ -149,7 +151,10 @@ export default function Form({ listItems, onAdd }) {
         <DropDown
           optionElements={dropDownRecipes}
           ariaLabel="öffne Rezept-Items"
-          onButtonClick={openPopUp}
+          onButtonClick={() => {
+            setRecipeInput("");
+            onOpenModal;
+          }}
         />
       )}
     </StyledForm>

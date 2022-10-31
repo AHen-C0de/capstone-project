@@ -3,27 +3,29 @@ import { useState } from "react";
 
 import ListContainer from "../ListContainer";
 import Form from "./Form";
-import CheckInButton from "../Buttons/CheckInButton";
-import DeleteButton from "../Buttons/DeleteButton";
+import List from "./List";
+import RecipeModal from "./RecipeModal";
+import { getAllItemsFromDB, getRecipesFromDB } from "../../services/db.js";
 
 export default function ShoppingListEditor({ listItems, onDelete, onAdd }) {
-  const [recipeName, setRecipeName] = useState("");
-  const [recipeVariant, setRecipeVariant] = useState("");
-  const [recipeItems, setRecipeItems] = useState([]);
+  //DB request
+  const [allItems, setAllItems] = useState(getAllItemsFromDB);
+  const [recipes, setRecipes] = useState(getRecipesFromDB);
+  const [clickedRecipe, setClickedRecipe] = useState({});
   const [isShowRecipePopUp, setIsShowRecipePopUp] = useState(false);
 
-  function handleAddRecipeItems() {
-    recipeItems.forEach((recipeItem) => {
+  function handleAddRecipeItems(recipe) {
+    recipe.items.forEach((recipeItem) => {
       if (!recipeItem.isOnList) {
         onAdd({ id: recipeItem.id, name: recipeItem.name });
       }
     });
     setIsShowRecipePopUp(false);
-    setRecipeInput("");
-    inputRef.current.focus();
+
+    //inputRef.current.focus();
   }
 
-  function openPopUp(recipe) {
+  function openModal(recipe) {
     setIsShowRecipePopUp(true);
     const recipeItems = allItems.filter((item) =>
       recipe.item_ids.includes(item.id)
@@ -35,9 +37,15 @@ export default function ShoppingListEditor({ listItems, onDelete, onAdd }) {
         ? { ...recipeItem, isOnList: true }
         : { ...recipeItem, isOnList: false }
     );
-    setRecipeName(recipe.name);
-    setRecipeVariant(recipe.variant);
-    setRecipeItems(recipeItemsAndStatus);
+
+    const detailedRecipe = {
+      name: recipe.name,
+      variant: recipe.variant,
+      items: recipeItemsAndStatus,
+    };
+
+    console.log(detailedRecipe);
+    setClickedRecipe(detailedRecipe);
   }
 
   function deleteRecipeItem(id) {
@@ -47,58 +55,17 @@ export default function ShoppingListEditor({ listItems, onDelete, onAdd }) {
   return (
     <>
       <ListContainer isBlur={isShowRecipePopUp}>
-        <Form listItems={listItems} />
+        <Form
+          allItems={allItems}
+          recipes={recipes}
+          listItems={listItems}
+          onAdd={onAdd}
+          onOpenModal={openModal}
+        />
         <Line />
-        <List>
-          {listItems.map(({ id, name }) => (
-            <ListItemContent key={id}>
-              <ItemName>{name}</ItemName>
-              <ItemDeleteButton
-                aria-label="lösche Item"
-                onClick={() => onDelete(id)}
-              >
-                Löschen
-              </ItemDeleteButton>
-            </ListItemContent>
-          ))}
-        </List>
+        <List listItems={listItems} onDelete={onDelete} />
       </ListContainer>
-      {isShowRecipePopUp && (
-        <Modal>
-          <RecipePopUp>
-            <RecipeName>{recipeName}</RecipeName>
-            {recipeVariant && (
-              <RecipeVariant>{`- ${recipeVariant} -`}</RecipeVariant>
-            )}
-            <RecipeItemsList>
-              {recipeItems.map(({ id, name, isOnList }) => (
-                <li key={id}>
-                  <RecipeItemWrapper>
-                    <RecipeItemName isOnList={isOnList}>{name}</RecipeItemName>
-                    {!isOnList && (
-                      <DeleteButton
-                        id={id}
-                        onDelete={() => deleteRecipeItem(id)}
-                      />
-                    )}
-                    {isOnList && <Message>- Bereits gelistet -</Message>}
-                  </RecipeItemWrapper>
-                </li>
-              ))}
-            </RecipeItemsList>
-            <CheckInButton
-              aria-label="zu Liste hizufügen"
-              onItemsAdd={handleAddRecipeItems}
-            />
-            <button
-              aria-label="schließen"
-              onClick={() => setIsShowRecipePopUp(false)}
-            >
-              Schließen
-            </button>
-          </RecipePopUp>
-        </Modal>
-      )}
+      {isShowRecipePopUp && <RecipeModal recipe={clickedRecipe} />}
     </>
   );
 }
@@ -109,90 +76,4 @@ const Line = styled.div`
   border-radius: 1rem;
   background-color: black;
   align-self: center;
-`;
-
-const List = styled.ul`
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-`;
-
-const ListItemContent = styled.li`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-`;
-
-const ItemName = styled.p`
-  word-break: break-word;
-  line-height: normal;
-`;
-
-const ItemDeleteButton = styled.button`
-  background-color: red;
-  height: 1.5rem;
-`;
-
-const Modal = styled.div`
-  position: fixed;
-  z-index: 10;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  overflow: auto;
-  background-color: rgb(0, 0, 0); /* Fallback color */
-  background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
-`;
-
-const RecipePopUp = styled.article`
-  width: 80%;
-  padding: 1rem;
-  background-color: white;
-  position: absolute;
-  border-radius: 1rem;
-  justify-self: center;
-  z-index: 20;
-`;
-
-const Message = styled.p`
-  color: red;
-  font-size: 0.7rem;
-`;
-
-const RecipeName = styled.h2`
-  font-family: "Lily Script One";
-  font-size: 1.3rem;
-`;
-
-const RecipeVariant = styled.h3`
-  font-style: italic;
-  font-size: 1.1rem;
-  font-family: "Lily Script One";
-  margin-top: 0.2rem;
-`;
-
-const RecipeItemsList = styled.ul`
-  margin: 1.5rem 0;
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-`;
-
-const RecipeItemName = styled.p`
-  word-break: break-word;
-  line-height: normal;
-  color: ${({ isOnList }) => (isOnList ? "#B0B0B0" : "black")};
-  font-style: ${({ isOnList }) => (isOnList ? "italic" : "normal")};
-`;
-
-const RecipeItemWrapper = styled.span`
-  display: flex;
-  justify-content: space-between;
 `;
