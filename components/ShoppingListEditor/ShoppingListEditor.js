@@ -315,7 +315,6 @@ const Message = styled.p`
 
 const RecipeName = styled.h2`
   font-family: "Lily Script One";
-  margin-bottom: 0.2rem;
   font-size: 1.3rem;
 `;
 
@@ -323,6 +322,7 @@ const RecipeVariant = styled.h3`
   font-style: italic;
   font-size: 1.1rem;
   font-family: "Lily Script One";
+  margin-top: 0.2rem;
 `;
 
 const RecipeItemsList = styled.ul`
