@@ -4,6 +4,7 @@ import { useRef, useState, useEffect } from "react";
 import ListContainer from "../ListContainer";
 import InputDropDown from "./InputDropDown";
 import CheckInButton from "../Buttons/CheckInButton";
+import DeleteButton from "../Buttons/DeleteButton";
 import { getAllItemsFromDB, getRecipesFromDB } from "../../services/db.js";
 
 export default function ShoppingListEditor({ items, onDelete, onAdd }) {
@@ -16,6 +17,8 @@ export default function ShoppingListEditor({ items, onDelete, onAdd }) {
   //rendering
   const [dropDownItems, setDropDownItems] = useState([]);
   const [dropDownRecipes, setDropDownRecipes] = useState([]);
+  const [recipeName, setRecipeName] = useState("");
+  const [recipeVariant, setRecipeVariant] = useState("");
   const [recipeItems, setRecipeItems] = useState([]);
   const [isFocusItemInput, setIsFocusItemInput] = useState(false);
   const [isShowRecipePopUp, setIsShowRecipePopUp] = useState(false);
@@ -119,7 +122,13 @@ export default function ShoppingListEditor({ items, onDelete, onAdd }) {
         ? { ...recipeItem, isOnList: true }
         : { ...recipeItem, isOnList: false }
     );
+    setRecipeName(recipe.name);
+    setRecipeVariant(recipe.variant);
     setRecipeItems(recipeItemsAndStatus);
+  }
+
+  function deleteRecipeItem(id) {
+    setRecipeItems(recipeItems.filter((item) => item.id !== id));
   }
 
   return (
@@ -190,12 +199,12 @@ export default function ShoppingListEditor({ items, onDelete, onAdd }) {
           {items.map(({ id, name }) => (
             <ListItemContent key={id}>
               <ItemName>{name}</ItemName>
-              <DeleteButton
+              <ItemDeleteButton
                 aria-label="lösche Item"
                 onClick={() => onDelete(id)}
               >
                 Löschen
-              </DeleteButton>
+              </ItemDeleteButton>
             </ListItemContent>
           ))}
         </List>
@@ -203,16 +212,26 @@ export default function ShoppingListEditor({ items, onDelete, onAdd }) {
       {isShowRecipePopUp && (
         <Modal>
           <RecipePopUp>
-            <List>
+            <RecipeName>{recipeName}</RecipeName>
+            {recipeVariant && (
+              <RecipeVariant>{`- ${recipeVariant} -`}</RecipeVariant>
+            )}
+            <RecipeItemsList>
               {recipeItems.map(({ id, name, isOnList }) => (
-                <ListItemContent key={id}>
-                  <RecipeTextWrapper>
+                <li key={id}>
+                  <RecipeItemWrapper>
                     <RecipeItemName isOnList={isOnList}>{name}</RecipeItemName>
+                    {!isOnList && (
+                      <DeleteButton
+                        id={id}
+                        onDelete={() => deleteRecipeItem(id)}
+                      />
+                    )}
                     {isOnList && <Message>- Bereits gelistet -</Message>}
-                  </RecipeTextWrapper>
-                </ListItemContent>
+                  </RecipeItemWrapper>
+                </li>
               ))}
-            </List>
+            </RecipeItemsList>
             <CheckInButton
               aria-label="zu Liste hizufügen"
               onItemsAdd={handleAddRecipeItems}
@@ -262,7 +281,7 @@ const ItemName = styled.p`
   line-height: normal;
 `;
 
-const DeleteButton = styled.button`
+const ItemDeleteButton = styled.button`
   background-color: red;
   height: 1.5rem;
 `;
@@ -297,6 +316,26 @@ const Message = styled.p`
   font-size: 0.7rem;
 `;
 
+const RecipeName = styled.h2`
+  font-family: "Lily Script One";
+  font-size: 1.3rem;
+`;
+
+const RecipeVariant = styled.h3`
+  font-style: italic;
+  font-size: 1.1rem;
+  font-family: "Lily Script One";
+  margin-top: 0.2rem;
+`;
+
+const RecipeItemsList = styled.ul`
+  margin: 1.5rem 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+`;
+
 const RecipeItemName = styled.p`
   word-break: break-word;
   line-height: normal;
@@ -304,8 +343,7 @@ const RecipeItemName = styled.p`
   font-style: ${({ isOnList }) => (isOnList ? "italic" : "normal")};
 `;
 
-const RecipeTextWrapper = styled.span`
+const RecipeItemWrapper = styled.span`
   display: flex;
-  align-items: flex-end;
-  gap: 1rem;
+  justify-content: space-between;
 `;
