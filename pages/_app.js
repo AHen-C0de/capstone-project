@@ -48,7 +48,7 @@ function MyApp({ Component, pageProps }) {
       <GlobalStyle />
       <Component
         {...pageProps}
-        items={shoppingListItems}
+        listItems={shoppingListItems}
         onToggleItemChecked={toggleItemChecked}
         onDelete={deleteItem}
         onAdd={addItem}

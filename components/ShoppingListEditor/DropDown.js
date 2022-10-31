@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export default function InputDropDown({
+export default function DropDown({
   optionElements, //= available items, when used for item input & recipes when used for recipe input
   ariaLabel,
   onButtonClick,
