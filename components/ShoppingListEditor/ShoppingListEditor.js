@@ -127,7 +127,7 @@ export default function ShoppingListEditor({ items, onDelete, onAdd }) {
     setRecipeItems(recipeItemsAndStatus);
   }
 
-  function delelteRecipeItem(id) {
+  function deleteRecipeItem(id) {
     setRecipeItems(recipeItems.filter((item) => item.id !== id));
   }
 
@@ -222,7 +222,10 @@ export default function ShoppingListEditor({ items, onDelete, onAdd }) {
                   <RecipeItemWrapper>
                     <RecipeItemName isOnList={isOnList}>{name}</RecipeItemName>
                     {!isOnList && (
-                      <DeleteButton id={id} onDelete={delelteRecipeItem} />
+                      <DeleteButton
+                        id={id}
+                        onDelete={() => deleteRecipeItem(id)}
+                      />
                     )}
                     {isOnList && <Message>- Bereits gelistet -</Message>}
                   </RecipeItemWrapper>
