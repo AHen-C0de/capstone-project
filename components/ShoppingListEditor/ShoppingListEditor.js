@@ -13,7 +13,7 @@ export default function ShoppingListEditor({ listItems, onDelete, onAdd }) {
   const [recipes, setRecipes] = useState(getRecipesFromDB);
   //rendering
   const [clickedRecipe, setClickedRecipe] = useState({});
-  const [isShowRecipePopUp, setIsShowRecipePopUp] = useState(false);
+  const [isShowRecipeModal, setIsShowRecipeModal] = useState(false);
   const itemInputRef = useRef();
 
   function handleAddRecipeItems(recipe) {
@@ -22,19 +22,19 @@ export default function ShoppingListEditor({ listItems, onDelete, onAdd }) {
         onAdd({ id: recipeItem.id, name: recipeItem.name });
       }
     });
-    setIsShowRecipePopUp(false);
+    setIsShowRecipeModal(false);
     itemInputRef.current.focus();
   }
 
   function openModal(recipe) {
-    setIsShowRecipePopUp(true);
+    setIsShowRecipeModal(true);
 
-    const recipeItems = allItems.filter((item) =>
+    const detailedItems = allItems.filter((item) =>
       recipe.item_ids.includes(item.id)
     );
-    //add available attr. whether recipe item is already on the shopping list
+    //add isOnList attr. whether recipe item is already on the shopping list
     const usedItemIds = listItems.map((usedItem) => usedItem.item_id);
-    const recipeItemsAndStatus = recipeItems.map((recipeItem) =>
+    const detailedItemsAndStatus = detailedItems.map((recipeItem) =>
       usedItemIds.includes(recipeItem.id)
         ? { ...recipeItem, isOnList: true }
         : { ...recipeItem, isOnList: false }
@@ -43,7 +43,7 @@ export default function ShoppingListEditor({ listItems, onDelete, onAdd }) {
     const detailedRecipe = {
       name: recipe.name,
       variant: recipe.variant,
-      items: recipeItemsAndStatus,
+      items: detailedItemsAndStatus,
     };
     setClickedRecipe(detailedRecipe);
   }
@@ -58,7 +58,7 @@ export default function ShoppingListEditor({ listItems, onDelete, onAdd }) {
 
   return (
     <>
-      <ListContainer isBlur={isShowRecipePopUp}>
+      <ListContainer isBlur={isShowRecipeModal}>
         <Form
           allItems={allItems}
           recipes={recipes}
@@ -70,12 +70,12 @@ export default function ShoppingListEditor({ listItems, onDelete, onAdd }) {
         <Line />
         <List listItems={listItems} onDelete={onDelete} />
       </ListContainer>
-      {isShowRecipePopUp && (
+      {isShowRecipeModal && (
         <RecipeModal
           recipe={clickedRecipe}
           onAdd={handleAddRecipeItems}
           onDelete={deleteRecipeItem}
-          onCloseModal={() => setIsShowRecipePopUp(false)}
+          onCloseModal={() => setIsShowRecipeModal(false)}
         />
       )}
     </>
