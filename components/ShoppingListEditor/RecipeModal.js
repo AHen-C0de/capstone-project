@@ -3,13 +3,13 @@ import styled from "styled-components";
 import CheckInButton from "../Buttons/CheckInButton";
 import DeleteButton from "../Buttons/DeleteButton";
 
-export default function RecipeModal({ recipe }) {
+export default function RecipeModal({ recipe, onAdd, onDelete, onCloseModal }) {
   return (
     <ModalBackground>
       <ModalContainer>
         <RecipeName>{recipe.name}</RecipeName>
         {recipe.variant && (
-          <RecipeVariant>{`- ${recipeVariant} -`}</RecipeVariant>
+          <RecipeVariant>{`- ${recipe.variant} -`}</RecipeVariant>
         )}
         <RecipeItemsList>
           {recipe.items.map(({ id, name, isOnList }) => (
@@ -17,7 +17,7 @@ export default function RecipeModal({ recipe }) {
               <RecipeItemWrapper>
                 <RecipeItemName isOnList={isOnList}>{name}</RecipeItemName>
                 {!isOnList && (
-                  <DeleteButton id={id} onDelete={() => deleteRecipeItem(id)} />
+                  <DeleteButton id={id} onDelete={() => onDelete(recipe, id)} />
                 )}
                 {isOnList && <Message>- Bereits gelistet -</Message>}
               </RecipeItemWrapper>
@@ -26,12 +26,9 @@ export default function RecipeModal({ recipe }) {
         </RecipeItemsList>
         <CheckInButton
           aria-label="zu Liste hizufügen"
-          // onItemsAdd={handleAddRecipeItems}
+          onItemsAdd={() => onAdd(recipe)}
         />
-        <button
-          aria-label="schließen"
-          onClick={() => setIsShowRecipePopUp(false)}
-        >
+        <button aria-label="schließen" onClick={onCloseModal}>
           Schließen
         </button>
       </ModalContainer>

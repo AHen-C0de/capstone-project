@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useState } from "react";
+import { useState, useRef } from "react";
 
 import ListContainer from "../ListContainer";
 import Form from "./Form";
@@ -11,8 +11,10 @@ export default function ShoppingListEditor({ listItems, onDelete, onAdd }) {
   //DB request
   const [allItems, setAllItems] = useState(getAllItemsFromDB);
   const [recipes, setRecipes] = useState(getRecipesFromDB);
+  //rendering
   const [clickedRecipe, setClickedRecipe] = useState({});
   const [isShowRecipePopUp, setIsShowRecipePopUp] = useState(false);
+  const itemInputRef = useRef();
 
   function handleAddRecipeItems(recipe) {
     recipe.items.forEach((recipeItem) => {
@@ -21,12 +23,12 @@ export default function ShoppingListEditor({ listItems, onDelete, onAdd }) {
       }
     });
     setIsShowRecipePopUp(false);
-
-    //inputRef.current.focus();
+    itemInputRef.current.focus();
   }
 
   function openModal(recipe) {
     setIsShowRecipePopUp(true);
+
     const recipeItems = allItems.filter((item) =>
       recipe.item_ids.includes(item.id)
     );
@@ -43,13 +45,15 @@ export default function ShoppingListEditor({ listItems, onDelete, onAdd }) {
       variant: recipe.variant,
       items: recipeItemsAndStatus,
     };
-
-    console.log(detailedRecipe);
     setClickedRecipe(detailedRecipe);
   }
 
-  function deleteRecipeItem(id) {
-    setRecipeItems(recipeItems.filter((item) => item.id !== id));
+  function deleteRecipeItem(recipe, id) {
+    const filteredItems = recipe.items.filter((item) => item.id !== id);
+    setClickedRecipe((previousRecipe) => ({
+      ...previousRecipe,
+      items: filteredItems,
+    }));
   }
 
   return (
@@ -61,11 +65,19 @@ export default function ShoppingListEditor({ listItems, onDelete, onAdd }) {
           listItems={listItems}
           onAdd={onAdd}
           onOpenModal={openModal}
+          itemInputRef={itemInputRef}
         />
         <Line />
         <List listItems={listItems} onDelete={onDelete} />
       </ListContainer>
-      {isShowRecipePopUp && <RecipeModal recipe={clickedRecipe} />}
+      {isShowRecipePopUp && (
+        <RecipeModal
+          recipe={clickedRecipe}
+          onAdd={handleAddRecipeItems}
+          onDelete={deleteRecipeItem}
+          onCloseModal={() => setIsShowRecipePopUp(false)}
+        />
+      )}
     </>
   );
 }

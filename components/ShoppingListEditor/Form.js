@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useState, useRef, useEffect } from "react";
+import { useState, useEffect } from "react";
 
 import DropDown from "./DropDown";
 
@@ -9,6 +9,7 @@ export default function Form({
   listItems,
   onAdd,
   onOpenModal,
+  itemInputRef,
 }) {
   //input values
   const [itemInput, setItemInput] = useState("");
@@ -17,11 +18,10 @@ export default function Form({
   const [dropDownItems, setDropDownItems] = useState([]);
   const [dropDownRecipes, setDropDownRecipes] = useState([]);
   const [isFocusItemInput, setIsFocusItemInput] = useState(false);
-  const inputRef = useRef();
 
   //set focus on item input after page load
   useEffect(() => {
-    inputRef.current.focus();
+    itemInputRef.current.focus();
   }, []);
 
   //open drop down when typing into input field
@@ -75,11 +75,16 @@ export default function Form({
     return matchedRecipes;
   }
 
-  function handleAddSingleItem(item) {
-    onAdd(item);
+  function handleClickItem(item) {
+    onAdd(item); //add item to shopping list
     setItemInput("");
     setDropDownItems([]);
     setIsFocusItemInput(true); //to focus item input after adding item to list
+  }
+
+  function handleClickRecipe(recipe) {
+    onOpenModal(recipe);
+    setRecipeInput("");
   }
 
   function handleBlur() {
@@ -89,7 +94,7 @@ export default function Form({
     //and handleBlur() triggers AFTER handleAddItem(), isFocusItem state
     //is set to true within handleAddItem() and used here to re-focus the input
     if (isFocusItemInput) {
-      inputRef.current.focus();
+      itemInputRef.current.focus();
       setIsFocusItemInput(false);
     }
   }
@@ -107,7 +112,7 @@ export default function Form({
         aria-label="Itemname"
         placeholder="Suche ein Item..."
         maxLength="30"
-        ref={inputRef} //set ref to set autofocus after submit
+        ref={itemInputRef} //used to set autofocus after submit
         value={itemInput}
         onInput={(event) =>
           handleInput(event, setItemInput, setDropDownItems, matchItemInput)
@@ -122,7 +127,7 @@ export default function Form({
         <DropDown
           optionElements={dropDownItems}
           ariaLabel="Item hinzufügen"
-          onButtonClick={handleAddSingleItem}
+          onButtonClick={handleClickItem}
         />
       )}
       <label htmlFor="recipeItems">Items für Rezepte</label>
@@ -151,10 +156,7 @@ export default function Form({
         <DropDown
           optionElements={dropDownRecipes}
           ariaLabel="öffne Rezept-Items"
-          onButtonClick={() => {
-            setRecipeInput("");
-            onOpenModal;
-          }}
+          onButtonClick={handleClickRecipe}
         />
       )}
     </StyledForm>
