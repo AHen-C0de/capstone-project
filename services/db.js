@@ -19,6 +19,10 @@ const ITEMS_DB = [
   },
   {
     id: nanoid(),
+    name: "TEST_averyveryloooooooooooooooongitemname",
+  },
+  {
+    id: nanoid(),
     name: "Salat",
   },
   {
@@ -170,6 +174,11 @@ const SHOPPINGLIST_DB = [
     id: nanoid(),
     item_id: ITEMS_DB[4].id,
     checked: true,
+  },
+  {
+    id: nanoid(),
+    item_id: ITEMS_DB[5].id,
+    checked: false,
   },
 ];
 

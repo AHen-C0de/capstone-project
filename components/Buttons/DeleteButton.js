@@ -3,7 +3,6 @@ import styled from "styled-components";
 export default function DeleteButton({ onDelete }) {
   return (
     <StyledButton onClick={onDelete}>
-      {/* <Image src={TrashIcon} alt="trash-icon" /> */}
       <StyledSVG
         width="21"
         height="22"

@@ -17,9 +17,6 @@ export default function List({ listItems, onDelete }) {
 
 const StyledList = styled.ul`
   list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
 `;
 
 const ListItem = styled.li`
@@ -27,6 +24,13 @@ const ListItem = styled.li`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  font-size: 1.3rem;
+  padding: 0.7rem;
+  border-radius: 0.5rem;
+
+  &:nth-child(odd) {
+    background-color: var(--list-secondary);
+  }
 `;
 
 const Name = styled.p`

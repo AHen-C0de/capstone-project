@@ -1,40 +1,61 @@
 import styled from "styled-components";
+import Image from "next/image";
+// import {
+//   MdCheckBoxOutlineBlank as CheckboxIconEmpty,
+//   MdSdCardAlert,
+// } from "react-icons/md";
+//import { MdCheckBox as CheckboxIcon } from "react-icons/md";
+
+import CheckboxIcon from "../../public/assets/icons/checkbox.svg";
+import CheckboxIconEmpty from "../../public/assets/icons/checkbox_empty.svg";
 
 export default function ListItem({ id, text, isChecked, onToggleItemChecked }) {
   return (
     <StyledListElement isChecked={isChecked}>
-      <StyledCheckBox
-        id={id}
-        type="checkbox"
-        defaultChecked={isChecked}
+      <StyledButton
+        aria-label={isChecked ? "uncheck item" : "check item"}
         onClick={() => onToggleItemChecked(id)}
-      />
-      <StyledLabel htmlFor={id}>{text}</StyledLabel>
+        isChecked={isChecked}
+      >
+        {isChecked ? (
+          <Image src={CheckboxIcon} />
+        ) : (
+          <Image src={CheckboxIconEmpty} />
+        )}
+        {text}
+      </StyledButton>
     </StyledListElement>
   );
 }
 
 const StyledListElement = styled.li`
-  text-decoration: ${({ isChecked }) => (isChecked ? "line-through" : "none")};
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 0.5rem;
-  font-size: 1.5rem;
-  padding: 1rem;
   border-radius: 0.5rem;
-
-  &:nth-child(even) {
+  &:nth-child(odd) {
     background-color: var(--list-secondary);
   }
 `;
 
-const StyledCheckBox = styled.input`
-  margin-right: 0.5rem;
-  transform: scale(1.5);
+const StyledButton = styled.button`
+  border: none;
+  background-color: transparent;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 1rem;
+  font-size: 1.3rem;
+  padding: 1rem;
+  width: 100%;
+  height: 100%;
+  font-size: 1.3rem;
+  text-decoration: ${({ isChecked }) => (isChecked ? "line-through" : "none")};
+  word-break: break-word;
+  text-align: start;
 `;
 
-const StyledLabel = styled.label`
-  word-break: break-word;
-  line-height: normal;
-`;
+// const StyledCheckBoxIcon = styled(CheckboxIcon)`
+//   /* transform: scale(1.5); */
+// `;
+
+// const StyledCheckBoxIconEmpty = styled(CheckboxIconEmpty)`
+//   transform: scale(1.5);
+// `;
