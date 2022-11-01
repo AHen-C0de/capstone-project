@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 const ListContainer = styled.div`
-  background-color: #fad861;
+  background-color: var(--list-primary);
   padding: 1rem;
   display: flex;
   flex-direction: column;
