@@ -19,6 +19,8 @@ const StyledList = styled.ul`
   height: fit-content;
   overflow-y: auto;
   list-style: none;
+  border: solid 2px var(--list-secondary);
+  border-radius: 0.5rem;
 `;
 
 const ListItem = styled.li`

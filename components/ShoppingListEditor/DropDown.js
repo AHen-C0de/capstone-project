@@ -8,7 +8,7 @@ export default function DropDown({
   return (
     <List>
       {optionElements.map((element) => (
-        <li key={element.id}>
+        <ListElement key={element.id}>
           <StyledButton
             aria-label={ariaLabel}
             onMouseDown={() => onButtonClick(element)} //use onMouseDown to trigger click BEFORE onBlur effect on input field triggers
@@ -18,7 +18,7 @@ export default function DropDown({
               <VariantText>{`- ${element.variant} -`}</VariantText>
             )}
           </StyledButton>
-        </li>
+        </ListElement>
       ))}
     </List>
   );
@@ -29,14 +29,24 @@ const List = styled.ul`
   flex-direction: column;
   line-height: 1rem;
   list-style: none;
+  width: 90%;
+`;
+
+const ListElement = styled.li`
+  margin-bottom: 0.1rem;
 `;
 
 const StyledButton = styled.button`
   width: 100%;
+  background-color: var(--list-secondary);
+  padding: 0.3rem;
+  border: solid 1px var(--list-primary);
+  border-radius: 0.5rem;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 `;
 
 const ElementText = styled.p`
-  font-size: 1rem;
+  font-size: 1.3rem;
 `;
 
 const VariantText = styled.p`

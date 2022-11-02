@@ -20,6 +20,7 @@ export default function ShoppingList({ listItems, onToggleItemChecked }) {
               />
             ))}
         </StyledList>
+        <Line />
         <StyledList>
           {listItems
             .filter((item) => item.checked)
@@ -46,7 +47,16 @@ const ScrollContainer = styled.div`
 const StyledList = styled.ul`
   list-style: none;
 
-  &:first-child {
-    margin-bottom: 2rem;
-  }
+  /* &:first-child {
+    margin-bottom: 3rem;
+  } */
+`;
+
+const Line = styled.div`
+  width: 90%;
+  height: 0.1rem;
+  border-radius: 1rem;
+  background-color: black;
+  align-self: center;
+  margin: 1rem auto;
 `;
