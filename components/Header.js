@@ -18,7 +18,7 @@ const StyledHeader = styled.header`
 `;
 
 const StyledHeadline = styled.h1`
-  color: white;
+  color: var(--background-primary);
   font-family: "Lily Script One";
   font-weight: normal;
 `;

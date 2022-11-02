@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { useState, useEffect } from "react";
 
-import DropDown from "./DropDown";
+import Input from "./Input";
 
 export default function Form({
   allItems,
@@ -105,38 +105,29 @@ export default function Form({
       autoComplete="off" //turn off auto completions for typing input suggested by the browser
       onSubmit={(event) => event.preventDefault()}
     >
-      <label htmlFor="item">Item</label>
-      <input
-        type="text"
+      <Input
         id="item"
-        aria-label="Itemname"
-        placeholder="Suche ein Item..."
-        maxLength="30"
-        ref={itemInputRef} //used to set autofocus after submit
+        text="Item"
+        ariaLabel="Itemname"
+        placeholderText="Suche ein Item..."
+        reference={itemInputRef}
         value={itemInput}
         onInput={(event) =>
           handleInput(event, setItemInput, setDropDownItems, matchItemInput)
-        } //don't use onChange() -> it ignores some events!!!
+        }
         onFocus={() =>
           triggerDropDown(itemInput, setDropDownItems, matchItemInput)
         }
-        //close drop down, when losing focus
         onBlur={handleBlur}
+        dropDownItems={dropDownItems}
+        dropDownAriaLabel="Item hinzufügen"
+        onDropDownClick={handleClickItem}
       />
-      {dropDownItems.length > 0 && (
-        <DropDown
-          optionElements={dropDownItems}
-          ariaLabel="Item hinzufügen"
-          onButtonClick={handleClickItem}
-        />
-      )}
-      <label htmlFor="recipeItems">Items für Rezepte</label>
-      <input
-        type="text"
+      <Input
         id="recipeItems"
-        aria-label="Rezeptname"
-        placeholder="Suche ein Rezept..."
-        maxLength="30"
+        text="Rezepte"
+        ariaLabel="Rezeptname"
+        placeholderText="Suche ein Rezept..."
         value={recipeInput}
         onInput={(event) =>
           handleInput(
@@ -145,20 +136,15 @@ export default function Form({
             setDropDownRecipes,
             matchRecipeInput
           )
-        } //don't use onChange() -> it ignores some events!!!
+        }
         onFocus={() =>
           triggerDropDown(recipeInput, setDropDownRecipes, matchRecipeInput)
         }
-        //close drop down, when losing focus
         onBlur={handleBlur}
+        dropDownItems={dropDownRecipes}
+        dropDownAriaLabel="öffne Rezept-Items"
+        onDropDownClick={handleClickRecipe}
       />
-      {dropDownRecipes.length > 0 && (
-        <DropDown
-          optionElements={dropDownRecipes}
-          ariaLabel="öffne Rezept-Items"
-          onButtonClick={handleClickRecipe}
-        />
-      )}
     </StyledForm>
   );
 }
