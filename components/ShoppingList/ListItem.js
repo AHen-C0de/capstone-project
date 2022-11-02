@@ -1,13 +1,8 @@
 import styled from "styled-components";
 import Image from "next/image";
-// import {
-//   MdCheckBoxOutlineBlank as CheckboxIconEmpty,
-//   MdSdCardAlert,
-// } from "react-icons/md";
-//import { MdCheckBox as CheckboxIcon } from "react-icons/md";
 
-import CheckboxIcon from "../../public/assets/icons/checkbox.svg";
-import CheckboxIconEmpty from "../../public/assets/icons/checkbox_empty.svg";
+import checkboxIcon from "../../public/assets/icons/checkbox.svg";
+import checkboxIconEmpty from "../../public/assets/icons/checkbox_empty.svg";
 
 export default function ListItem({ id, text, isChecked, onToggleItemChecked }) {
   return (
@@ -18,9 +13,9 @@ export default function ListItem({ id, text, isChecked, onToggleItemChecked }) {
         isChecked={isChecked}
       >
         {isChecked ? (
-          <Image src={CheckboxIcon} />
+          <Image src={checkboxIcon} alt="checked checkbox icon" />
         ) : (
-          <Image src={CheckboxIconEmpty} />
+          <Image src={checkboxIconEmpty} alt="unchecked checkbox icon" />
         )}
         {text}
       </StyledButton>
@@ -51,11 +46,3 @@ const StyledButton = styled.button`
   word-break: break-word;
   text-align: start;
 `;
-
-// const StyledCheckBoxIcon = styled(CheckboxIcon)`
-//   /* transform: scale(1.5); */
-// `;
-
-// const StyledCheckBoxIconEmpty = styled(CheckboxIconEmpty)`
-//   transform: scale(1.5);
-// `;

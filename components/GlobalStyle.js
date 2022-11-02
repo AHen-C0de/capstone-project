@@ -46,7 +46,7 @@ const GlobalStyle = createGlobalStyle`
   #__next {
     display: grid;
     // header main footer
-    grid-template-rows: 4rem 1fr 3rem;
+    grid-template-rows: 4rem 1fr 4rem;
   }
 
   main {
