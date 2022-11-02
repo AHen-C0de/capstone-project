@@ -1,3 +1,5 @@
+import styled from "styled-components";
+
 import Head from "next/head";
 import Header from "../components/Header";
 import NavigationBar from "../components/NavigationBar/NavigationBar";
@@ -14,12 +16,22 @@ export default function Home({ listItems, onToggleItemChecked }) {
 
       <Header>MyShoppingManager</Header>
       <main>
-        <ShoppingList
-          listItems={listItems}
-          onToggleItemChecked={onToggleItemChecked}
-        />
+        <MainContainer>
+          <ShoppingList
+            listItems={listItems}
+            onToggleItemChecked={onToggleItemChecked}
+          />
+        </MainContainer>
       </main>
       <NavigationBar />
     </>
   );
 }
+
+const MainContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+`;

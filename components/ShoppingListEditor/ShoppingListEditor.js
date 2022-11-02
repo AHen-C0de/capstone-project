@@ -84,7 +84,7 @@ export default function ShoppingListEditor({ listItems, onDelete, onAdd }) {
 
 const Line = styled.div`
   width: 90%;
-  height: 0.2rem;
+  height: 0.3rem;
   border-radius: 1rem;
   background-color: black;
   align-self: center;

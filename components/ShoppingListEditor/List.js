@@ -16,7 +16,7 @@ export default function List({ listItems, onDelete }) {
 }
 
 const StyledList = styled.ul`
-  height: 49vh;
+  height: fit-content;
   overflow-y: auto;
   list-style: none;
 `;
