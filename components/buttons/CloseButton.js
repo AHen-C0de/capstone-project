@@ -15,7 +15,7 @@ const StyledButton = styled.button`
   align-items: center;
   justify-content: center;
   background-color: #d83434;
-  border-radius: 50%;
+  border-radius: 0.5rem;
   padding: 0.1rem;
   cursor: pointer;
   position: absolute;

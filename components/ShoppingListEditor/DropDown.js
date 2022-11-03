@@ -32,7 +32,7 @@ const List = styled.ul`
 `;
 
 const ListElement = styled.li`
-  margin-bottom: 0.1rem;
+  margin-bottom: 0.08rem;
 `;
 
 const StyledButton = styled.button`
