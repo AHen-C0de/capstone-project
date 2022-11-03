@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
-import CloseButton from "../Buttons/CloseButton";
-import CheckInButton from "../Buttons/CheckInButton";
-import DeleteButton from "../Buttons/DeleteButton";
+import CloseButton from "../bla/CloseButton";
+import CheckInButton from "../bla/CheckInButton";
+import DeleteButton from "../bla/DeleteButton";
 
 export default function RecipeModal({ recipe, onAdd, onDelete, onCloseModal }) {
   return (

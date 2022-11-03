@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import DeleteButton from "../Buttons/DeleteButton";
+import DeleteButton from "../bla/DeleteButton";
 
 export default function List({ listItems, onDelete }) {
   return (
