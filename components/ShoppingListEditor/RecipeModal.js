@@ -68,18 +68,18 @@ const Message = styled.p`
 
 const RecipeName = styled.h2`
   font-family: "Lily Script One";
-  font-size: 1.3rem;
+  font-size: 1.5rem;
 `;
 
 const RecipeVariant = styled.h3`
   font-style: italic;
-  font-size: 1.1rem;
+  font-size: 1.3rem;
   font-family: "Lily Script One";
   margin-top: 0.2rem;
 `;
 
 const RecipeItemsList = styled.ul`
-  margin: 1.5rem 0;
+  margin: 1.8rem 0;
   list-style: none;
   display: flex;
   flex-direction: column;
@@ -89,6 +89,9 @@ const RecipeItemsList = styled.ul`
 const RecipeItemName = styled.p`
   word-break: break-word;
   line-height: normal;
+  font-weight: bold;
+  font-family: "Handlee";
+  font-size: 1.3rem;
   color: ${({ isOnList }) => (isOnList ? "#B0B0B0" : "black")};
   font-style: ${({ isOnList }) => (isOnList ? "italic" : "normal")};
 `;

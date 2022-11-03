@@ -27,7 +27,6 @@ export default function DropDown({
 const List = styled.ul`
   display: flex;
   flex-direction: column;
-  line-height: 1rem;
   list-style: none;
   width: 90%;
 `;
@@ -47,8 +46,11 @@ const StyledButton = styled.button`
 
 const ElementText = styled.p`
   font-size: 1.3rem;
+  font-family: "Noto Sans";
+  margin-bottom: 0.2rem;
 `;
 
 const VariantText = styled.p`
+  font-size: 1.2rem;
   font-style: italic;
 `;
