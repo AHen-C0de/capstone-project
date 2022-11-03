@@ -8,7 +8,10 @@ export default function List({ listItems, onDelete }) {
       {listItems.map(({ id, name }) => (
         <ListItem key={id}>
           <Name>{name}</Name>
-          <DeleteButton onDelete={() => onDelete(id)}>Löschen</DeleteButton>
+          <DeleteButton
+            aria-label="lösche Item"
+            onDelete={() => onDelete(id)}
+          />
         </ListItem>
       ))}
     </StyledList>

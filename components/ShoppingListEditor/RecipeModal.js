@@ -1,5 +1,6 @@
 import styled from "styled-components";
 
+import CloseButton from "../buttons/CloseButton";
 import CheckInButton from "../Buttons/CheckInButton";
 import DeleteButton from "../buttons/DeleteButton";
 
@@ -7,6 +8,11 @@ export default function RecipeModal({ recipe, onAdd, onDelete, onCloseModal }) {
   return (
     <ModalBackground>
       <ModalContainer>
+        <CloseButton
+          aria-label="schließe Fenster"
+          onClose={onCloseModal}
+          absolutePositionRight="15px"
+        />
         <RecipeName>{recipe.name}</RecipeName>
         {recipe.variant && (
           <RecipeVariant>{`- ${recipe.variant} -`}</RecipeVariant>
@@ -28,9 +34,6 @@ export default function RecipeModal({ recipe, onAdd, onDelete, onCloseModal }) {
           aria-label="zu Liste hizufügen"
           onItemsAdd={() => onAdd(recipe)}
         />
-        <button aria-label="schließen" onClick={onCloseModal}>
-          Schließen
-        </button>
       </ModalContainer>
     </ModalBackground>
   );
