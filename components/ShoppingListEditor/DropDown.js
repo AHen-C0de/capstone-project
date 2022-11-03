@@ -42,11 +42,11 @@ const StyledButton = styled.button`
   border: solid 1px var(--list-primary);
   border-radius: 0.5rem;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  font-family: "Noto Sans";
 `;
 
 const ElementText = styled.p`
   font-size: 1.3rem;
-  font-family: "Noto Sans";
   margin-bottom: 0.2rem;
 `;
 

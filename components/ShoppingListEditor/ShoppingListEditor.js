@@ -86,7 +86,7 @@ const Line = styled.div`
   width: 90%;
   height: 0.3rem;
   border-radius: 1rem;
-  background-color: black;
+  background-color: #000000;
   align-self: center;
   margin: 1rem 0;
 `;

@@ -12,7 +12,7 @@ export default function CheckInButton({ onItemsAdd, margin }) {
 
 const StyledButton = styled.button`
   background-color: var(--background-secondary);
-  color: white;
+  color: var(--background-primary);
   border-radius: 0.2rem;
   padding: 0.3rem;
   font-size: 1.3rem;

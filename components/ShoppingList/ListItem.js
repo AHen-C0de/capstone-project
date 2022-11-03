@@ -12,7 +12,7 @@ export default function ListItem({ id, text, isChecked, onToggleItemChecked }) {
         isChecked={isChecked}
       >
         {isChecked ? (
-          <CheckboxIcon fillColor="grey" alt="abgehaktes Checkbox-Icon" />
+          <CheckboxIcon fillColor="#8E8E8E" alt="abgehaktes Checkbox-Icon" />
         ) : (
           <CheckboxEmptyIcon alt="leeres Checkbox-Icon" />
         )}
@@ -45,6 +45,6 @@ const StyledButton = styled.button`
   font-weight: bold;
   font-family: "Handlee";
   text-decoration: ${({ isChecked }) => (isChecked ? "line-through" : "none")};
-  color: ${({ isChecked }) => (isChecked ? "grey" : "black")};
+  color: ${({ isChecked }) => (isChecked ? "#8E8E8E" : "#000000")};
   font-style: ${({ isChecked }) => (isChecked ? "italic" : "normal")};
 `;

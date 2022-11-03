@@ -96,7 +96,7 @@ const RecipeItemName = styled.p`
   font-weight: bold;
   font-family: "Handlee";
   font-size: 1.3rem;
-  color: ${({ isOnList }) => (isOnList ? "#B0B0B0" : "black")};
+  color: ${({ isOnList }) => (isOnList ? "#B0B0B0" : "#000000")};
   font-style: ${({ isOnList }) => (isOnList ? "italic" : "normal")};
 `;
 
