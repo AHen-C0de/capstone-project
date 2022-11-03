@@ -1,8 +1,7 @@
 import styled from "styled-components";
-import Image from "next/image";
 
-import checkboxIcon from "../../public/assets/icons/checkbox.svg";
-import checkboxIconEmpty from "../../public/assets/icons/checkbox_empty.svg";
+import CheckboxIcon from "../icons/CheckboxIcon";
+import CheckboxEmptyIcon from "../icons/CheckboxEmptyIcon";
 
 export default function ListItem({ id, text, isChecked, onToggleItemChecked }) {
   return (
@@ -13,9 +12,9 @@ export default function ListItem({ id, text, isChecked, onToggleItemChecked }) {
         isChecked={isChecked}
       >
         {isChecked ? (
-          <Image src={checkboxIcon} alt="checked checkbox icon" />
+          <CheckboxIcon fillColor="grey" alt="abgehaktes Checkbox-Icon" />
         ) : (
-          <Image src={checkboxIconEmpty} alt="unchecked checkbox icon" />
+          <CheckboxEmptyIcon alt="leeres Checkbox-Icon" />
         )}
         {text}
       </StyledButton>
@@ -43,6 +42,8 @@ const StyledButton = styled.button`
   height: 100%;
   font-size: 1.3rem;
   text-decoration: ${({ isChecked }) => (isChecked ? "line-through" : "none")};
+  color: ${({ isChecked }) => (isChecked ? "grey" : "black")};
+  font-style: ${({ isChecked }) => (isChecked ? "italic" : "normal")};
   word-break: break-word;
   text-align: start;
 `;
