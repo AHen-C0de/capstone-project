@@ -31,7 +31,7 @@ const ListItem = styled.li`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  padding: 0.4rem;
+  padding: 0.4rem 0.7rem;
   border-radius: 0.5rem;
   font-size: 1.3rem;
   font-weight: bold;

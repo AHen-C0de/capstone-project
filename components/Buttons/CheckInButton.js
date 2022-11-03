@@ -1,9 +1,9 @@
 import styled from "styled-components";
 import { GiCheckMark as CheckIcon } from "react-icons/gi";
 
-export default function CheckInButton({ onItemsAdd }) {
+export default function CheckInButton({ onItemsAdd, margin }) {
   return (
-    <StyledButton onClick={onItemsAdd}>
+    <StyledButton onClick={onItemsAdd} margin={margin}>
       <p>Check-In</p>
       <CheckIcon />
     </StyledButton>
@@ -21,6 +21,7 @@ const StyledButton = styled.button`
   align-items: center;
   gap: 0.5rem;
   cursor: pointer;
+  margin: ${({ margin }) => margin || 0};
 
   &:hover {
     background-color: var(--background-secondary-hover);

@@ -11,7 +11,7 @@ export default function RecipeModal({ recipe, onAdd, onDelete, onCloseModal }) {
         <CloseButton
           aria-label="schließe Fenster"
           onClose={onCloseModal}
-          absolutePositionRight="15px"
+          absolutePositionRight="17px"
         />
         <RecipeName>{recipe.name}</RecipeName>
         {recipe.variant && (
@@ -33,6 +33,7 @@ export default function RecipeModal({ recipe, onAdd, onDelete, onCloseModal }) {
         <CheckInButton
           aria-label="zu Liste hizufügen"
           onItemsAdd={() => onAdd(recipe)}
+          margin="0 auto"
         />
       </ModalContainer>
     </ModalBackground>
@@ -55,8 +56,8 @@ const ModalBackground = styled.div`
 `;
 
 const ModalContainer = styled.article`
-  width: 80%;
-  padding: 1rem;
+  width: 82%;
+  padding: 1.2rem;
   background-color: white;
   position: absolute;
   border-radius: 1rem;
@@ -66,7 +67,7 @@ const ModalContainer = styled.article`
 
 const Message = styled.p`
   color: red;
-  font-size: 0.7rem;
+  font-size: 1rem;
 `;
 
 const RecipeName = styled.h2`
@@ -82,7 +83,7 @@ const RecipeVariant = styled.h3`
 `;
 
 const RecipeItemsList = styled.ul`
-  margin: 1.8rem 0;
+  margin: 2rem 0 1.5rem 0;
   list-style: none;
   display: flex;
   flex-direction: column;
