@@ -7,6 +7,7 @@ const ListContainer = styled.div`
   flex-direction: column;
   gap: 1rem;
   width: 85%;
+  max-width: 400px;
   box-shadow: 5px 5px 6px #c2c2c2;
   filter: ${({ isBlur }) => (isBlur ? "blur(5px)" : "none")};
   height: 90%;

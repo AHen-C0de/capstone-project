@@ -57,6 +57,7 @@ const ModalBackground = styled.div`
 
 const ModalContainer = styled.article`
   width: 82%;
+  max-width: 350px;
   padding: 1.2rem;
   background-color: white;
   position: absolute;
