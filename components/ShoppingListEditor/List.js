@@ -28,9 +28,11 @@ const ListItem = styled.li`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  font-size: 1.3rem;
-  padding: 0.7rem;
+  padding: 0.4rem;
   border-radius: 0.5rem;
+  font-size: 1.3rem;
+  font-weight: bold;
+  font-family: "Handlee";
 
   &:nth-child(odd) {
     background-color: var(--list-secondary);

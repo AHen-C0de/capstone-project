@@ -30,20 +30,21 @@ const StyledListElement = styled.li`
 `;
 
 const StyledButton = styled.button`
-  border: none;
-  background-color: transparent;
   display: flex;
   flex-direction: row;
   align-items: center;
   gap: 1rem;
-  font-size: 1.3rem;
-  padding: 1rem;
+  text-align: start;
+  border: none;
+  background-color: transparent;
+  padding: 0.5rem 0.7rem;
   width: 100%;
   height: 100%;
-  font-size: 1.3rem;
+  word-break: break-word;
+  font-size: 1.4rem;
+  font-weight: bold;
+  font-family: "Handlee";
   text-decoration: ${({ isChecked }) => (isChecked ? "line-through" : "none")};
   color: ${({ isChecked }) => (isChecked ? "grey" : "black")};
   font-style: ${({ isChecked }) => (isChecked ? "italic" : "normal")};
-  word-break: break-word;
-  text-align: start;
 `;
