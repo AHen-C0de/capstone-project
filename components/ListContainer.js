@@ -9,8 +9,8 @@ const ListContainer = styled.div`
   width: 85%;
   max-width: 400px;
   box-shadow: 5px 5px 6px #c2c2c2;
-  filter: ${({ isBlur }) => (isBlur ? "blur(5px)" : "none")};
   height: 90%;
+  filter: ${({ isBlur }) => (isBlur ? "blur(5px)" : "none")};
 `;
 
 export default ListContainer;

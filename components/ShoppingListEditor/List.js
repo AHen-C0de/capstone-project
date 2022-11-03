@@ -1,29 +1,39 @@
 import styled from "styled-components";
 
 import DeleteButton from "../buttons/DeleteButton";
+import ListEmptyMessage from "../ListEmptyMessage";
 
 export default function List({ listItems, onDelete }) {
+  const isEmpty = listItems.length === 0;
+
   return (
-    <StyledList>
-      {listItems.map(({ id, name }) => (
-        <ListItem key={id}>
-          <Name>{name}</Name>
-          <DeleteButton
-            aria-label="lösche Item"
-            onDelete={() => onDelete(id)}
-          />
-        </ListItem>
-      ))}
-    </StyledList>
+    <>
+      {isEmpty ? (
+        <ListEmptyMessage>Leer...</ListEmptyMessage>
+      ) : (
+        <StyledList hideBorder={isEmpty} alignMiddle={isEmpty}>
+          {listItems.map(({ id, name }) => (
+            <ListItem key={id}>
+              <Name>{name}</Name>
+              <DeleteButton
+                aria-label="lösche Item"
+                onDelete={() => onDelete(id)}
+              />
+            </ListItem>
+          ))}
+        </StyledList>
+      )}
+    </>
   );
 }
 
 const StyledList = styled.ul`
-  height: fit-content;
+  height: 100%;
   overflow-y: auto;
   list-style: none;
-  border: solid 2px var(--list-secondary);
   border-radius: 0.5rem;
+  border: ${({ hideBorder }) =>
+    hideBorder ? "none" : "solid 2px var(--list-secondary)"};
 `;
 
 const ListItem = styled.li`

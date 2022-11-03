@@ -2,11 +2,14 @@ import styled from "styled-components";
 
 import ListContainer from "../ListContainer";
 import ListItem from "./ListItem";
+import ListEmptyMessage from "../ListEmptyMessage";
 
 export default function ShoppingList({ listItems, onToggleItemChecked }) {
+  const isEmpty = listItems.length === 0;
+
   return (
     <ListContainer>
-      <ScrollContainer>
+      <ScrollContainer alignMiddle={isEmpty}>
         <StyledList>
           {listItems
             .filter((item) => !item.checked)
@@ -20,9 +23,14 @@ export default function ShoppingList({ listItems, onToggleItemChecked }) {
               />
             ))}
         </StyledList>
-
-        <StyledText>Fertig:</StyledText>
-        <Line />
+        {isEmpty ? (
+          <ListEmptyMessage>Leer...</ListEmptyMessage>
+        ) : (
+          <>
+            <StyledText>Fertig:</StyledText>
+            <Line />
+          </>
+        )}
         <StyledList>
           {listItems
             .filter((item) => item.checked)
@@ -42,8 +50,13 @@ export default function ShoppingList({ listItems, onToggleItemChecked }) {
 }
 
 const ScrollContainer = styled.div`
-  height: fit-content;
+  height: 100%;
   overflow-y: auto;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: ${({ alignMiddle }) =>
+    alignMiddle ? "center" : "flex-start"};
 `;
 
 const StyledList = styled.ul`
@@ -67,6 +80,5 @@ const Line = styled.div`
   height: 0.1rem;
   border-radius: 1rem;
   background-color: var(--background-secondary);
-  align-self: center;
   margin: 0.2rem 0 1rem 0;
 `;
