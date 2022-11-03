@@ -1,12 +1,18 @@
 import styled from "styled-components";
 
-import CheckInButton from "../Buttons/CheckInButton";
-import DeleteButton from "../Buttons/DeleteButton";
+import CloseButton from "../buttons/CloseButton";
+import CheckInButton from "../buttons/CheckInButton";
+import DeleteButton from "../buttons/DeleteButton";
 
 export default function RecipeModal({ recipe, onAdd, onDelete, onCloseModal }) {
   return (
     <ModalBackground>
       <ModalContainer>
+        <CloseButton
+          aria-label="schließe Fenster"
+          onClose={onCloseModal}
+          absolutePositionRight="17px"
+        />
         <RecipeName>{recipe.name}</RecipeName>
         {recipe.variant && (
           <RecipeVariant>{`- ${recipe.variant} -`}</RecipeVariant>
@@ -27,10 +33,8 @@ export default function RecipeModal({ recipe, onAdd, onDelete, onCloseModal }) {
         <CheckInButton
           aria-label="zu Liste hizufügen"
           onItemsAdd={() => onAdd(recipe)}
+          margin="0 auto"
         />
-        <button aria-label="schließen" onClick={onCloseModal}>
-          Schließen
-        </button>
       </ModalContainer>
     </ModalBackground>
   );
@@ -52,8 +56,9 @@ const ModalBackground = styled.div`
 `;
 
 const ModalContainer = styled.article`
-  width: 80%;
-  padding: 1rem;
+  width: 82%;
+  max-width: 350px;
+  padding: 1.2rem;
   background-color: white;
   position: absolute;
   border-radius: 1rem;
@@ -63,23 +68,23 @@ const ModalContainer = styled.article`
 
 const Message = styled.p`
   color: red;
-  font-size: 0.7rem;
+  font-size: 1rem;
 `;
 
 const RecipeName = styled.h2`
   font-family: "Lily Script One";
-  font-size: 1.3rem;
+  font-size: 1.5rem;
 `;
 
 const RecipeVariant = styled.h3`
   font-style: italic;
-  font-size: 1.1rem;
+  font-size: 1.3rem;
   font-family: "Lily Script One";
   margin-top: 0.2rem;
 `;
 
 const RecipeItemsList = styled.ul`
-  margin: 1.5rem 0;
+  margin: 2rem 0 1.5rem 0;
   list-style: none;
   display: flex;
   flex-direction: column;
@@ -89,7 +94,10 @@ const RecipeItemsList = styled.ul`
 const RecipeItemName = styled.p`
   word-break: break-word;
   line-height: normal;
-  color: ${({ isOnList }) => (isOnList ? "#B0B0B0" : "black")};
+  font-weight: bold;
+  font-family: "Handlee";
+  font-size: 1.3rem;
+  color: ${({ isOnList }) => (isOnList ? "#B0B0B0" : "#000000")};
   font-style: ${({ isOnList }) => (isOnList ? "italic" : "normal")};
 `;
 

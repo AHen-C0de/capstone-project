@@ -171,6 +171,21 @@ const SHOPPINGLIST_DB = [
     item_id: ITEMS_DB[4].id,
     checked: true,
   },
+  {
+    id: nanoid(),
+    item_id: ITEMS_DB[5].id,
+    checked: false,
+  },
+  {
+    id: nanoid(),
+    item_id: ITEMS_DB[6].id,
+    checked: true,
+  },
+  {
+    id: nanoid(),
+    item_id: ITEMS_DB[7].id,
+    checked: false,
+  },
 ];
 
 function getShoppingListFromDB() {

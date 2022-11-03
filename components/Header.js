@@ -2,17 +2,23 @@ import styled from "styled-components";
 
 export default function Header({ children }) {
   return (
-    <header>
+    <StyledHeader>
       <StyledHeadline>{children}</StyledHeadline>
-    </header>
+    </StyledHeader>
   );
 }
 
-const StyledHeadline = styled.h1`
+const StyledHeader = styled.header`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 4rem;
   background-color: var(--background-secondary);
-  color: white;
-  padding: 0.6rem;
+`;
+
+const StyledHeadline = styled.h1`
+  color: var(--background-primary);
   font-family: "Lily Script One";
   font-weight: normal;
-  text-align: center;
 `;

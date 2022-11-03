@@ -1,25 +1,39 @@
 import styled from "styled-components";
 
+import DeleteButton from "../buttons/DeleteButton";
+import ListEmptyMessage from "../ListEmptyMessage";
+
 export default function List({ listItems, onDelete }) {
+  const isEmpty = listItems.length === 0;
+
   return (
-    <StyledList>
-      {listItems.map(({ id, name }) => (
-        <ListItem key={id}>
-          <Name>{name}</Name>
-          <DeleteButton aria-label="lösche Item" onClick={() => onDelete(id)}>
-            Löschen
-          </DeleteButton>
-        </ListItem>
-      ))}
-    </StyledList>
+    <>
+      {isEmpty ? (
+        <ListEmptyMessage>Leer...</ListEmptyMessage>
+      ) : (
+        <StyledList hideBorder={isEmpty} alignMiddle={isEmpty}>
+          {listItems.map(({ id, name }) => (
+            <ListItem key={id}>
+              <Name>{name}</Name>
+              <DeleteButton
+                aria-label="lösche Item"
+                onDelete={() => onDelete(id)}
+              />
+            </ListItem>
+          ))}
+        </StyledList>
+      )}
+    </>
   );
 }
 
 const StyledList = styled.ul`
+  height: 100%;
+  overflow-y: auto;
   list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
+  border-radius: 0.5rem;
+  border: ${({ hideBorder }) =>
+    hideBorder ? "none" : "solid 2px var(--list-secondary)"};
 `;
 
 const ListItem = styled.li`
@@ -27,14 +41,18 @@ const ListItem = styled.li`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  padding: 0.4rem 0.7rem;
+  border-radius: 0.5rem;
+  font-size: 1.3rem;
+  font-weight: bold;
+  font-family: "Handlee";
+
+  &:nth-child(odd) {
+    background-color: var(--list-secondary);
+  }
 `;
 
 const Name = styled.p`
   word-break: break-word;
   line-height: normal;
-`;
-
-const DeleteButton = styled.button`
-  background-color: red;
-  height: 1.5rem;
 `;
