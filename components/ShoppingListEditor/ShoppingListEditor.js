@@ -8,7 +8,7 @@ import RecipeModal from "./RecipeModal";
 
 export default function ShoppingListEditor({
   listItems,
-  allItems,
+  items,
   recipes,
   onDelete,
   onAdd,
@@ -31,7 +31,7 @@ export default function ShoppingListEditor({
   function openModal(recipe) {
     setIsShowRecipeModal(true);
 
-    const detailedItems = allItems.filter((item) =>
+    const detailedItems = items.filter((item) =>
       recipe.item_ids.includes(item.id)
     );
     //add isOnList attr. whether recipe item is already on the shopping list
@@ -62,7 +62,7 @@ export default function ShoppingListEditor({
     <>
       <ListContainer isBlur={isShowRecipeModal}>
         <Form
-          allItems={allItems}
+          items={items}
           recipes={recipes}
           listItems={listItems}
           onAdd={onAdd}

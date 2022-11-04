@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import Input from "./Input";
 
 export default function Form({
-  allItems,
+  items,
   recipes,
   listItems,
   onAdd,
@@ -45,9 +45,9 @@ export default function Form({
       return [];
     }
 
-    //filter out items from allItems, that are already on the shopping list
+    //filter out items from items, that are already on the shopping list
     const usedItemIds = listItems.map((usedItem) => usedItem.item_id);
-    const availableItems = allItems.filter(
+    const availableItems = items.filter(
       (DBitem) => !usedItemIds.includes(DBitem.id)
     );
 

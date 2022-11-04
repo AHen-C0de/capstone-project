@@ -5,11 +5,20 @@ import Head from "next/head";
 import Header from "../components/Header";
 import NavigationBar from "../components/NavigationBar/NavigationBar";
 import ShoppingListEditor from "../components/ShoppingListEditor/ShoppingListEditor";
-import { getAllItemsFromDB, getRecipesFromDB } from "../services/db.js";
+import { getRecipesFromDB } from "../services/db.js";
 
-export default function Edit({ listItems, onDelete, onAdd }) {
+import { getAllItems } from "../services/itemService";
+
+export async function getServerSideProps() {
+  const items = await getAllItems();
+  return {
+    props: { items: items },
+  };
+}
+
+export default function Edit({ items, listItems, onDelete, onAdd }) {
   //DB request
-  const [allItems, setAllItems] = useState(getAllItemsFromDB);
+  //const [allItems, setAllItems] = useState(items);
   const [recipes, setRecipes] = useState(getRecipesFromDB);
 
   return (
@@ -24,7 +33,7 @@ export default function Edit({ listItems, onDelete, onAdd }) {
       <main>
         <MainContainer>
           <ShoppingListEditor
-            allItems={allItems}
+            items={items}
             recipes={recipes}
             listItems={listItems}
             onDelete={onDelete}
