@@ -1,11 +1,17 @@
 import styled from "styled-components";
+import { useState } from "react";
 
 import Head from "next/head";
 import Header from "../components/Header";
 import NavigationBar from "../components/NavigationBar/NavigationBar";
 import ShoppingListEditor from "../components/ShoppingListEditor/ShoppingListEditor";
+import { getAllItemsFromDB, getRecipesFromDB } from "../services/db.js";
 
 export default function Edit({ listItems, onDelete, onAdd }) {
+  //DB request
+  const [allItems, setAllItems] = useState(getAllItemsFromDB);
+  const [recipes, setRecipes] = useState(getRecipesFromDB);
+
   return (
     <>
       <Head>
@@ -18,6 +24,8 @@ export default function Edit({ listItems, onDelete, onAdd }) {
       <main>
         <MainContainer>
           <ShoppingListEditor
+            allItems={allItems}
+            recipes={recipes}
             listItems={listItems}
             onDelete={onDelete}
             onAdd={onAdd}

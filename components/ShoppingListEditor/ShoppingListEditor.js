@@ -5,12 +5,14 @@ import ListContainer from "../ListContainer";
 import Form from "./Form";
 import List from "./List";
 import RecipeModal from "./RecipeModal";
-import { getAllItemsFromDB, getRecipesFromDB } from "../../services/db.js";
 
-export default function ShoppingListEditor({ listItems, onDelete, onAdd }) {
-  //DB request
-  const [allItems, setAllItems] = useState(getAllItemsFromDB);
-  const [recipes, setRecipes] = useState(getRecipesFromDB);
+export default function ShoppingListEditor({
+  listItems,
+  allItems,
+  recipes,
+  onDelete,
+  onAdd,
+}) {
   //rendering
   const [clickedRecipe, setClickedRecipe] = useState({});
   const [isShowRecipeModal, setIsShowRecipeModal] = useState(false);
