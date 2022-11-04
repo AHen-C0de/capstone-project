@@ -14,6 +14,8 @@ export async function getServerSideProps() {
 }
 
 export default function Home({ listItems, onToggleItemChecked }) {
+  console.log(listItems);
+
   return (
     <>
       <Head>
