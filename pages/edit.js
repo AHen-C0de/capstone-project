@@ -8,19 +8,17 @@ import ShoppingListEditor from "../components/ShoppingListEditor/ShoppingListEdi
 import { getRecipesFromDB } from "../services/db.js";
 
 import { getAllItems } from "../services/itemService";
+import { getAllRecipes } from "../services/recipeService";
 
 export async function getServerSideProps() {
   const items = await getAllItems();
+  const recipes = await getAllRecipes();
   return {
-    props: { items: items },
+    props: { items: items, recipes: recipes },
   };
 }
 
-export default function Edit({ items, listItems, onDelete, onAdd }) {
-  //DB request
-  //const [allItems, setAllItems] = useState(items);
-  const [recipes, setRecipes] = useState(getRecipesFromDB);
-
+export default function Edit({ items, recipes, listItems, onDelete, onAdd }) {
   return (
     <>
       <Head>

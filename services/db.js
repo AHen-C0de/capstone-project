@@ -166,8 +166,4 @@ function getShoppingListFromDB() {
   return shoppingItems;
 }
 
-function getRecipesFromDB() {
-  return RECIPES_DB;
-}
-
-export { getShoppingListFromDB, getRecipesFromDB };
+export { getShoppingListFromDB };
