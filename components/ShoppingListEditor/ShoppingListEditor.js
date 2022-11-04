@@ -34,13 +34,22 @@ export default function ShoppingListEditor({
     const detailedItems = items.filter((item) =>
       recipe.item_ids.includes(item.id)
     );
+
+    console.log("items", items);
+    console.log("detailedItems", detailedItems);
+
     //add isOnList attr. whether recipe item is already on the shopping list
     const usedItemIds = listItems.map((usedItem) => usedItem.item_id);
+
+    console.log(usedItemIds);
+
     const detailedItemsAndStatus = detailedItems.map((recipeItem) =>
       usedItemIds.includes(recipeItem.id)
         ? { ...recipeItem, isOnList: true }
         : { ...recipeItem, isOnList: false }
     );
+
+    console.log(detailedItemsAndStatus);
 
     const detailedRecipe = {
       name: recipe.name,
@@ -48,6 +57,8 @@ export default function ShoppingListEditor({
       items: detailedItemsAndStatus,
     };
     setClickedRecipe(detailedRecipe);
+
+    console.log(detailedItems);
   }
 
   function deleteRecipeItem(recipe, id) {

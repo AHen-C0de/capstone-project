@@ -14,7 +14,7 @@ const ITEMS_DB = [
     name: "Marmelade",
   },
   {
-    id: nanoid(),
+    id: "6363e33673267e78f0e55dd3",
     name: "Milch",
   },
   {
@@ -22,7 +22,7 @@ const ITEMS_DB = [
     name: "Salat",
   },
   {
-    id: nanoid(),
+    id: "6363e37b73267e78f0e55dd5",
     name: "Kartoffeln",
   },
   {
@@ -101,10 +101,10 @@ const RECIPES_DB = [
     name: "Bratkartoffeln",
     variant: "original",
     item_ids: [
-      ITEMS_DB.find((item) => item.name === "Kartoffeln").id,
-      ITEMS_DB.find((item) => item.name === "Schinkenwürfel").id,
-      ITEMS_DB.find((item) => item.name === "Zwiebeln").id,
-      ITEMS_DB.find((item) => item.name === "Petersilie").id,
+      "6363e37b73267e78f0e55dd5",
+      "6363e3d373267e78f0e55dda",
+      "6363e3e573267e78f0e55ddb",
+      "6363e3fa73267e78f0e55ddc",
     ],
   },
   {
@@ -148,43 +148,13 @@ const RECIPES_DB = [
 const SHOPPINGLIST_DB = [
   {
     id: nanoid(),
-    item_id: ITEMS_DB[0].id,
+    item_id: "6363e37b73267e78f0e55dd5",
     checked: false,
   },
   {
     id: nanoid(),
-    item_id: ITEMS_DB[1].id,
-    checked: false,
-  },
-  {
-    id: nanoid(),
-    item_id: ITEMS_DB[2].id,
-    checked: false,
-  },
-  {
-    id: nanoid(),
-    item_id: ITEMS_DB[3].id,
+    item_id: "6363e33673267e78f0e55dd3",
     checked: true,
-  },
-  {
-    id: nanoid(),
-    item_id: ITEMS_DB[4].id,
-    checked: true,
-  },
-  {
-    id: nanoid(),
-    item_id: ITEMS_DB[5].id,
-    checked: false,
-  },
-  {
-    id: nanoid(),
-    item_id: ITEMS_DB[6].id,
-    checked: true,
-  },
-  {
-    id: nanoid(),
-    item_id: ITEMS_DB[7].id,
-    checked: false,
   },
 ];
 
