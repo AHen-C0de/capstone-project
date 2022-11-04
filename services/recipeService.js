@@ -7,7 +7,7 @@ export async function getAllRecipes() {
   const recipes = await Recipe.find();
 
   const sanitizedRecipes = recipes.map(({ id, name, variant }) => ({
-    id: id,
+    id,
     name: name,
     variant: variant,
   }));

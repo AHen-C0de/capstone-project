@@ -4,6 +4,14 @@ import Head from "next/head";
 import Header from "../components/Header";
 import NavigationBar from "../components/NavigationBar/NavigationBar";
 import ShoppingList from "../components/ShoppingList/ShoppingList";
+import { getAllShoppingItems } from "../services/shoppingItemsService";
+
+export async function getServerSideProps() {
+  const shoppingItems = await getAllShoppingItems();
+  return {
+    props: { listItems: shoppingItems },
+  };
+}
 
 export default function Home({ listItems, onToggleItemChecked }) {
   return (

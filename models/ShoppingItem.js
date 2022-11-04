@@ -1,13 +1,14 @@
 import mongoose from "mongoose";
 const { Schema } = mongoose;
+import "./Item";
 
 const shoppingItemSchema = new Schema({
-  item_id: { type: Schema.Types.ObjectId, ref: "Item", required: true },
+  name: { type: Schema.Types.ObjectId, ref: "Item", required: true },
   checked: { type: Boolean, required: true },
 });
 
-const shoppingItem =
-  mongoose.models.shoppingItem ||
-  mongoose.model("shoppingItem", shoppingItemSchema, "shoppingItems");
+const ShoppingItem =
+  mongoose.models.ShoppingItem ||
+  mongoose.model("ShoppingItem", shoppingItemSchema, "shoppingItems");
 
-export default shoppingItem;
+export default ShoppingItem;

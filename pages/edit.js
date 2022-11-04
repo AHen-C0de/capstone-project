@@ -9,12 +9,14 @@ import { getRecipesFromDB } from "../services/db.js";
 
 import { getAllItems } from "../services/itemService";
 import { getAllRecipes } from "../services/recipeService";
+import { getAllShoppingItems } from "../services/shoppingItemsService";
 
 export async function getServerSideProps() {
   const items = await getAllItems();
   const recipes = await getAllRecipes();
+  const shoppingItems = await getAllShoppingItems();
   return {
-    props: { items: items, recipes: recipes },
+    props: { items: items, recipes: recipes, listItems: shoppingItems },
   };
 }
 

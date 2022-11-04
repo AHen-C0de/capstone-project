@@ -2,15 +2,14 @@ import { useState, useEffect } from "react";
 import { nanoid } from "nanoid";
 
 import GlobalStyle from "/components/GlobalStyle";
-import { getShoppingListFromDB } from "/services/db.js";
 
-function MyApp({ Component, pageProps }) {
-  const [shoppingListItems, setShoppingListItems] = useState([]);
+function MyApp({ Component, pageProps, shoppingItems }) {
+  //const [shoppingListItems, setShoppingListItems] = useState([]);
 
-  //set state via useEffect(), instead of setting it directly in useState,
-  //because of "React Hydration Error";
-  //also see "https://nextjs.org/docs/messages/react-hydration-error"
-  useEffect(() => setShoppingListItems(getShoppingListFromDB), []);
+  // //set state via useEffect(), instead of setting it directly in useState,
+  // //because of "React Hydration Error";
+  // //also see "https://nextjs.org/docs/messages/react-hydration-error"
+  // useEffect(() => setShoppingListItems(shoppingItems), []);
 
   function toggleItemChecked(id) {
     //separate to-toggle-item from the array, to put it at first idx after being changed
@@ -48,7 +47,7 @@ function MyApp({ Component, pageProps }) {
       <GlobalStyle />
       <Component
         {...pageProps}
-        listItems={shoppingListItems}
+        //listItems={shoppingListItems}
         onToggleItemChecked={toggleItemChecked}
         onDelete={deleteItem}
         onAdd={addItem}

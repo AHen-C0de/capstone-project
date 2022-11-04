@@ -6,8 +6,7 @@ export async function getAllItems() {
 
   const items = await Item.find();
 
-  const sanitizedItems = items.map(({ id, name }) => ({
-    id: id,
+  const sanitizedItems = items.map(({ name }) => ({
     name: name,
   }));
 
