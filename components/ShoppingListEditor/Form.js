@@ -19,11 +19,6 @@ export default function Form({
   const [dropDownRecipes, setDropDownRecipes] = useState([]);
   const [isFocusItemInput, setIsFocusItemInput] = useState(false);
 
-  //set focus on item input after page load
-  useEffect(() => {
-    itemInputRef.current.focus();
-  }, []);
-
   //open drop down when typing into input field
   function handleInput(event, inputSetter, dropDownSetter, inputMatcher) {
     const inputString = event.target.value;

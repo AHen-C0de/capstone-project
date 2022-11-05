@@ -5,8 +5,6 @@ import Head from "next/head";
 import Header from "../components/Header";
 import NavigationBar from "../components/NavigationBar/NavigationBar";
 import ShoppingListEditor from "../components/ShoppingListEditor/ShoppingListEditor";
-import { getRecipesFromDB } from "../services/db.js";
-
 import { getAllItems } from "../services/itemService";
 import { getAllRecipes } from "../services/recipeService";
 import { getAllShoppingItems } from "../services/shoppingItemsService";
@@ -16,11 +14,19 @@ export async function getServerSideProps() {
   const recipes = await getAllRecipes();
   const shoppingItems = await getAllShoppingItems();
   return {
-    props: { items: items, recipes: recipes, listItems: shoppingItems },
+    props: { items: items, recipes: recipes, shoppingItems: shoppingItems },
   };
 }
 
-export default function Edit({ items, recipes, listItems, onDelete, onAdd }) {
+export default function Edit({
+  items,
+  recipes,
+  shoppingItems,
+  onDelete,
+  onAdd,
+}) {
+  const [listItems, setListItems] = useState(shoppingItems);
+
   return (
     <>
       <Head>
