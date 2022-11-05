@@ -4,12 +4,11 @@ import mongoose from "mongoose";
 
 export default async function handler(request, response) {
   await dbConnect();
+  const data = JSON.parse(request.body);
 
-  try {
-    switch (request.method) {
-      case "PATCH":
-        const data = JSON.parse(request.body);
-
+  switch (request.method) {
+    case "PATCH":
+      try {
         const updatedShoppingItem = await ShoppingItem.findByIdAndUpdate(
           { _id: data.id },
           { $set: data.updateData },
@@ -20,8 +19,18 @@ export default async function handler(request, response) {
           message: "ShoppingItem updated",
           updatedShoppingItem: updatedShoppingItem,
         });
-    }
-  } catch (err) {
-    response.status(400).json(err.message);
+      } catch (err) {
+        return response.status(400).json(err.message);
+      }
+    case "DELETE":
+      await ShoppingItem.findByIdAndDelete(data.id);
+      return response
+        .status(200)
+        .json({ message: "ShoppingItem deleted", deletedId: data.id });
+
+    default:
+      return response
+        .status(405)
+        .json({ message: "HTTP method is not allowed" });
   }
 }

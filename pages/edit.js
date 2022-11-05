@@ -27,6 +27,18 @@ export default function Edit({
 }) {
   const [listItems, setListItems] = useState(shoppingItems);
 
+  async function deleteItem(id) {
+    const response = await fetch("/api/shoppingItems", {
+      method: "DELETE",
+      body: JSON.stringify({ id: id }),
+    });
+    const fetchedData = await response.json();
+
+    setListItems((previousItems) =>
+      previousItems.filter((item) => item.id !== fetchedData.deletedId)
+    );
+  }
+
   return (
     <>
       <Head>
@@ -42,7 +54,7 @@ export default function Edit({
             items={items}
             recipes={recipes}
             listItems={listItems}
-            onDelete={onDelete}
+            onDelete={deleteItem}
             onAdd={onAdd}
           />
         </MainContainer>
