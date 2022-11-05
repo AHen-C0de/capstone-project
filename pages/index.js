@@ -18,18 +18,6 @@ export default function Home({ shoppingItems }) {
   const [listItems, setListItems] = useState(shoppingItems);
 
   async function toggleItemChecked(id, checkedStatus) {
-    // //separate to-toggle-item from the array, to put it at first idx after being changed
-    // //this will render toggled item on top of the list after mapping
-    // const unchangedItems = shoppingListItems.filter((item) => item.id !== id);
-    // const toggledItem = shoppingListItems.find((item) => item.id === id);
-
-    // const updatedList = [
-    //   { ...toggledItem, checked: !toggledItem.checked },
-    //   ...unchangedItems,
-    // ];
-
-    console.log("before", checkedStatus);
-
     const toggeledCheckStatus = { checked: !checkedStatus };
 
     const response = await fetch("/api/shoppingItems", {
