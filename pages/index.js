@@ -13,8 +13,29 @@ export async function getServerSideProps() {
   };
 }
 
-export default function Home({ listItems, onToggleItemChecked }) {
-  console.log(listItems);
+export default function Home({ listItems }) {
+  async function toggleItemChecked(item) {
+    // //separate to-toggle-item from the array, to put it at first idx after being changed
+    // //this will render toggled item on top of the list after mapping
+    // const unchangedItems = shoppingListItems.filter((item) => item.id !== id);
+    // const toggledItem = shoppingListItems.find((item) => item.id === id);
+
+    // const updatedList = [
+    //   { ...toggledItem, checked: !toggledItem.checked },
+    //   ...unchangedItems,
+    // ];
+    const checkedToggeled = { checked: !item.checked };
+
+    const response = await fetch("/api/shoppingItems", {
+      method: "PATCH",
+      body: JSON.stringify({ id: item.id, updateData: checkedToggeled }),
+    });
+    await response.json();
+
+    //router.push(`/${item.id}`);
+
+    //setShoppingListItems(updatedList);
+  }
 
   return (
     <>
@@ -29,7 +50,7 @@ export default function Home({ listItems, onToggleItemChecked }) {
         <MainContainer>
           <ShoppingList
             listItems={listItems}
-            onToggleItemChecked={onToggleItemChecked}
+            onToggleItemChecked={toggleItemChecked}
           />
         </MainContainer>
       </main>

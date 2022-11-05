@@ -35,7 +35,7 @@ function MyApp({ Component, pageProps, shoppingItems }) {
       <Component
         {...pageProps}
         //listItems={shoppingListItems}
-        onToggleItemChecked={toggleItemChecked}
+        //onToggleItemChecked={toggleItemChecked}
         onDelete={deleteItem}
         onAdd={addItem}
       />
