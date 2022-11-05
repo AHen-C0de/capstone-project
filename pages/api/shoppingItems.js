@@ -12,7 +12,8 @@ export default async function handler(request, response) {
 
         const updatedShoppingItem = await ShoppingItem.findByIdAndUpdate(
           { _id: data.id },
-          { $set: data.updateData }
+          { $set: data.updateData },
+          { new: true } //set 'new' to return updated document
         );
 
         return response.status(200).json({

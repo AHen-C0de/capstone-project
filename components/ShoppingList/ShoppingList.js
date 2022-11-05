@@ -13,13 +13,13 @@ export default function ShoppingList({ listItems, onToggleItemChecked }) {
         <StyledList>
           {listItems
             .filter((item) => !item.checked)
-            .map((item) => (
+            .map(({ id, name, checked }) => (
               <ListItem
-                key={item.id}
-                id={item.id}
-                text={item.name}
-                isChecked={item.checked}
-                onToggleItemChecked={() => onToggleItemChecked(item)}
+                key={id}
+                id={id}
+                text={name}
+                isChecked={checked}
+                onToggleItemChecked={() => onToggleItemChecked(id, checked)}
               />
             ))}
         </StyledList>
@@ -34,13 +34,13 @@ export default function ShoppingList({ listItems, onToggleItemChecked }) {
         <StyledList>
           {listItems
             .filter((item) => item.checked)
-            .map((item) => (
+            .map(({ id, name, checked }) => (
               <ListItem
-                key={item.id}
-                id={item.id}
-                text={item.name}
-                isChecked={item.checked}
-                onToggleItemChecked={() => onToggleItemChecked(item)}
+                key={id}
+                id={id}
+                text={name}
+                isChecked={checked}
+                onToggleItemChecked={() => onToggleItemChecked(id, checked)}
               />
             ))}
         </StyledList>

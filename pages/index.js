@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { useState, useEffect } from "react";
 
 import Head from "next/head";
 import Header from "../components/Header";
@@ -9,12 +10,14 @@ import { getAllShoppingItems } from "../services/shoppingItemsService";
 export async function getServerSideProps() {
   const shoppingItems = await getAllShoppingItems();
   return {
-    props: { listItems: shoppingItems },
+    props: { shoppingItems: shoppingItems },
   };
 }
 
-export default function Home({ listItems }) {
-  async function toggleItemChecked(item) {
+export default function Home({ shoppingItems }) {
+  const [listItems, setListItems] = useState(shoppingItems);
+
+  async function toggleItemChecked(id, checkedStatus) {
     // //separate to-toggle-item from the array, to put it at first idx after being changed
     // //this will render toggled item on top of the list after mapping
     // const unchangedItems = shoppingListItems.filter((item) => item.id !== id);
@@ -24,17 +27,23 @@ export default function Home({ listItems }) {
     //   { ...toggledItem, checked: !toggledItem.checked },
     //   ...unchangedItems,
     // ];
-    const checkedToggeled = { checked: !item.checked };
+
+    console.log("before", checkedStatus);
+
+    const toggeledCheckStatus = { checked: !checkedStatus };
 
     const response = await fetch("/api/shoppingItems", {
       method: "PATCH",
-      body: JSON.stringify({ id: item.id, updateData: checkedToggeled }),
+      body: JSON.stringify({ id: id, updateData: toggeledCheckStatus }),
     });
-    await response.json();
+    const fetchedData = await response.json();
+    const updatedCheckedStatus = fetchedData.updatedShoppingItem.checked;
 
-    //router.push(`/${item.id}`);
-
-    //setShoppingListItems(updatedList);
+    setListItems((previousItems) =>
+      previousItems.map((item) =>
+        item.id === id ? { ...item, checked: updatedCheckedStatus } : item
+      )
+    );
   }
 
   return (

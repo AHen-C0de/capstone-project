@@ -3,7 +3,7 @@ import { nanoid } from "nanoid";
 
 import GlobalStyle from "/components/GlobalStyle";
 
-function MyApp({ Component, pageProps, shoppingItems }) {
+function MyApp({ Component, pageProps }) {
   //const [shoppingListItems, setShoppingListItems] = useState([]);
 
   // //set state via useEffect(), instead of setting it directly in useState,
