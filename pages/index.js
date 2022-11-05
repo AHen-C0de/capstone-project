@@ -22,7 +22,7 @@ export default function Home({ shoppingItems }) {
 
     const response = await fetch("/api/shoppingItems", {
       method: "PATCH",
-      body: JSON.stringify({ id: id, updateData: toggeledCheckStatus }),
+      body: JSON.stringify({ id: id, data: toggeledCheckStatus }),
     });
     const fetchedData = await response.json();
     const updatedCheckedStatus = fetchedData.updatedShoppingItem.checked;

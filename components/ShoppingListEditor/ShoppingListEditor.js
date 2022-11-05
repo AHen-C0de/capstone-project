@@ -91,5 +91,5 @@ const Line = styled.div`
   border-radius: 1rem;
   background-color: #000000;
   align-self: center;
-  margin: 1rem 0;
+  margin: 0.5rem 0;
 `;

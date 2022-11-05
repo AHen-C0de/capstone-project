@@ -18,14 +18,25 @@ export async function getServerSideProps() {
   };
 }
 
-export default function Edit({
-  items,
-  recipes,
-  shoppingItems,
-  onDelete,
-  onAdd,
-}) {
+export default function Edit({ items, recipes, shoppingItems }) {
   const [listItems, setListItems] = useState(shoppingItems);
+
+  async function addItem(item) {
+    const data = { name: item.id, checked: false };
+    await fetch("api/shoppingItems", {
+      method: "POST",
+      body: JSON.stringify(data),
+    });
+    //fetch all shoppingItems after POST, because returned POST
+    //document does only contain name ref, but not its String value
+    const response = await fetch("api/shoppingItems", {
+      method: "GET",
+    });
+    const fetchedData = await response.json();
+    const shoppingItems = fetchedData.shoppingItems;
+
+    setListItems(shoppingItems);
+  }
 
   async function deleteItem(id) {
     const response = await fetch("/api/shoppingItems", {
@@ -55,7 +66,7 @@ export default function Edit({
             recipes={recipes}
             listItems={listItems}
             onDelete={deleteItem}
-            onAdd={onAdd}
+            onAdd={addItem}
           />
         </MainContainer>
       </main>
