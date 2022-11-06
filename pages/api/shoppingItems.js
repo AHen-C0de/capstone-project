@@ -61,7 +61,7 @@ export default async function handler(request, response) {
           });
         }
         return response
-          .status(400)
+          .status(409)
           .json({ message: "ShoppingItem already exists" });
       } catch (err) {
         return response.status(400).json(err.message);
