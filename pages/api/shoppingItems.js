@@ -55,7 +55,7 @@ export default async function handler(request, response) {
 
         if (!used_ids.includes(postData.item)) {
           const createdShoppingItem = await ShoppingItem.create(postData);
-          return response.status(200).json({
+          return response.status(201).json({
             message: "ShoppingItem created",
             createdShoppingItem: createdShoppingItem,
           });
