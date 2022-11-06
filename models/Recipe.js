@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
-const { Schema } = mongoose;
 import "./Item";
+
+const { Schema } = mongoose;
 
 const recipesSchema = new Schema({
   name: { type: String, required: true },

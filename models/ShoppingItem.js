@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
-const { Schema } = mongoose;
 import "./Item";
+
+const { Schema } = mongoose;
 
 const shoppingItemSchema = new Schema({
   item: { type: Schema.Types.ObjectId, ref: "Item", required: true },
