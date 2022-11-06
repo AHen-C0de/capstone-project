@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { useState, useEffect } from "react";
 
 import Input from "./Input";
+import { handleInput, triggerDropDown } from "./utils";
 
 export default function Form({
   items,
@@ -18,19 +19,6 @@ export default function Form({
   const [dropDownItems, setDropDownItems] = useState([]);
   const [dropDownRecipes, setDropDownRecipes] = useState([]);
   const [isFocusItemInput, setIsFocusItemInput] = useState(false);
-
-  //open drop down when typing into input field
-  function handleInput(event, inputSetter, dropDownSetter, inputMatcher) {
-    const inputString = event.target.value;
-    inputSetter(inputString);
-    triggerDropDown(inputString, dropDownSetter, inputMatcher);
-  }
-
-  //evoke rendering drop down buttons for elements that match input
-  function triggerDropDown(inputString, dropDownSetter, inputMatcher) {
-    const matchedElements = inputMatcher(inputString);
-    dropDownSetter(matchedElements);
-  }
 
   //match item input with all items from DB
   function matchItemInput(value) {
