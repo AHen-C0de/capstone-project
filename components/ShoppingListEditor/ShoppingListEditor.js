@@ -30,27 +30,18 @@ export default function ShoppingListEditor({
 
   function openModal(recipe) {
     setIsShowRecipeModal(true);
-
-    console.log(recipe);
-
-    // const detailedItems = items.filter((item) =>
-    //   recipe.item_ids.includes(item.id)
-    // );
     //add isOnList attr. whether recipe item is already on the shopping list
-    // const usedItemIds = listItems.map((usedItem) => usedItem.item_id);
-
-    // const detailedItemsAndStatus = detailedItems.map((recipeItem) =>
-    //   usedItemIds.includes(recipeItem.id)
-    //     ? { ...recipeItem, isOnList: true }
-    //     : { ...recipeItem, isOnList: false }
-    // );
-
-    // const detailedRecipe = {
-    //   name: recipe.name,
-    //   variant: recipe.variant,
-    //   items: detailedItemsAndStatus,
-    // };
-    // setClickedRecipe(detailedRecipe);
+    const usedItemIds = listItems.map((usedItem) => usedItem.item_id);
+    const itemsPlusStatus = recipe.items.map((recipeItem) =>
+      usedItemIds.includes(recipeItem.id)
+        ? { ...recipeItem, isOnList: true }
+        : { ...recipeItem, isOnList: false }
+    );
+    const recipePlusStatus = {
+      ...recipe,
+      items: itemsPlusStatus,
+    };
+    setClickedRecipe(recipePlusStatus);
   }
 
   function deleteRecipeItem(recipe, id) {
