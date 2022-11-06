@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 const { Schema } = mongoose;
+import "./Item";
 
 const recipesSchema = new Schema({
   name: { type: String, required: true },

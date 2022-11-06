@@ -10,7 +10,7 @@ export async function getAllRecipes() {
     id,
     name: name,
     variant: variant,
-    items: { id: items.id, name: items.name },
+    items: items.map((item) => ({ id: item.id, name: item.name })),
   }));
 
   return sanitizedRecipes;

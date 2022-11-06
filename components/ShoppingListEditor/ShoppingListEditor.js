@@ -31,24 +31,26 @@ export default function ShoppingListEditor({
   function openModal(recipe) {
     setIsShowRecipeModal(true);
 
-    const detailedItems = items.filter((item) =>
-      recipe.item_ids.includes(item.id)
-    );
+    console.log(recipe);
+
+    // const detailedItems = items.filter((item) =>
+    //   recipe.item_ids.includes(item.id)
+    // );
     //add isOnList attr. whether recipe item is already on the shopping list
-    const usedItemIds = listItems.map((usedItem) => usedItem.item_id);
+    // const usedItemIds = listItems.map((usedItem) => usedItem.item_id);
 
-    const detailedItemsAndStatus = detailedItems.map((recipeItem) =>
-      usedItemIds.includes(recipeItem.id)
-        ? { ...recipeItem, isOnList: true }
-        : { ...recipeItem, isOnList: false }
-    );
+    // const detailedItemsAndStatus = detailedItems.map((recipeItem) =>
+    //   usedItemIds.includes(recipeItem.id)
+    //     ? { ...recipeItem, isOnList: true }
+    //     : { ...recipeItem, isOnList: false }
+    // );
 
-    const detailedRecipe = {
-      name: recipe.name,
-      variant: recipe.variant,
-      items: detailedItemsAndStatus,
-    };
-    setClickedRecipe(detailedRecipe);
+    // const detailedRecipe = {
+    //   name: recipe.name,
+    //   variant: recipe.variant,
+    //   items: detailedItemsAndStatus,
+    // };
+    // setClickedRecipe(detailedRecipe);
   }
 
   function deleteRecipeItem(recipe, id) {
