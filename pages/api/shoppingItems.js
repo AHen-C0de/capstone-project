@@ -46,11 +46,21 @@ export default async function handler(request, response) {
       await dbConnect();
       try {
         const postData = JSON.parse(request.body);
-        const createdShoppingItem = await ShoppingItem.create(postData);
-        return response.status(200).json({
-          message: "ShoppingItem created",
-          createdShoppingItem: createdShoppingItem,
-        });
+
+        //check whether item exists already in shoppingItems collection
+        const shoppingItems = await getAllShoppingItems();
+        const used_ids = shoppingItems.map((item) => item.item_id);
+
+        if (!used_ids.includes(postData.name)) {
+          const createdShoppingItem = await ShoppingItem.create(postData);
+          return response.status(200).json({
+            message: "ShoppingItem created",
+            createdShoppingItem: createdShoppingItem,
+          });
+        }
+        return response
+          .status(400)
+          .json({ message: "ShoppingItem already exists" });
       } catch (err) {
         return response.status(400).json(err.message);
       }
