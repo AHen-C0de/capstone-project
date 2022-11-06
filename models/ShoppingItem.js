@@ -3,7 +3,7 @@ const { Schema } = mongoose;
 import "./Item";
 
 const shoppingItemSchema = new Schema({
-  name: { type: Schema.Types.ObjectId, ref: "Item", required: true },
+  item: { type: Schema.Types.ObjectId, ref: "Item", required: true },
   checked: { type: Boolean, required: true },
 });
 

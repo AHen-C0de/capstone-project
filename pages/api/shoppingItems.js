@@ -49,9 +49,11 @@ export default async function handler(request, response) {
 
         //check whether item exists already in shoppingItems collection
         const shoppingItems = await getAllShoppingItems();
-        const used_ids = shoppingItems.map((item) => item.item_id);
+        const used_ids = shoppingItems.map(
+          (shoppingItem) => shoppingItem.item.id
+        );
 
-        if (!used_ids.includes(postData.name)) {
+        if (!used_ids.includes(postData.item)) {
           const createdShoppingItem = await ShoppingItem.create(postData);
           return response.status(200).json({
             message: "ShoppingItem created",

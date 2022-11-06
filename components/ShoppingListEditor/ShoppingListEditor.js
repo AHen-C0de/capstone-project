@@ -31,7 +31,7 @@ export default function ShoppingListEditor({
   function openModal(recipe) {
     setIsShowRecipeModal(true);
     //add isOnList attr. whether recipe item is already on the shopping list
-    const usedItemIds = listItems.map((usedItem) => usedItem.item_id);
+    const usedItemIds = listItems.map((shoppingItem) => shoppingItem.item.id);
     const itemsPlusStatus = recipe.items.map((recipeItem) =>
       usedItemIds.includes(recipeItem.id)
         ? { ...recipeItem, isOnList: true }

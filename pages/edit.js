@@ -22,7 +22,7 @@ export default function Edit({ items, recipes, shoppingItems }) {
   const [listItems, setListItems] = useState(shoppingItems);
 
   async function addItem(item) {
-    const data = { name: item.id, checked: false };
+    const data = { item: item.id, checked: false };
     await fetch("api/shoppingItems", {
       method: "POST",
       body: JSON.stringify(data),

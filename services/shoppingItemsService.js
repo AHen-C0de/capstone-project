@@ -4,12 +4,11 @@ import ShoppingItem from "../models/ShoppingItem";
 export async function getAllShoppingItems() {
   await dbConnect();
 
-  const shoppingItems = await ShoppingItem.find().populate("name");
+  const shoppingItems = await ShoppingItem.find().populate("item");
 
-  const sanitizedShoppingItems = shoppingItems.map(({ id, name, checked }) => ({
+  const sanitizedShoppingItems = shoppingItems.map(({ id, item, checked }) => ({
     id: id,
-    item_id: name.id,
-    name: name.name,
+    item: { id: item.id, name: item.name },
     checked: checked,
   }));
 

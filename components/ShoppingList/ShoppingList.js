@@ -12,12 +12,12 @@ export default function ShoppingList({ listItems, onToggleItemChecked }) {
       <ScrollContainer alignMiddle={isEmpty}>
         <StyledList>
           {listItems
-            .filter((item) => !item.checked)
-            .map(({ id, name, checked }) => (
+            .filter((shoppingItem) => !shoppingItem.checked)
+            .map(({ id, item, checked }) => (
               <ListItem
                 key={id}
                 id={id}
-                text={name}
+                text={item.name}
                 isChecked={checked}
                 onToggleItemChecked={() => onToggleItemChecked(id, checked)}
               />
@@ -33,12 +33,12 @@ export default function ShoppingList({ listItems, onToggleItemChecked }) {
         )}
         <StyledList>
           {listItems
-            .filter((item) => item.checked)
-            .map(({ id, name, checked }) => (
+            .filter((shoppingItem) => shoppingItem.checked)
+            .map(({ id, item, checked }) => (
               <ListItem
                 key={id}
                 id={id}
-                text={name}
+                text={item.name}
                 isChecked={checked}
                 onToggleItemChecked={() => onToggleItemChecked(id, checked)}
               />

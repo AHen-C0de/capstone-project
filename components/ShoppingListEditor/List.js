@@ -12,9 +12,9 @@ export default function List({ listItems, onDelete }) {
         <ListEmptyMessage>Leer...</ListEmptyMessage>
       ) : (
         <StyledList hideBorder={isEmpty} alignMiddle={isEmpty}>
-          {listItems.map(({ id, name }) => (
+          {listItems.map(({ id, item }) => (
             <ListItem key={id}>
-              <Name>{name}</Name>
+              <Name>{item.name}</Name>
               <DeleteButton
                 aria-label="lösche Item"
                 onDelete={() => onDelete(id)}

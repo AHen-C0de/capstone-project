@@ -29,9 +29,9 @@ export default function Form({
     }
 
     //filter out items from items, that are already on the shopping list
-    const usedItemIds = listItems.map((usedItem) => usedItem.item_id);
+    const usedItemIds = listItems.map((shoppingItem) => shoppingItem.item.id);
     const availableItems = items.filter(
-      (DBitem) => !usedItemIds.includes(DBitem.id)
+      (item) => !usedItemIds.includes(item.id)
     );
 
     const matchedItems = availableItems.filter((item) =>
