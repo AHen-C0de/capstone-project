@@ -44,7 +44,7 @@ export default function Categories() {
 
 const CategoryContainer = styled.div`
   background-color: var(--list-secondary);
-  width: 100%;
+  width: 95%;
   height: 75vh;
   padding: 1rem;
   border: solid 1px #b3b3b3;
@@ -64,6 +64,7 @@ const StyledButton = styled.button`
   box-shadow: var(--button-shaddow);
   font-family: "Noto Sans";
   font-size: 1.2rem;
+  font-weight: bold;
 
   &:first-child {
     margin-top: 0;

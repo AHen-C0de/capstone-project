@@ -4,6 +4,7 @@ const { Schema } = mongoose;
 
 const itemsSchema = new Schema({
   name: { type: String, required: true },
+  category: { type: Object },
 });
 
 const Item =

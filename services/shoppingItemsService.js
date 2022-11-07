@@ -8,7 +8,11 @@ export async function getAllShoppingItems() {
 
   const sanitizedShoppingItems = shoppingItems.map(({ id, item, checked }) => ({
     id: id,
-    item: { id: item.id, name: item.name },
+    item: {
+      id: item.id,
+      name: item.name,
+      category: { name: item.category.name, icon_src: item.category.icon_src },
+    },
     checked: checked,
   }));
 
