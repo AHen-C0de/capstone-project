@@ -5,27 +5,24 @@ import ShoppingList from "./ShoppingList";
 const shoppingListItems = [
   {
     id: "a",
-    item_id: "1",
-    name: "Brot",
+    item: { id: "1", name: "Brot" },
     checked: false,
   },
   {
     id: "b",
-    item_id: "2",
-    name: "Butter",
-    checked: true,
+    item: { id: "1", name: "Bananen" },
+    checked: false,
   },
   {
     id: "c",
-    item_id: "3",
-    name: "Nudeln",
-    checked: false,
+    item: { id: "1", name: "Milch" },
+    checked: true,
   },
 ];
 
 describe("ShoppingList", () => {
   it("renders all items from current shopping list", () => {
-    render(<ShoppingList items={shoppingListItems} />);
+    render(<ShoppingList listItems={shoppingListItems} />);
 
     const shoppingItems = screen.getAllByRole("listitem");
     const itemBrot = screen.getByText(/Brot/i);
@@ -38,12 +35,12 @@ describe("ShoppingList", () => {
     const checkBoxCallback = jest.fn();
     render(
       <ShoppingList
-        items={shoppingListItems}
+        listItems={shoppingListItems}
         onToggleItemChecked={checkBoxCallback}
       />
     );
 
-    const itemCheckBox = screen.getAllByRole("checkbox")[0];
+    const itemCheckBox = screen.getAllByRole("button")[0];
 
     await userEvent.click(itemCheckBox);
 
