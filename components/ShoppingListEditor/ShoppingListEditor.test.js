@@ -26,7 +26,7 @@ describe("ShoppingListEditor", () => {
 
     const shoppingItems = screen.getAllByRole("listitem");
     const deleteButtons = screen.getAllByLabelText("lösche Item");
-    const itemBrot = screen.getByText(/Brot/i);
+    const itemBrot = screen.getByText("Brot");
 
     expect(shoppingItems).toHaveLength(3);
     expect(deleteButtons).toHaveLength(3);

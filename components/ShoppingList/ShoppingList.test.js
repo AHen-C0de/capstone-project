@@ -25,7 +25,7 @@ describe("ShoppingList", () => {
     render(<ShoppingList listItems={shoppingListItems} />);
 
     const shoppingItems = screen.getAllByRole("listitem");
-    const itemBrot = screen.getByText(/Brot/i);
+    const itemBrot = screen.getByText("Brot");
 
     expect(shoppingItems).toHaveLength(3);
     expect(itemBrot).toBeInTheDocument();
