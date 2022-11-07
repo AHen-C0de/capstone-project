@@ -5,31 +5,28 @@ import ShoppingListEditor from "./ShoppingListEditor";
 const shoppingListItems = [
   {
     id: "a",
-    item_id: "1",
-    name: "Brot",
+    item: { id: "1", name: "Brot" },
     checked: false,
   },
   {
     id: "b",
-    item_id: "2",
-    name: "Butter",
+    item: { id: "1", name: "Bananen" },
     checked: false,
   },
   {
     id: "c",
-    item_id: "3",
-    name: "Nudeln",
-    checked: false,
+    item: { id: "1", name: "Milch" },
+    checked: true,
   },
 ];
 
 describe("ShoppingListEditor", () => {
   it("renders all items from current shopping list and their delete button", () => {
-    render(<ShoppingListEditor items={shoppingListItems} />);
+    render(<ShoppingListEditor listItems={shoppingListItems} />);
 
     const shoppingItems = screen.getAllByRole("listitem");
-    const deleteButtons = screen.getAllByText("Löschen");
-    const itemBrot = screen.getByText(/Brot/i);
+    const deleteButtons = screen.getAllByLabelText("lösche Item");
+    const itemBrot = screen.getByText("Brot");
 
     expect(shoppingItems).toHaveLength(3);
     expect(deleteButtons).toHaveLength(3);
@@ -39,10 +36,13 @@ describe("ShoppingListEditor", () => {
   it("calls callback, when clicking delete button of an item", async () => {
     const deleteCallback = jest.fn();
     render(
-      <ShoppingListEditor items={shoppingListItems} onDelete={deleteCallback} />
+      <ShoppingListEditor
+        listItems={shoppingListItems}
+        onDelete={deleteCallback}
+      />
     );
 
-    const deleteButton = screen.getAllByText(/Löschen/i)[0];
+    const deleteButton = screen.getAllByLabelText("lösche Item")[0];
 
     await userEvent.click(deleteButton);
 

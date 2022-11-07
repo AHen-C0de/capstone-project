@@ -5,7 +5,7 @@ import TrashIcon from "/public/assets/icons/trash.svg";
 
 export default function DeleteButton({ onDelete }) {
   return (
-    <StyledButton onClick={onDelete}>
+    <StyledButton onClick={onDelete} aria-label="lösche Item">
       <Image src={TrashIcon} alt="Muelleimer Icon" />
     </StyledButton>
   );
