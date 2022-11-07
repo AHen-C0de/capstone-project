@@ -5,6 +5,7 @@ import Head from "next/head";
 import Header from "../components/Header";
 import NavigationBar from "../components/NavigationBar/NavigationBar";
 import ShoppingList from "../components/ShoppingList/ShoppingList";
+import CategoryButton from "../components/buttons/CategoryButton";
 import { getAllShoppingItems } from "../services/shoppingItemsService";
 
 export async function getServerSideProps() {
@@ -43,20 +44,19 @@ export default function Home({ shoppingItems }) {
       </Head>
 
       <Header>MyShoppingManager</Header>
-      <main>
-        <MainContainer>
-          <ShoppingList
-            listItems={listItems}
-            onToggleItemChecked={toggleItemChecked}
-          />
-        </MainContainer>
-      </main>
+      <StyledMain>
+        <ShoppingList
+          listItems={listItems}
+          onToggleItemChecked={toggleItemChecked}
+        />
+        <CategoryButton />
+      </StyledMain>
       <NavigationBar />
     </>
   );
 }
 
-const MainContainer = styled.div`
+const StyledMain = styled.main`
   display: flex;
   align-items: center;
   justify-content: center;

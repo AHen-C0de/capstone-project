@@ -59,23 +59,21 @@ export default function Edit({ items, recipes, shoppingItems }) {
       </Head>
 
       <Header>Liste bearbeiten</Header>
-      <main>
-        <MainContainer>
-          <ShoppingListEditor
-            items={items}
-            recipes={recipes}
-            listItems={listItems}
-            onDelete={deleteItem}
-            onAdd={addItem}
-          />
-        </MainContainer>
-      </main>
+      <StyledMain>
+        <ShoppingListEditor
+          items={items}
+          recipes={recipes}
+          listItems={listItems}
+          onDelete={deleteItem}
+          onAdd={addItem}
+        />
+      </StyledMain>
       <NavigationBar />
     </>
   );
 }
 
-const MainContainer = styled.div`
+const StyledMain = styled.main`
   display: flex;
   align-items: center;
   justify-content: center;
