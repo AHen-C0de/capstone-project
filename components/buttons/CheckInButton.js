@@ -5,7 +5,7 @@ export default function CheckInButton({ onItemsAdd, margin }) {
   return (
     <StyledButton onClick={onItemsAdd} margin={margin}>
       <p>Check-In</p>
-      <CheckIcon />
+      <CheckIcon alt="Checkmark Icon" />
     </StyledButton>
   );
 }
@@ -21,6 +21,7 @@ const StyledButton = styled.button`
   align-items: center;
   gap: 0.5rem;
   cursor: pointer;
+  box-shadow: var(--button-shaddow);
   margin: ${({ margin }) => margin || 0};
 
   &:hover {

@@ -4,10 +4,11 @@ const GlobalStyle = createGlobalStyle`
   :root {
     --background-primary: #FFFFFF;
     --background-secondary: #0B7D54;
-    --background-secondary__dark: #085c3e;
+    --background-secondary__dark: #095A3D;
     --background-secondary__hover: #06402B;
     --list-primary: #FAD861;
     --list-secondary: #FFF1C1;
+    --button-shaddow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   }
 
   /* noto-sans-regular - latin */

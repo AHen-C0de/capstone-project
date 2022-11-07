@@ -5,7 +5,7 @@ import { RiCloseFill as CrossIcon } from "react-icons/ri";
 export default function CloseButton({ onClose, absolutePositionRight }) {
   return (
     <StyledButton onClick={() => onClose()} posRight={absolutePositionRight}>
-      <CrossIcon size={27} fill="#FFFFFF" />
+      <CrossIcon size={27} fill="#FFFFFF" alt="Kreuz Icon" />
     </StyledButton>
   );
 }
@@ -19,5 +19,6 @@ const StyledButton = styled.button`
   padding: 0.1rem;
   cursor: pointer;
   position: absolute;
+  box-shadow: var(--button-shaddow);
   right: ${({ posRight }) => posRight || "0"};
 `;
