@@ -31,7 +31,7 @@ export default function Categories() {
             {categories.map(({ name, icon_src }) => (
               <StyledButton key={name}>
                 <span>{name}</span>
-                <Image src={icon_src} width={24} height={24} />
+                <Image src={icon_src} width={30} height={30} />
               </StyledButton>
             ))}
           </CategoryContainer>
@@ -45,8 +45,10 @@ export default function Categories() {
 const CategoryContainer = styled.div`
   background-color: var(--list-secondary);
   width: 100%;
-  height: 73vh;
+  height: 75vh;
   padding: 1rem;
+  border: solid 1px #b3b3b3;
+  border-radius: 0.5rem;
 `;
 
 const StyledButton = styled.button`
@@ -54,10 +56,16 @@ const StyledButton = styled.button`
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  padding: 0.2rem;
+  padding: 0.6rem;
   background-color: var(--list-primary);
-  margin: 0.5rem 0;
+  margin: 1rem 0;
   border-radius: 0.5rem;
   border: none;
   box-shadow: var(--button-shaddow);
+  font-family: "Noto Sans";
+  font-size: 1.2rem;
+
+  &:first-child {
+    margin-top: 0;
+  }
 `;
