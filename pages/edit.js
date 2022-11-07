@@ -4,6 +4,7 @@ import { useState } from "react";
 import Head from "next/head";
 import Header from "../components/Header";
 import NavigationBar from "../components/NavigationBar/NavigationBar";
+import ContentWrapper from "../components/ContentWrapper";
 import ShoppingListEditor from "../components/ShoppingListEditor/ShoppingListEditor";
 import { getAllItems } from "../services/itemService";
 import { getAllRecipes } from "../services/recipeService";
@@ -59,24 +60,19 @@ export default function Edit({ items, recipes, shoppingItems }) {
       </Head>
 
       <Header>Liste bearbeiten</Header>
-      <StyledMain>
-        <ShoppingListEditor
-          items={items}
-          recipes={recipes}
-          listItems={listItems}
-          onDelete={deleteItem}
-          onAdd={addItem}
-        />
-      </StyledMain>
+      <main>
+        <ContentWrapper>
+          <ShoppingListEditor
+            items={items}
+            recipes={recipes}
+            listItems={listItems}
+            onDelete={deleteItem}
+            onAdd={addItem}
+          />
+        </ContentWrapper>
+      </main>
+
       <NavigationBar />
     </>
   );
 }
-
-const StyledMain = styled.main`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-  width: 100%;
-`;

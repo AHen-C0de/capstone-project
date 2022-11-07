@@ -61,7 +61,7 @@ const GlobalStyle = createGlobalStyle`
   }
 
   main {
-    overflow-y: auto;
+    overflow-y: hidden;
   }
 `;
 

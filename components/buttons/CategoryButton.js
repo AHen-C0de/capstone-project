@@ -21,7 +21,7 @@ const StyledButton = styled.button`
   align-items: center;
   gap: 0.5rem;
   cursor: pointer;
-  margin: ${({ margin }) => margin || 0};
+  align-self: flex-start;
 
   &:hover {
     background-color: var(--background-secondary__hover);

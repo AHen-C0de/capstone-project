@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import Head from "next/head";
 import Header from "../components/Header";
 import NavigationBar from "../components/NavigationBar/NavigationBar";
+import ContentWrapper from "../components/ContentWrapper";
 import ShoppingList from "../components/ShoppingList/ShoppingList";
 import CategoryButton from "../components/buttons/CategoryButton";
 import { getAllShoppingItems } from "../services/shoppingItemsService";
@@ -44,23 +45,16 @@ export default function Home({ shoppingItems }) {
       </Head>
 
       <Header>MyShoppingManager</Header>
-      <StyledMain>
-        <ShoppingList
-          listItems={listItems}
-          onToggleItemChecked={toggleItemChecked}
-        />
-        <CategoryButton />
-      </StyledMain>
+      <main>
+        <ContentWrapper>
+          <ShoppingList
+            listItems={listItems}
+            onToggleItemChecked={toggleItemChecked}
+          />
+          <CategoryButton />
+        </ContentWrapper>
+      </main>
       <NavigationBar />
     </>
   );
 }
-
-const StyledMain = styled.main`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-  width: 100%;
-`;

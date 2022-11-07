@@ -8,7 +8,7 @@ export default function ShoppingList({ listItems, onToggleItemChecked }) {
   const isEmpty = listItems.length === 0;
 
   return (
-    <ListContainer>
+    <ListContainer height="63vh">
       <ScrollContainer alignMiddle={isEmpty}>
         <StyledList>
           {listItems
