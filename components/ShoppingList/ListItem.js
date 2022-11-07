@@ -8,7 +8,7 @@ export default function ListItem({ id, text, isChecked, onToggleItemChecked }) {
     <StyledListElement isChecked={isChecked}>
       <StyledButton
         aria-label={isChecked ? "uncheck item" : "check item"}
-        onClick={() => onToggleItemChecked(id)}
+        onClick={onToggleItemChecked}
         isChecked={isChecked}
       >
         {isChecked ? (

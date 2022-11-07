@@ -2,9 +2,10 @@ import styled from "styled-components";
 import { useState, useEffect } from "react";
 
 import Input from "./Input";
+import { handleInput, triggerDropDown } from "./utils";
 
 export default function Form({
-  allItems,
+  items,
   recipes,
   listItems,
   onAdd,
@@ -19,24 +20,6 @@ export default function Form({
   const [dropDownRecipes, setDropDownRecipes] = useState([]);
   const [isFocusItemInput, setIsFocusItemInput] = useState(false);
 
-  //set focus on item input after page load
-  useEffect(() => {
-    itemInputRef.current.focus();
-  }, []);
-
-  //open drop down when typing into input field
-  function handleInput(event, inputSetter, dropDownSetter, inputMatcher) {
-    const inputString = event.target.value;
-    inputSetter(inputString);
-    triggerDropDown(inputString, dropDownSetter, inputMatcher);
-  }
-
-  //evoke rendering drop down buttons for elements that match input
-  function triggerDropDown(inputString, dropDownSetter, inputMatcher) {
-    const matchedElements = inputMatcher(inputString);
-    dropDownSetter(matchedElements);
-  }
-
   //match item input with all items from DB
   function matchItemInput(value) {
     const editedValue = value.trim().toLowerCase();
@@ -45,10 +28,10 @@ export default function Form({
       return [];
     }
 
-    //filter out items from allItems, that are already on the shopping list
-    const usedItemIds = listItems.map((usedItem) => usedItem.item_id);
-    const availableItems = allItems.filter(
-      (DBitem) => !usedItemIds.includes(DBitem.id)
+    //filter out items from items, that are already on the shopping list
+    const usedItemIds = listItems.map((shoppingItem) => shoppingItem.item.id);
+    const availableItems = items.filter(
+      (item) => !usedItemIds.includes(item.id)
     );
 
     const matchedItems = availableItems.filter((item) =>

@@ -5,12 +5,14 @@ import ListContainer from "../ListContainer";
 import Form from "./Form";
 import List from "./List";
 import RecipeModal from "./RecipeModal";
-import { getAllItemsFromDB, getRecipesFromDB } from "../../services/db.js";
 
-export default function ShoppingListEditor({ listItems, onDelete, onAdd }) {
-  //DB request
-  const [allItems, setAllItems] = useState(getAllItemsFromDB);
-  const [recipes, setRecipes] = useState(getRecipesFromDB);
+export default function ShoppingListEditor({
+  listItems,
+  items,
+  recipes,
+  onDelete,
+  onAdd,
+}) {
   //rendering
   const [clickedRecipe, setClickedRecipe] = useState({});
   const [isShowRecipeModal, setIsShowRecipeModal] = useState(false);
@@ -28,24 +30,18 @@ export default function ShoppingListEditor({ listItems, onDelete, onAdd }) {
 
   function openModal(recipe) {
     setIsShowRecipeModal(true);
-
-    const detailedItems = allItems.filter((item) =>
-      recipe.item_ids.includes(item.id)
-    );
     //add isOnList attr. whether recipe item is already on the shopping list
-    const usedItemIds = listItems.map((usedItem) => usedItem.item_id);
-    const detailedItemsAndStatus = detailedItems.map((recipeItem) =>
+    const usedItemIds = listItems.map((shoppingItem) => shoppingItem.item.id);
+    const itemsPlusStatus = recipe.items.map((recipeItem) =>
       usedItemIds.includes(recipeItem.id)
         ? { ...recipeItem, isOnList: true }
         : { ...recipeItem, isOnList: false }
     );
-
-    const detailedRecipe = {
-      name: recipe.name,
-      variant: recipe.variant,
-      items: detailedItemsAndStatus,
+    const recipePlusStatus = {
+      ...recipe,
+      items: itemsPlusStatus,
     };
-    setClickedRecipe(detailedRecipe);
+    setClickedRecipe(recipePlusStatus);
   }
 
   function deleteRecipeItem(recipe, id) {
@@ -60,7 +56,7 @@ export default function ShoppingListEditor({ listItems, onDelete, onAdd }) {
     <>
       <ListContainer isBlur={isShowRecipeModal}>
         <Form
-          allItems={allItems}
+          items={items}
           recipes={recipes}
           listItems={listItems}
           onAdd={onAdd}
@@ -88,5 +84,5 @@ const Line = styled.div`
   border-radius: 1rem;
   background-color: #000000;
   align-self: center;
-  margin: 1rem 0;
+  margin: 0.5rem 0;
 `;
