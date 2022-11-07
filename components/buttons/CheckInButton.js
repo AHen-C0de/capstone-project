@@ -11,7 +11,7 @@ export default function CheckInButton({ onItemsAdd, margin }) {
 }
 
 const StyledButton = styled.button`
-  background-color: var(--background-secondary);
+  background-color: var(--background-secondary__dark);
   color: var(--background-primary);
   border-radius: 0.2rem;
   padding: 0.3rem;
@@ -24,6 +24,6 @@ const StyledButton = styled.button`
   margin: ${({ margin }) => margin || 0};
 
   &:hover {
-    background-color: var(--background-secondary-hover);
+    background-color: var(--background-secondary__hover);
   }
 `;

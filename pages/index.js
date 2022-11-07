@@ -58,6 +58,7 @@ export default function Home({ shoppingItems }) {
 
 const StyledMain = styled.main`
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   height: 100%;

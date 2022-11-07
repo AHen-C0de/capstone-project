@@ -4,7 +4,8 @@ const GlobalStyle = createGlobalStyle`
   :root {
     --background-primary: #FFFFFF;
     --background-secondary: #0B7D54;
-    --background-secondary-hover: #085C3E;
+    --background-secondary__dark: #085c3e;
+    --background-secondary__hover: #06402B;
     --list-primary: #FAD861;
     --list-secondary: #FFF1C1;
   }
