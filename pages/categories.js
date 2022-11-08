@@ -43,8 +43,9 @@ export default function Categories({ categories }) {
 
 const CategoryContainer = styled.div`
   background-color: var(--list-secondary);
-  width: 95%;
-  height: 75vh;
+  width: 90%;
+  align-self: center;
+  height: 100%;
   padding: 1rem;
   border: solid 1px #b3b3b3;
   border-radius: 0.5rem;

@@ -14,7 +14,7 @@ const StyledButton = styled.button`
   background-color: var(--background-secondary__dark);
   color: var(--background-primary);
   border-radius: 0.2rem;
-  padding: 0.3rem;
+  padding: 0.3rem 0.8rem 0.3rem 0.8rem;
   font-size: 1.3rem;
   font-family: "Noto Sans";
   display: flex;

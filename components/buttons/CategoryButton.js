@@ -12,11 +12,12 @@ export default function CheckInButton() {
 }
 
 const StyledButton = styled.button`
+  position: relative;
+  left: 0.2rem;
   background-color: var(--background-secondary__dark);
   color: var(--background-primary);
   border-radius: 0.2rem;
-  padding: 0.3rem;
-  padding-right: 0.4rem;
+  padding: 0.3rem 0.9rem 0.3rem 0.7rem;
   font-size: 1.3rem;
   font-family: "Noto Sans";
   display: flex;
