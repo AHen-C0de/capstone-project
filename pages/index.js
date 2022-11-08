@@ -6,6 +6,8 @@ import Head from "next/head";
 import Header from "../components/Header";
 import NavigationBar from "../components/NavigationBar/NavigationBar";
 import ContentWrapper from "../components/ContentWrapper";
+import ListContainer from "../components/ListContainer";
+import ListEmptyMessage from "../components/ListEmptyMessage";
 import ShoppingList from "../components/ShoppingList/ShoppingList";
 import CategoryButton from "../components/buttons/CategoryButton";
 import { getAllShoppingItems } from "../services/shoppingItemService";
@@ -19,6 +21,7 @@ export async function getServerSideProps() {
 
 export default function Home({ shoppingItems }) {
   const [listItems, setListItems] = useState(shoppingItems);
+  const isEmpty = listItems.length === 0;
 
   async function toggleItemChecked(id, checkedStatus) {
     const toggeledCheckStatus = { checked: !checkedStatus };
@@ -48,10 +51,28 @@ export default function Home({ shoppingItems }) {
       <Header>MyShoppingManager</Header>
       <main>
         <ContentWrapper>
-          <ShoppingList
-            listItems={listItems}
-            onToggleItemChecked={toggleItemChecked}
-          />
+          <ListContainer>
+            {isEmpty ? (
+              <ListEmptyMessage>Leer...</ListEmptyMessage>
+            ) : (
+              <>
+                <ShoppingList
+                  listItems={listItems.filter(
+                    (shoppingItem) => !shoppingItem.checked
+                  )}
+                  onToggleItemChecked={toggleItemChecked}
+                />
+                <StyledText>Fertig:</StyledText>
+                <Line />
+                <ShoppingList
+                  listItems={listItems.filter(
+                    (shoppingItem) => shoppingItem.checked
+                  )}
+                  onToggleItemChecked={toggleItemChecked}
+                />
+              </>
+            )}
+          </ListContainer>
           <Link href={"/categories"} passHref>
             <StyledLink>
               <CategoryButton />
@@ -63,6 +84,22 @@ export default function Home({ shoppingItems }) {
     </>
   );
 }
+
+const StyledText = styled.span`
+  font-family: "Lily Script One";
+  color: var(--background-secondary);
+  font-size: 1.6rem;
+  position: relative;
+  left: 1rem;
+`;
+
+const Line = styled.div`
+  width: 70%;
+  height: 0.1rem;
+  border-radius: 1rem;
+  background-color: var(--background-secondary);
+  margin: 0.2rem 0 1rem 0;
+`;
 
 const StyledLink = styled.a`
   align-self: flex-start;
