@@ -9,8 +9,9 @@ export async function getAllShoppingItems() {
     .populate({ path: "item", populate: { path: "category" } });
 
   const sanitizedShoppingItems = shoppingItems.map(({ id, item, checked }) => ({
-    id: item.id,
+    id: id,
     name: item.name,
+    item_id: item.id,
     category: item.category.id,
     checked: checked,
   }));
