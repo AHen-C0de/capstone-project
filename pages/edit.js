@@ -22,6 +22,8 @@ export async function getServerSideProps() {
 export default function Edit({ items, recipes, shoppingItems }) {
   const [listItems, setListItems] = useState(shoppingItems);
 
+  console.log(shoppingItems);
+
   async function addItem(item) {
     const data = { item: item.id, checked: false };
     await fetch("api/shoppingItems", {

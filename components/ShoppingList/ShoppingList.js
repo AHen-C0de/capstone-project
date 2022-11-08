@@ -5,11 +5,11 @@ import ListItem from "./ListItem";
 export default function ShoppingList({ listItems, onToggleItemChecked }) {
   return (
     <StyledList>
-      {listItems.map(({ id, item, checked }) => (
+      {listItems.map(({ id, name, checked }) => (
         <ListItem
           key={id}
           id={id}
-          text={item.name}
+          text={name}
           isChecked={checked}
           onToggleItemChecked={() => onToggleItemChecked(id, checked)}
         />

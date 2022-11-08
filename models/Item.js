@@ -1,15 +1,11 @@
 import mongoose from "mongoose";
+import "./Category";
 
 const { Schema } = mongoose;
 
-const categorySchema = new Schema({
-  name: { type: String },
-  icon_src: { type: String },
-});
-
 const itemsSchema = new Schema({
   name: { type: String, required: true },
-  category: { type: categorySchema },
+  category: { type: Schema.Types.ObjectId, ref: "Category", required: true },
 });
 
 const Item =

@@ -4,35 +4,34 @@ import ShoppingItem from "../models/ShoppingItem";
 export async function getAllShoppingItems() {
   await dbConnect();
 
-  const shoppingItems = await ShoppingItem.find().populate("item");
+  const shoppingItems = await ShoppingItem.find()
+    .populate("item")
+    .populate({ path: "item", populate: { path: "category" } });
 
   const sanitizedShoppingItems = shoppingItems.map(({ id, item, checked }) => ({
-    id: id,
-    item: {
-      id: item.id,
-      name: item.name,
-      category: item.category.name,
-    },
+    id: item.id,
+    name: item.name,
+    category: item.category.id,
     checked: checked,
   }));
 
   return sanitizedShoppingItems;
 }
 
-export async function getCurrentCategories() {
-  await dbConnect();
+// export async function getCurrentCategories() {
+//   await dbConnect();
 
-  const shoppingItems = await ShoppingItem.find().populate("item");
+//   const shoppingItems = await ShoppingItem.find().populate("item");
 
-  const categories = shoppingItems.map(({ item }) => {
-    return {
-      name: item.category.name,
-      icon_src: item.category.icon_src,
-    };
-  });
-  const uniqueCategories = [
-    ...new Map(categories.map((item) => [item.name, item])).values(),
-  ];
+//   const categories = shoppingItems.map(({ item }) => {
+//     return {
+//       name: item.category.name,
+//       icon_src: item.category.icon_src,
+//     };
+//   });
+//   const uniqueCategories = [
+//     ...new Map(categories.map((item) => [item.name, item])).values(),
+//   ];
 
-  return uniqueCategories;
-}
+//   return uniqueCategories;
+// }
