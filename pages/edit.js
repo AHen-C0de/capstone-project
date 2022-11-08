@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { useState } from "react";
-
 import Head from "next/head";
+
 import Header from "../components/Header";
 import NavigationBar from "../components/NavigationBar/NavigationBar";
 import ContentWrapper from "../components/ContentWrapper";

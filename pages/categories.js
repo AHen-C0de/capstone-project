@@ -1,10 +1,12 @@
 import styled from "styled-components";
 import Image from "next/image";
-
+import Link from "next/link";
 import Head from "next/head";
+
 import Header from "../components/Header";
 import NavigationBar from "../components/NavigationBar/NavigationBar";
 import ContentWrapper from "../components/ContentWrapper";
+import BackToAllButton from "../components/buttons/BackToAllButton";
 import { getCurrentCategories } from "../services/shoppingItemService";
 
 export async function getServerSideProps() {
@@ -34,6 +36,11 @@ export default function Categories({ categories }) {
               </StyledButton>
             ))}
           </CategoryContainer>
+          <Link href={"/"} passHref>
+            <StyledLink>
+              <BackToAllButton />
+            </StyledLink>
+          </Link>
         </ContentWrapper>
       </main>
       <NavigationBar />
@@ -41,14 +48,20 @@ export default function Categories({ categories }) {
   );
 }
 
+const StyledLink = styled.a`
+  align-self: flex-start;
+  text-decoration: none;
+`;
+
 const CategoryContainer = styled.div`
   background-color: var(--list-secondary);
-  width: 90%;
+  width: 100%;
   align-self: center;
   height: 100%;
   padding: 1rem;
   border: solid 1px #b3b3b3;
   border-radius: 0.5rem;
+  overflow-y: auto;
 `;
 
 const StyledButton = styled.button`
