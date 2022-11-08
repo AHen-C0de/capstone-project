@@ -5,7 +5,6 @@ const ListContainer = styled.div`
   padding: 1rem;
   display: flex;
   flex-direction: column;
-  gap: 1rem;
   width: 100%;
   max-width: 400px;
   box-shadow: 5px 5px 6px #c2c2c2;

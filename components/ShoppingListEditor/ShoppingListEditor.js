@@ -78,11 +78,12 @@ export default function ShoppingListEditor({
   );
 }
 
-const Line = styled.div`
+const Line = styled.hr`
   width: 90%;
   height: 0.2rem;
   border-radius: 1rem;
   background-color: #000000;
   align-self: center;
-  margin: 0.5rem 0;
+  margin: 1.3rem 0;
+  border: none;
 `;
