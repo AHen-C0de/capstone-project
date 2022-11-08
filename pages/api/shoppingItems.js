@@ -34,11 +34,11 @@ export default async function handler(request, response) {
     case "DELETE":
       await dbConnect();
       try {
-        const data = JSON.parse(request.body);
-        await ShoppingItem.findByIdAndDelete(data.id);
+        const id = JSON.parse(request.body);
+        await ShoppingItem.findByIdAndDelete(id);
         return response
           .status(200)
-          .json({ message: "ShoppingItem deleted", deletedId: data.id });
+          .json({ message: "ShoppingItem deleted", deletedId: id });
       } catch (err) {
         return response.status(400).json(err.message);
       }

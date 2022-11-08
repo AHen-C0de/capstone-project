@@ -22,7 +22,7 @@ export async function getServerSideProps() {
 export default function Edit({ items, recipes, shoppingItems }) {
   const [listItems, setListItems] = useState(shoppingItems);
 
-  console.log(listItems);
+  //console.log(listItems);
 
   async function addItem(item) {
     const data = { item: item.id, checked: false };
@@ -44,7 +44,7 @@ export default function Edit({ items, recipes, shoppingItems }) {
   async function deleteItem(id) {
     const response = await fetch("/api/shoppingItems", {
       method: "DELETE",
-      body: JSON.stringify({ id: id }),
+      body: JSON.stringify(id),
     });
     const fetchedData = await response.json();
 
