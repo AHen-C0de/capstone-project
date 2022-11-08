@@ -6,7 +6,7 @@ import { IoIosArrowBack as ArrowBackIcon } from "react-icons/io";
 export default function BackToAllButton() {
   return (
     <StyledButton>
-      <ArrowBackIcon />
+      <ArrowBackIcon alt={"Arrow Icon"} />
       <p>Alle Items</p>
     </StyledButton>
   );
