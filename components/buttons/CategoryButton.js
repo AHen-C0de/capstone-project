@@ -24,7 +24,7 @@ const StyledButton = styled.button`
   align-items: center;
   gap: 0.5rem;
   cursor: pointer;
-  align-self: flex-start;
+  /* align-self: flex-start; */
   box-shadow: var(--button-shaddow);
 
   &:hover {

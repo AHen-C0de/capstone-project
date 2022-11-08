@@ -1,7 +1,8 @@
 import styled from "styled-components";
 import { useState, useEffect } from "react";
-
+import Link from "next/link";
 import Head from "next/head";
+
 import Header from "../components/Header";
 import NavigationBar from "../components/NavigationBar/NavigationBar";
 import ContentWrapper from "../components/ContentWrapper";
@@ -51,10 +52,18 @@ export default function Home({ shoppingItems }) {
             listItems={listItems}
             onToggleItemChecked={toggleItemChecked}
           />
-          <CategoryButton />
+          <Link href={"/categories"} passHref>
+            <StyledLink>
+              <CategoryButton />
+            </StyledLink>
+          </Link>
         </ContentWrapper>
       </main>
       <NavigationBar />
     </>
   );
 }
+
+const StyledLink = styled.a`
+  align-self: flex-start;
+`;
