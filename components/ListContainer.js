@@ -6,7 +6,6 @@ const ListContainer = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  max-width: 400px;
   box-shadow: 5px 5px 6px #c2c2c2;
   height: 100%;
   overflow-y: auto;
