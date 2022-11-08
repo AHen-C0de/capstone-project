@@ -50,7 +50,7 @@ export default async function handler(request, response) {
         //check whether item exists already in shoppingItems collection
         const shoppingItems = await getAllShoppingItems();
         const used_ids = shoppingItems.map(
-          (shoppingItem) => shoppingItem.item.id
+          (shoppingItem) => shoppingItem.item_id
         );
 
         if (!used_ids.includes(postData.item)) {
