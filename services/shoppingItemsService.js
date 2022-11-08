@@ -6,15 +6,17 @@ export async function getAllShoppingItems() {
 
   const shoppingItems = await ShoppingItem.find().populate("item");
 
-  const sanitizedShoppingItems = shoppingItems.map(({ id, item, checked }) => ({
-    id: id,
-    item: {
-      id: item.id,
-      name: item.name,
-      category: { name: item.category.name, icon_src: item.category.icon_src },
-    },
-    checked: checked,
-  }));
+  const sanitizedShoppingItems = shoppingItems.map(({ id, item, checked }) => {
+    return {
+      id: id,
+      item: {
+        id: item.id,
+        name: item.name,
+        category: item.category.name,
+      },
+      checked: checked,
+    };
+  });
 
   return sanitizedShoppingItems;
 }

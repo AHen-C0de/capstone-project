@@ -2,9 +2,14 @@ import mongoose from "mongoose";
 
 const { Schema } = mongoose;
 
+const categorySchema = new Schema({
+  name: { type: String },
+  icon_src: { type: String },
+});
+
 const itemsSchema = new Schema({
   name: { type: String, required: true },
-  category: { type: Object },
+  category: { type: categorySchema },
 });
 
 const Item =
