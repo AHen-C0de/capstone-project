@@ -19,7 +19,8 @@ const StyledButton = styled.button`
   border-radius: 0.2rem;
   padding: 0.3rem 0.9rem 0.3rem 0.7rem;
   font-size: 1.3rem;
-  font-family: "Noto Sans";
+  font-family: "Inter";
+  font-weight: 500;
   display: flex;
   align-items: center;
   gap: 0.5rem;

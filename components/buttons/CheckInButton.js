@@ -16,10 +16,11 @@ const StyledButton = styled.button`
   border-radius: 0.2rem;
   padding: 0.3rem 0.8rem 0.3rem 0.8rem;
   font-size: 1.3rem;
-  font-family: "Noto Sans";
+  font-family: "Inter";
+  font-weight: 500;
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.7rem;
   cursor: pointer;
   box-shadow: var(--button-shaddow);
   margin: ${({ margin }) => margin || 0};

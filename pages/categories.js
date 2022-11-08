@@ -75,9 +75,9 @@ const StyledButton = styled.button`
   border-radius: 0.5rem;
   border: none;
   box-shadow: var(--button-shaddow);
-  font-family: "Noto Sans";
+  font-family: "Inter";
   font-size: 1.2rem;
-  font-weight: bold;
+  font-weight: 700;
 
   &:first-child {
     margin-top: 0;

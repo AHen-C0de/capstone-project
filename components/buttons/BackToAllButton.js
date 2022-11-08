@@ -21,6 +21,8 @@ const StyledButton = styled.button`
   padding: 0.3rem 0.7rem 0.3rem 0.5rem;
   font-size: 1.3rem;
   font-family: "Noto Sans";
+  font-family: "Inter";
+  font-weight: 500;
   display: flex;
   align-items: center;
   gap: 0.5rem;
