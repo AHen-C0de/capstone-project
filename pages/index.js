@@ -66,4 +66,5 @@ export default function Home({ shoppingItems }) {
 
 const StyledLink = styled.a`
   align-self: flex-start;
+  text-decoration: none;
 `;

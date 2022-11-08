@@ -3,61 +3,50 @@ import styled from "styled-components";
 import ListContainer from "../ListContainer";
 import ListItem from "./ListItem";
 import ListEmptyMessage from "../ListEmptyMessage";
+import { calculateObjectSize } from "bson";
 
 export default function ShoppingList({ listItems, onToggleItemChecked }) {
   const isEmpty = listItems.length === 0;
-
+  //height={"(calc((100vh - 8rem) / 100) * 50)"}
   return (
-    <ListContainer height="63vh">
-      <ScrollContainer alignMiddle={isEmpty}>
-        <StyledList>
-          {listItems
-            .filter((shoppingItem) => !shoppingItem.checked)
-            .map(({ id, item, checked }) => (
-              <ListItem
-                key={id}
-                id={id}
-                text={item.name}
-                isChecked={checked}
-                onToggleItemChecked={() => onToggleItemChecked(id, checked)}
-              />
-            ))}
-        </StyledList>
-        {isEmpty ? (
-          <ListEmptyMessage>Leer...</ListEmptyMessage>
-        ) : (
-          <>
-            <StyledText>Fertig:</StyledText>
-            <Line />
-          </>
-        )}
-        <StyledList>
-          {listItems
-            .filter((shoppingItem) => shoppingItem.checked)
-            .map(({ id, item, checked }) => (
-              <ListItem
-                key={id}
-                id={id}
-                text={item.name}
-                isChecked={checked}
-                onToggleItemChecked={() => onToggleItemChecked(id, checked)}
-              />
-            ))}
-        </StyledList>
-      </ScrollContainer>
+    <ListContainer>
+      <StyledList>
+        {listItems
+          .filter((shoppingItem) => !shoppingItem.checked)
+          .map(({ id, item, checked }) => (
+            <ListItem
+              key={id}
+              id={id}
+              text={item.name}
+              isChecked={checked}
+              onToggleItemChecked={() => onToggleItemChecked(id, checked)}
+            />
+          ))}
+      </StyledList>
+      {isEmpty ? (
+        <ListEmptyMessage>Leer...</ListEmptyMessage>
+      ) : (
+        <>
+          <StyledText>Fertig:</StyledText>
+          <Line />
+        </>
+      )}
+      <StyledList>
+        {listItems
+          .filter((shoppingItem) => shoppingItem.checked)
+          .map(({ id, item, checked }) => (
+            <ListItem
+              key={id}
+              id={id}
+              text={item.name}
+              isChecked={checked}
+              onToggleItemChecked={() => onToggleItemChecked(id, checked)}
+            />
+          ))}
+      </StyledList>
     </ListContainer>
   );
 }
-
-const ScrollContainer = styled.div`
-  height: 100%;
-  overflow-y: auto;
-  overflow-x: hidden;
-  display: flex;
-  flex-direction: column;
-  justify-content: ${({ alignMiddle }) =>
-    alignMiddle ? "center" : "flex-start"};
-`;
 
 const StyledList = styled.ul`
   list-style: none;

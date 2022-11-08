@@ -54,7 +54,7 @@ export default function ShoppingListEditor({
 
   return (
     <>
-      <ListContainer isBlur={isShowRecipeModal} height="73vh">
+      <ListContainer isBlur={isShowRecipeModal}>
         <Form
           items={items}
           recipes={recipes}

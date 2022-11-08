@@ -1,5 +1,4 @@
 import styled from "styled-components";
-//import { FaSearch as SearchIcon } from "react-icons/fa";
 import Image from "next/image";
 import searchIcon from "/public/assets/icons/search.svg";
 
@@ -24,7 +23,6 @@ const StyledButton = styled.button`
   align-items: center;
   gap: 0.5rem;
   cursor: pointer;
-  /* align-self: flex-start; */
   box-shadow: var(--button-shaddow);
 
   &:hover {
