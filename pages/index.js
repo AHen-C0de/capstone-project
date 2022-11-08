@@ -1,7 +1,8 @@
 import styled from "styled-components";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import Head from "next/head";
+import Image from "next/image";
 
 import Header from "../components/Header";
 import NavigationBar from "../components/NavigationBar/NavigationBar";
@@ -9,7 +10,8 @@ import ContentWrapper from "../components/ContentWrapper";
 import ListContainer from "../components/ListContainer";
 import ListEmptyMessage from "../components/ListEmptyMessage";
 import ShoppingList from "../components/ShoppingList/ShoppingList";
-import CategoryButton from "../components/buttons/CategoryButton";
+import IconPlusTextButton from "../components/buttons/IconPlusTextButton";
+import searchIcon from "/public/assets/icons/search.svg";
 import { getAllShoppingItems } from "../services/shoppingItemService";
 
 export async function getServerSideProps() {
@@ -75,7 +77,13 @@ export default function Home({ shoppingItems }) {
           </ListContainer>
           <Link href={"/categories"} passHref>
             <StyledLink>
-              <CategoryButton />
+              <IconPlusTextButton
+                padding="0.3rem 0.9rem 0.3rem 0.7rem"
+                gap="0.5rem"
+              >
+                <Image src={searchIcon} alt="Lupe Icon" />
+                <p>Suche Kategorie</p>
+              </IconPlusTextButton>
             </StyledLink>
           </Link>
         </ContentWrapper>

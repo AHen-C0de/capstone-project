@@ -1,8 +1,9 @@
 import styled from "styled-components";
 
 import CloseButton from "../buttons/CloseButton";
-import CheckInButton from "../buttons/CheckInButton";
 import DeleteButton from "../buttons/DeleteButton";
+import IconPlusTextButton from "../buttons/IconPlusTextButton";
+import { GiCheckMark as CheckIcon } from "react-icons/gi";
 
 export default function RecipeModal({ recipe, onAdd, onDelete, onCloseModal }) {
   return (
@@ -30,11 +31,16 @@ export default function RecipeModal({ recipe, onAdd, onDelete, onCloseModal }) {
             </li>
           ))}
         </RecipeItemsList>
-        <CheckInButton
-          aria-label="zu Liste hizufügen"
-          onItemsAdd={() => onAdd(recipe)}
+        <IconPlusTextButton
+          aria-label="Items zu Liste hizufügen"
+          padding="0.3rem 0.8rem"
           margin="0 auto"
-        />
+          gap="0.7rem"
+          onButtonClick={() => onAdd(recipe)}
+        >
+          <p>Check-In</p>
+          <CheckIcon alt="Checkmark Icon" />
+        </IconPlusTextButton>
       </ModalContainer>
     </ModalBackground>
   );

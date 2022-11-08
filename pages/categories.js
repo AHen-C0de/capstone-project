@@ -6,7 +6,8 @@ import Head from "next/head";
 import Header from "../components/Header";
 import NavigationBar from "../components/NavigationBar/NavigationBar";
 import ContentWrapper from "../components/ContentWrapper";
-import BackToAllButton from "../components/buttons/BackToAllButton";
+import IconPlusTextButton from "../components/buttons/IconPlusTextButton";
+import { IoIosArrowBack as ArrowBackIcon } from "react-icons/io";
 import { getCurrentCategories } from "../services/shoppingItemService";
 
 export async function getServerSideProps() {
@@ -32,13 +33,24 @@ export default function Categories({ categories }) {
             {categories.map(({ name, icon_src }) => (
               <StyledButton key={name}>
                 <span>{name}</span>
-                <Image src={icon_src} width={30} height={30} />
+                <Image
+                  src={icon_src}
+                  width={30}
+                  height={30}
+                  alt={"Kategorie Icon"}
+                />
               </StyledButton>
             ))}
           </CategoryContainer>
           <Link href={"/"} passHref>
             <StyledLink>
-              <BackToAllButton />
+              <IconPlusTextButton
+                padding="0.3rem 0.7rem 0.3rem 0.5rem"
+                gap="0.5rem"
+              >
+                <ArrowBackIcon alt={"Arrow Icon"} />
+                <p>Alle Items</p>
+              </IconPlusTextButton>
             </StyledLink>
           </Link>
         </ContentWrapper>
