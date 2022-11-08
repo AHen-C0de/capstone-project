@@ -1,6 +1,6 @@
 import dbConnect from "../../lib/dbConnect";
 import ShoppingItem from "../../models/ShoppingItem";
-import { getAllShoppingItems } from "../../services/shoppingItemsService";
+import { getAllShoppingItems } from "../../services/shoppingItemService";
 
 export default async function handler(request, response) {
   switch (request.method) {

@@ -7,7 +7,7 @@ import NavigationBar from "../components/NavigationBar/NavigationBar";
 import ContentWrapper from "../components/ContentWrapper";
 import ShoppingList from "../components/ShoppingList/ShoppingList";
 import CategoryButton from "../components/buttons/CategoryButton";
-import { getAllShoppingItems } from "../services/shoppingItemsService";
+import { getAllShoppingItems } from "../services/shoppingItemService";
 
 export async function getServerSideProps() {
   const shoppingItems = await getAllShoppingItems();

@@ -5,17 +5,16 @@ import Head from "next/head";
 import Header from "../components/Header";
 import NavigationBar from "../components/NavigationBar/NavigationBar";
 import ContentWrapper from "../components/ContentWrapper";
+import { getCurrentCategories } from "../services/shoppingItemService";
 
-import Bread from "/public/assets/icons/bread.svg";
+export async function getServerSideProps() {
+  const categories = await getCurrentCategories();
+  return {
+    props: { categories: categories },
+  };
+}
 
-const categories = [
-  { name: "Obst & Gemüse", icon_src: "/assets/icons/watermelon.svg" },
-  { name: "Haushalt", icon_src: "/assets/icons/spray.svg" },
-  { name: "Backwaren", icon_src: "/assets/icons/bread.svg" },
-];
-
-export default function Categories() {
-  console.log(Bread);
+export default function Categories({ categories }) {
   return (
     <>
       <Head>

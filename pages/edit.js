@@ -8,7 +8,7 @@ import ContentWrapper from "../components/ContentWrapper";
 import ShoppingListEditor from "../components/ShoppingListEditor/ShoppingListEditor";
 import { getAllItems } from "../services/itemService";
 import { getAllRecipes } from "../services/recipeService";
-import { getAllShoppingItems } from "../services/shoppingItemsService";
+import { getAllShoppingItems } from "../services/shoppingItemService";
 
 export async function getServerSideProps() {
   const items = await getAllItems();
@@ -21,9 +21,6 @@ export async function getServerSideProps() {
 
 export default function Edit({ items, recipes, shoppingItems }) {
   const [listItems, setListItems] = useState(shoppingItems);
-
-  console.log("ITEMS", items);
-  console.log("SHOPPING", shoppingItems);
 
   async function addItem(item) {
     const data = { item: item.id, checked: false };
