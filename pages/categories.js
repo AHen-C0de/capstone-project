@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import Head from "next/head";
@@ -8,16 +9,30 @@ import NavigationBar from "../components/NavigationBar/NavigationBar";
 import ContentWrapper from "../components/ContentWrapper";
 import IconPlusTextButton from "../components/buttons/IconPlusTextButton";
 import { IoIosArrowBack as ArrowBackIcon } from "react-icons/io";
-import { getCurrentCategories } from "../services/shoppingItemService";
+import { getAllShoppingItems } from "../services/shoppingItemService";
+import { getAllCategories } from "../services/categoryService";
 
 export async function getServerSideProps() {
-  const categories = await getCurrentCategories();
+  const shoppingItems = await getAllShoppingItems();
+  const categories = await getAllCategories();
   return {
-    props: { categories: categories },
+    props: { shoppingItems: shoppingItems, categories: categories },
   };
 }
 
-export default function Categories({ categories }) {
+export default function Categories({ shoppingItems, categories }) {
+  const [filteredCategories, setFilteredCategories] = useState(getCategories());
+
+  function getCategories() {
+    const usedCategoryIds = shoppingItems.map(
+      (shoppingItem) => shoppingItem.category
+    );
+    const filteredCategories = categories.filter((category) =>
+      usedCategoryIds.includes(category.id)
+    );
+    return filteredCategories;
+  }
+
   return (
     <>
       <Head>
@@ -30,7 +45,7 @@ export default function Categories({ categories }) {
       <main>
         <ContentWrapper>
           <CategoryContainer>
-            {categories.map(({ name, icon_src }) => (
+            {filteredCategories.map(({ name, icon_src }) => (
               <StyledButton key={name}>
                 <span>{name}</span>
                 <Image
