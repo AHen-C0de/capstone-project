@@ -45,16 +45,20 @@ export default function Categories({ shoppingItems, categories }) {
       <main>
         <ContentWrapper>
           <CategoryContainer>
-            {filteredCategories.map(({ name, icon_src }) => (
-              <StyledButton key={name}>
-                <span>{name}</span>
-                <Image
-                  src={icon_src}
-                  width={30}
-                  height={30}
-                  alt={"Kategorie Icon"}
-                />
-              </StyledButton>
+            {filteredCategories.map(({ id, name, icon_src }) => (
+              <li key={id}>
+                <Link href={`/categories/${name}`}>
+                  <StyledButton>
+                    <span>{name}</span>
+                    <Image
+                      src={icon_src}
+                      width={30}
+                      height={30}
+                      alt={"Kategorie Icon"}
+                    />
+                  </StyledButton>
+                </Link>
+              </li>
             ))}
           </CategoryContainer>
           <Link href={"/"} passHref>
@@ -80,7 +84,7 @@ const StyledLink = styled.a`
   text-decoration: none;
 `;
 
-const CategoryContainer = styled.div`
+const CategoryContainer = styled.ul`
   background-color: var(--list-secondary);
   width: 100%;
   align-self: center;
@@ -89,6 +93,7 @@ const CategoryContainer = styled.div`
   border: solid 1px #b3b3b3;
   border-radius: 0.5rem;
   overflow-y: auto;
+  list-style: none;
 `;
 
 const StyledButton = styled.button`
