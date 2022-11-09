@@ -14,3 +14,17 @@ export async function getAllCategories() {
 
   return sanitizedCategories;
 }
+
+export async function getCategoryByName(name) {
+  await dbConnect();
+
+  const category = await Category.findOne({ name: name });
+
+  const sanitizedCategory = {
+    id: category.id,
+    name: category.name,
+    icon_src: category.icon_src,
+  };
+
+  return sanitizedCategory;
+}
