@@ -2,8 +2,6 @@
 async function toggleItemChecked(id, checkedStatus, listItemsSetter) {
   const toggeledCheckStatus = { checked: !checkedStatus };
 
-  console.log(id, checkedStatus);
-
   const response = await fetch("/api/shoppingItems", {
     method: "PATCH",
     body: JSON.stringify({ id: id, data: toggeledCheckStatus }),
