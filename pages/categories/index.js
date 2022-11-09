@@ -4,13 +4,13 @@ import Image from "next/image";
 import Link from "next/link";
 import Head from "next/head";
 
-import Header from "../components/Header";
-import NavigationBar from "../components/NavigationBar/NavigationBar";
-import ContentWrapper from "../components/ContentWrapper";
-import IconPlusTextButton from "../components/buttons/IconPlusTextButton";
+import Header from "../../components/Header";
+import NavigationBar from "../../components/NavigationBar/NavigationBar";
+import ContentWrapper from "../../components/ContentWrapper";
+import IconPlusTextButton from "../../components/buttons/IconPlusTextButton";
 import { IoIosArrowBack as ArrowBackIcon } from "react-icons/io";
-import { getAllShoppingItems } from "../services/shoppingItemService";
-import { getAllCategories } from "../services/categoryService";
+import { getAllShoppingItems } from "../../services/shoppingItemService";
+import { getAllCategories } from "../../services/categoryService";
 
 export async function getServerSideProps() {
   const shoppingItems = await getAllShoppingItems();
