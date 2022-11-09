@@ -5,7 +5,7 @@ import { RiCloseFill as CrossIcon } from "react-icons/ri";
 export default function CloseButton({ onClose, absolutePositionRight }) {
   return (
     <StyledButton
-      onClick={() => onClose()}
+      onClick={onClose}
       posRight={absolutePositionRight}
       aria-label="schließe Fenster"
     >

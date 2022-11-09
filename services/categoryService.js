@@ -7,9 +7,9 @@ export async function getAllCategories() {
   const categories = await Category.find();
 
   const sanitizedCategories = categories.map(({ id, name, icon_src }) => ({
-    id: id,
-    name: name,
-    icon_src: icon_src,
+    id,
+    name,
+    icon_src,
   }));
 
   return sanitizedCategories;
