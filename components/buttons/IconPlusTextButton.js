@@ -5,6 +5,7 @@ export default function IconPlusText({
   padding,
   margin,
   gap,
+  left,
   onButtonClick,
 }) {
   return (
@@ -12,6 +13,7 @@ export default function IconPlusText({
       padding={padding}
       margin={margin}
       gap={gap}
+      left={left}
       onClick={onButtonClick}
     >
       {children}
@@ -23,7 +25,6 @@ const StyledButton = styled.button`
   display: flex;
   align-items: center;
   position: relative;
-  left: 0.2rem;
   background-color: var(--background-secondary__dark);
   color: var(--background-primary);
   border-radius: 0.2rem;
@@ -35,6 +36,7 @@ const StyledButton = styled.button`
   padding: ${({ padding }) => padding};
   margin: ${({ margin }) => margin || 0};
   gap: ${({ gap }) => gap};
+  left: ${({ left }) => left || 0};
 
   &:hover {
     background-color: var(--background-secondary__hover);

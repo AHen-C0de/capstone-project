@@ -66,6 +66,8 @@ export default function Categories({ shoppingItems, categories }) {
               <IconPlusTextButton
                 padding="0.3rem 0.7rem 0.3rem 0.5rem"
                 gap="0.5rem"
+                left="0.3rem"
+                margin="1.2rem 0 0 0"
               >
                 <ArrowBackIcon alt={"Arrow Icon"} />
                 <p>Alle Items</p>

@@ -80,6 +80,8 @@ export default function Home({ shoppingItems }) {
               <IconPlusTextButton
                 padding="0.3rem 0.9rem 0.3rem 0.7rem"
                 gap="0.5rem"
+                left="0.3rem"
+                margin="1.2rem 0 0 0"
               >
                 <Image src={searchIcon} alt="Lupe Icon" />
                 <p>Suche Kategorie</p>
