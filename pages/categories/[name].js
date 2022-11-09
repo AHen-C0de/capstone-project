@@ -14,6 +14,7 @@ import searchIcon from "/public/assets/icons/search.svg";
 import { IoIosArrowBack as ArrowBackIcon } from "react-icons/io";
 import { getAllShoppingItems } from "../../services/shoppingItemService";
 import { getCategoryByName } from "../../services/categoryService";
+import { toggleItemChecked } from "../../utils/indexFun";
 
 export async function getServerSideProps(context) {
   const { name } = context.params;
@@ -64,7 +65,8 @@ export default function Category({ id, name, icon_src, shoppingItems }) {
                 listItems={filteredItems.filter(
                   (shoppingItem) => !shoppingItem.checked
                 )}
-                //onToggleItemChecked={toggleItemChecked}
+                listItemSetter={setFilteredItems}
+                onToggleItemChecked={toggleItemChecked}
               />
               <StyledText>Fertig:</StyledText>
               <Line />
@@ -72,7 +74,8 @@ export default function Category({ id, name, icon_src, shoppingItems }) {
                 listItems={filteredItems.filter(
                   (shoppingItem) => shoppingItem.checked
                 )}
-                //onToggleItemChecked={toggleItemChecked}
+                listItemSetter={setFilteredItems}
+                onToggleItemChecked={toggleItemChecked}
               />
             </>
           </ListContainer>
@@ -140,7 +143,7 @@ const CategoryHeader = styled.h2`
   font-size: 1.8rem;
   text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   padding: 0;
-  margin-bottom: 0.5rem;
+  margin: 1rem 0;
 `;
 
 const ImageWrapper = styled.div`

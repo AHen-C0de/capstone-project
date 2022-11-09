@@ -13,6 +13,7 @@ import ShoppingList from "../components/ShoppingList/ShoppingList";
 import IconPlusTextButton from "../components/buttons/IconPlusTextButton";
 import searchIcon from "/public/assets/icons/search.svg";
 import { getAllShoppingItems } from "../services/shoppingItemService";
+import { toggleItemChecked } from "../utils/indexFun";
 
 export async function getServerSideProps() {
   const shoppingItems = await getAllShoppingItems();
@@ -24,23 +25,6 @@ export async function getServerSideProps() {
 export default function Home({ shoppingItems }) {
   const [listItems, setListItems] = useState(shoppingItems);
   const isEmpty = listItems.length === 0;
-
-  async function toggleItemChecked(id, checkedStatus) {
-    const toggeledCheckStatus = { checked: !checkedStatus };
-
-    const response = await fetch("/api/shoppingItems", {
-      method: "PATCH",
-      body: JSON.stringify({ id: id, data: toggeledCheckStatus }),
-    });
-    const fetchedData = await response.json();
-    const updatedCheckedStatus = fetchedData.updatedShoppingItem.checked;
-
-    setListItems((previousItems) =>
-      previousItems.map((item) =>
-        item.id === id ? { ...item, checked: updatedCheckedStatus } : item
-      )
-    );
-  }
 
   return (
     <>
@@ -62,6 +46,7 @@ export default function Home({ shoppingItems }) {
                   listItems={listItems.filter(
                     (shoppingItem) => !shoppingItem.checked
                   )}
+                  listItemSetter={setListItems}
                   onToggleItemChecked={toggleItemChecked}
                 />
                 <StyledText>Fertig:</StyledText>
@@ -70,6 +55,7 @@ export default function Home({ shoppingItems }) {
                   listItems={listItems.filter(
                     (shoppingItem) => shoppingItem.checked
                   )}
+                  listItemSetter={setListItems}
                   onToggleItemChecked={toggleItemChecked}
                 />
               </>
