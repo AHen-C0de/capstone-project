@@ -31,7 +31,7 @@ export default function ShoppingListEditor({
   function openModal(recipe) {
     setIsShowRecipeModal(true);
     //add isOnList attr. whether recipe item is already on the shopping list
-    const usedItemIds = listItems.map((shoppingItem) => shoppingItem.item.id);
+    const usedItemIds = listItems.map((shoppingItem) => shoppingItem.item_id);
     const itemsPlusStatus = recipe.items.map((recipeItem) =>
       usedItemIds.includes(recipeItem.id)
         ? { ...recipeItem, isOnList: true }
@@ -78,11 +78,12 @@ export default function ShoppingListEditor({
   );
 }
 
-const Line = styled.div`
+const Line = styled.hr`
   width: 90%;
   height: 0.2rem;
   border-radius: 1rem;
   background-color: #000000;
   align-self: center;
-  margin: 0.5rem 0;
+  margin: 1.3rem 0;
+  border: none;
 `;

@@ -41,8 +41,9 @@ const StyledButton = styled.button`
   padding: 0.3rem;
   border: solid 1px var(--list-primary);
   border-radius: 0.5rem;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  font-family: "Noto Sans";
+  box-shadow: var(--button-shaddow);
+  font-family: "Inter";
+  font-weight: 400;
 `;
 
 const ElementText = styled.p`

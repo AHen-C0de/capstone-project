@@ -1,11 +1,18 @@
 import styled from "styled-components";
-import { useState, useEffect } from "react";
-
+import { useState } from "react";
+import Link from "next/link";
 import Head from "next/head";
+import Image from "next/image";
+
 import Header from "../components/Header";
 import NavigationBar from "../components/NavigationBar/NavigationBar";
+import ContentWrapper from "../components/ContentWrapper";
+import ListContainer from "../components/ListContainer";
+import ListEmptyMessage from "../components/ListEmptyMessage";
 import ShoppingList from "../components/ShoppingList/ShoppingList";
-import { getAllShoppingItems } from "../services/shoppingItemsService";
+import IconPlusTextButton from "../components/buttons/IconPlusTextButton";
+import searchIcon from "/public/assets/icons/search.svg";
+import { getAllShoppingItems } from "../services/shoppingItemService";
 
 export async function getServerSideProps() {
   const shoppingItems = await getAllShoppingItems();
@@ -16,6 +23,7 @@ export async function getServerSideProps() {
 
 export default function Home({ shoppingItems }) {
   const [listItems, setListItems] = useState(shoppingItems);
+  const isEmpty = listItems.length === 0;
 
   async function toggleItemChecked(id, checkedStatus) {
     const toggeledCheckStatus = { checked: !checkedStatus };
@@ -44,22 +52,64 @@ export default function Home({ shoppingItems }) {
 
       <Header>MyShoppingManager</Header>
       <main>
-        <MainContainer>
-          <ShoppingList
-            listItems={listItems}
-            onToggleItemChecked={toggleItemChecked}
-          />
-        </MainContainer>
+        <ContentWrapper>
+          <ListContainer>
+            {isEmpty ? (
+              <ListEmptyMessage>Leer...</ListEmptyMessage>
+            ) : (
+              <>
+                <ShoppingList
+                  listItems={listItems.filter(
+                    (shoppingItem) => !shoppingItem.checked
+                  )}
+                  onToggleItemChecked={toggleItemChecked}
+                />
+                <StyledText>Fertig:</StyledText>
+                <Line />
+                <ShoppingList
+                  listItems={listItems.filter(
+                    (shoppingItem) => shoppingItem.checked
+                  )}
+                  onToggleItemChecked={toggleItemChecked}
+                />
+              </>
+            )}
+          </ListContainer>
+          <Link href={"/categories"} passHref>
+            <StyledLink>
+              <IconPlusTextButton
+                padding="0.3rem 0.9rem 0.3rem 0.7rem"
+                gap="0.5rem"
+              >
+                <Image src={searchIcon} alt="Lupe Icon" />
+                <p>Suche Kategorie</p>
+              </IconPlusTextButton>
+            </StyledLink>
+          </Link>
+        </ContentWrapper>
       </main>
       <NavigationBar />
     </>
   );
 }
 
-const MainContainer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-  width: 100%;
+const StyledText = styled.span`
+  font-family: "Lily Script One";
+  color: var(--background-secondary);
+  font-size: 1.6rem;
+  position: relative;
+  left: 1rem;
+`;
+
+const Line = styled.div`
+  width: 70%;
+  height: 0.1rem;
+  border-radius: 1rem;
+  background-color: var(--background-secondary);
+  margin: 0.2rem 0 1rem 0;
+`;
+
+const StyledLink = styled.a`
+  align-self: flex-start;
+  text-decoration: none;
 `;

@@ -5,11 +5,10 @@ const ListContainer = styled.div`
   padding: 1rem;
   display: flex;
   flex-direction: column;
-  gap: 1rem;
-  width: 85%;
-  max-width: 400px;
+  width: 100%;
   box-shadow: 5px 5px 6px #c2c2c2;
-  height: 90%;
+  height: 100%;
+  overflow-y: auto;
   filter: ${({ isBlur }) => (isBlur ? "blur(5px)" : "none")};
 `;
 

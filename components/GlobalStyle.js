@@ -4,20 +4,53 @@ const GlobalStyle = createGlobalStyle`
   :root {
     --background-primary: #FFFFFF;
     --background-secondary: #0B7D54;
-    --background-secondary-hover: #085C3E;
+    --background-secondary__dark: #095A3D;
+    --background-secondary__hover: #06402B;
     --list-primary: #FAD861;
     --list-secondary: #FFF1C1;
+    --button-shaddow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   }
 
-  /* noto-sans-regular - latin */
+  /* inter-regular - latin */
   @font-face {
-    font-family: 'Noto Sans';
+    font-family: 'Inter';
     font-style: normal;
     font-weight: 400;
     src: local(''),
-        url('/assets/fonts/noto-sans-v27-latin-regular.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
-        url('/assets/fonts/noto-sans-v27-latin-regular.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+        url('/assets/fonts/inter-v12-latin-regular.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+        url('/assets/fonts/inter-v12-latin-regular.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
   }
+
+  /* inter-500 - latin */
+  @font-face {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    src: local(''),
+        url('/assets/fonts/inter-v12-latin-500.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+        url('/assets/fonts/inter-v12-latin-500.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+  }
+
+    /* inter-600 - latin */
+    @font-face {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 600;
+    src: local(''),
+        url('/assets/fonts/inter-v12-latin-600.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+        url('/assets/fonts/inter-v12-latin-600.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+  }
+
+  /* inter-700 - latin */
+  @font-face {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 700;
+    src: local(''),
+        url('/assets/fonts/inter-v12-latin-700.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+        url('/assets/fonts/inter-v12-latin-700.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+  }
+
   /* lily-script-one-regular - latin */
   @font-face {
     font-family: 'Lily Script One';
@@ -49,7 +82,7 @@ const GlobalStyle = createGlobalStyle`
   }
 
   body {
-    font-family: 'Noto Sans', sans-serif;
+    font-family: 'Inter';
     background-color: var(--background-primary);
   }
 
@@ -60,7 +93,7 @@ const GlobalStyle = createGlobalStyle`
   }
 
   main {
-    overflow-y: auto;
+    overflow-y: hidden;
   }
 `;
 

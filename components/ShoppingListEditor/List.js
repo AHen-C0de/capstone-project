@@ -12,9 +12,9 @@ export default function List({ listItems, onDelete }) {
         <ListEmptyMessage>Leer...</ListEmptyMessage>
       ) : (
         <StyledList hideBorder={isEmpty} alignMiddle={isEmpty}>
-          {listItems.map(({ id, item }) => (
+          {listItems.map(({ id, name }) => (
             <ListItem key={id}>
-              <Name>{item.name}</Name>
+              <Name>{name}</Name>
               <DeleteButton onDelete={() => onDelete(id)} />
             </ListItem>
           ))}
@@ -25,7 +25,6 @@ export default function List({ listItems, onDelete }) {
 }
 
 const StyledList = styled.ul`
-  height: 100%;
   overflow-y: auto;
   list-style: none;
   border-radius: 0.5rem;

@@ -69,5 +69,5 @@ const StyledInput = styled.input`
   width: 90%;
   border-radius: 2rem;
   border: none;
-  font-family: "Noto Sans";
+  font-family: "Inter";
 `;
