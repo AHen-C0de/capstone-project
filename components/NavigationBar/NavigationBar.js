@@ -3,6 +3,7 @@ import styled from "styled-components";
 import NavigationItem from "./NavigationItem";
 import ListIcon from "../icons/ListIcon";
 import WriteIcon from "../icons/WriteIcon";
+import MoneyIcon from "../icons/MoneyIcon";
 
 export default function NavigationBar() {
   return (
@@ -17,6 +18,7 @@ export default function NavigationBar() {
               height="2rem"
             />
           }
+          padding="0.3rem"
         ></NavigationItem>
         <NavigationItem
           path="/edit"
@@ -27,9 +29,19 @@ export default function NavigationBar() {
               height="2rem"
             />
           }
-        >
-          Edit
-        </NavigationItem>
+          padding="0.3rem"
+        ></NavigationItem>
+        <NavigationItem
+          path="/expenses"
+          icon={
+            <MoneyIcon
+              fillColor="var(--background-secondary)"
+              width="2.2rem"
+              height="2.2rem"
+            />
+          }
+          padding="0.2rem"
+        ></NavigationItem>
       </NavBar>
     </StyledFooter>
   );
