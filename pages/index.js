@@ -2,7 +2,6 @@ import styled from "styled-components";
 import { useState } from "react";
 import Link from "next/link";
 import Head from "next/head";
-import Image from "next/image";
 
 import Header from "../components/Header";
 import NavigationBar from "../components/NavigationBar/NavigationBar";
@@ -11,7 +10,7 @@ import ListContainer from "../components/ListContainer";
 import ListEmptyMessage from "../components/ListEmptyMessage";
 import ShoppingList from "../components/ShoppingList/ShoppingList";
 import IconPlusTextButton from "../components/buttons/IconPlusTextButton";
-import searchIcon from "/public/assets/icons/search.svg";
+import { BiCategory as CategoryIcon } from "react-icons/bi";
 import { getAllShoppingItems } from "../services/shoppingItemService";
 import { toggleItemChecked } from "../utils/indexFun";
 
@@ -69,8 +68,8 @@ export default function Home({ shoppingItems }) {
                 left="0.3rem"
                 margin="1.2rem 0 0 0"
               >
-                <Image src={searchIcon} alt="Lupe Icon" />
-                <p>Suche Kategorie</p>
+                <CategoryIcon alt="Kategorie Icon" size={30} />
+                <p>Kategorien</p>
               </IconPlusTextButton>
             </StyledLink>
           </Link>

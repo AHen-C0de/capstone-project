@@ -54,7 +54,7 @@ export default function Categories({ shoppingItems, categories }) {
                       src={icon_src}
                       width={30}
                       height={30}
-                      alt={"Kategorie Icon"}
+                      alt={`${name} Icon`}
                     />
                   </StyledButton>
                 </Link>
@@ -69,7 +69,7 @@ export default function Categories({ shoppingItems, categories }) {
                 left="0.3rem"
                 margin="1.2rem 0 0 0"
               >
-                <ArrowBackIcon alt={"Arrow Icon"} />
+                <ArrowBackIcon alt="Pfeil Icon" size={30} />
                 <p>Alle Items</p>
               </IconPlusTextButton>
             </StyledLink>

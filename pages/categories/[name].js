@@ -10,7 +10,7 @@ import ContentWrapper from "../../components/ContentWrapper";
 import ListContainer from "../../components/ListContainer";
 import ShoppingList from "../../components/ShoppingList/ShoppingList";
 import IconPlusTextButton from "../../components/buttons/IconPlusTextButton";
-import searchIcon from "/public/assets/icons/search.svg";
+import { BiCategory as CategoryIcon } from "react-icons/bi";
 import { IoIosArrowBack as ArrowBackIcon } from "react-icons/io";
 import { getAllShoppingItems } from "../../services/shoppingItemService";
 import { getCategoryByName } from "../../services/categoryService";
@@ -87,7 +87,7 @@ export default function Category({ id, name, icon_src, shoppingItems }) {
                   gap="0.5rem"
                   margin="1.2rem 0 0 0 "
                 >
-                  <Image src={searchIcon} alt="Lupe Icon" />
+                  <CategoryIcon alt="Kategorie Icon" size={30} />
                   <p>Kategorien</p>
                 </IconPlusTextButton>
               </StyledLink>
@@ -99,7 +99,7 @@ export default function Category({ id, name, icon_src, shoppingItems }) {
                   gap="0.5rem"
                   margin="1.2rem 0 0 0 "
                 >
-                  <ArrowBackIcon alt={"Arrow Icon"} size={30} />
+                  <ArrowBackIcon alt="Pfeil Icon" size={30} />
                   <p>Alle Items</p>
                 </IconPlusTextButton>
               </StyledLink>
