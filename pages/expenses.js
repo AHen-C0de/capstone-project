@@ -33,9 +33,9 @@ export default function Expenses({ expenses }) {
         title: {
           display: true,
           text: "Ausgaben | € |",
-          // font: {
-          //   size: "15rem",
-          // },
+          font: {
+            size: "15rem",
+          },
         },
         grid: {
           display: false,
@@ -50,9 +50,9 @@ export default function Expenses({ expenses }) {
         title: {
           display: true,
           text: "Datum",
-          // font: {
-          //   size: "15rem",
-          // },
+          font: {
+            size: "15rem",
+          },
         },
         grid: {
           display: false,
