@@ -35,6 +35,9 @@ export default function Expenses({ expenses }) {
           display: true,
           text: "Kosten",
         },
+        grid: {
+          display: false,
+        },
       },
       x: {
         type: "time",
@@ -45,6 +48,9 @@ export default function Expenses({ expenses }) {
         title: {
           display: true,
           text: "Datum",
+        },
+        grid: {
+          display: false,
         },
       },
     },
@@ -59,12 +65,6 @@ export default function Expenses({ expenses }) {
     datasets: [
       {
         data: data,
-        // data: [
-        //   { x: new Date("2015-03-01T13:03:00Z"), y: 25 },
-        //   { x: new Date("2015-03-14T13:03:00Z"), y: 5 },
-        //   { x: new Date("2015-03-20T13:03:00Z"), y: 10 },
-        //   { x: new Date("2015-03-16T13:03:00Z"), y: 20 },
-        // ],
         backgroundColor: "#000000",
         borderColor: "#000000",
         borderWidth: 1,
