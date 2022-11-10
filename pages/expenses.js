@@ -1,6 +1,5 @@
 import { Scatter } from "react-chartjs-2";
-import { Line } from "react-chartjs-2";
-import { Chart as ChartJS } from "chart.js/auto";
+import { Chart as ChartJS, registerables } from "chart.js/auto";
 import "chartjs-adapter-luxon";
 import Head from "next/head";
 
@@ -17,20 +16,15 @@ export async function getServerSideProps() {
 }
 
 export default function Expenses({ expenses }) {
-  console.log("TEST", expenses);
-
   const data = expenses.map((expense) => ({
     x: new Date(expense.date),
     y: expense.amount,
   }));
-  console.log(data);
 
   const sortedData = data.sort(
     (dataPointPre, dataPointPost) =>
       Number(dataPointPre.x) - Number(dataPointPost.x)
   );
-
-  console.log("SORTED", sortedData);
 
   const plotOptions = {
     scales: {
@@ -38,7 +32,10 @@ export default function Expenses({ expenses }) {
         beginAtZero: true,
         title: {
           display: true,
-          text: "Kosten",
+          text: "Ausgaben | € |",
+          font: {
+            size: "15rem",
+          },
         },
         grid: {
           display: false,
@@ -46,13 +43,16 @@ export default function Expenses({ expenses }) {
       },
       x: {
         type: "time",
-        // time: {
-        //   // Luxon format string
-        //   tooltipFormat: "DD T",
-        // },
+        time: {
+          // Luxon format string
+          //tooltipFormat: "DD MM",
+        },
         title: {
           display: true,
           text: "Datum",
+          font: {
+            size: "15rem",
+          },
         },
         grid: {
           display: false,
@@ -70,9 +70,9 @@ export default function Expenses({ expenses }) {
     datasets: [
       {
         data: data,
-        backgroundColor: "#000000",
-        borderColor: "#000000",
-        borderWidth: 1,
+        backgroundColor: "rgba(11, 158, 91, 0.5)",
+        borderColor: "#0B7D54",
+        borderWidth: 2,
         showLine: true,
       },
     ],
