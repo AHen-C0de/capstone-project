@@ -4,13 +4,13 @@ import Image from "next/image";
 import Link from "next/link";
 import Head from "next/head";
 
-import Header from "../components/Header";
-import NavigationBar from "../components/NavigationBar/NavigationBar";
-import ContentWrapper from "../components/ContentWrapper";
-import IconPlusTextButton from "../components/buttons/IconPlusTextButton";
+import Header from "../../components/Header";
+import NavigationBar from "../../components/NavigationBar/NavigationBar";
+import ContentWrapper from "../../components/ContentWrapper";
+import IconPlusTextButton from "../../components/buttons/IconPlusTextButton";
 import { IoIosArrowBack as ArrowBackIcon } from "react-icons/io";
-import { getAllShoppingItems } from "../services/shoppingItemService";
-import { getAllCategories } from "../services/categoryService";
+import { getAllShoppingItems } from "../../services/shoppingItemService";
+import { getAllCategories } from "../../services/categoryService";
 
 export async function getServerSideProps() {
   const shoppingItems = await getAllShoppingItems();
@@ -45,16 +45,20 @@ export default function Categories({ shoppingItems, categories }) {
       <main>
         <ContentWrapper>
           <CategoryContainer>
-            {filteredCategories.map(({ name, icon_src }) => (
-              <StyledButton key={name}>
-                <span>{name}</span>
-                <Image
-                  src={icon_src}
-                  width={30}
-                  height={30}
-                  alt={"Kategorie Icon"}
-                />
-              </StyledButton>
+            {filteredCategories.map(({ id, name, icon_src }) => (
+              <li key={id}>
+                <Link href={`/categories/${name}`}>
+                  <StyledButton>
+                    <span>{name}</span>
+                    <Image
+                      src={icon_src}
+                      width={30}
+                      height={30}
+                      alt={`${name} Icon`}
+                    />
+                  </StyledButton>
+                </Link>
+              </li>
             ))}
           </CategoryContainer>
           <Link href={"/"} passHref>
@@ -62,8 +66,10 @@ export default function Categories({ shoppingItems, categories }) {
               <IconPlusTextButton
                 padding="0.3rem 0.7rem 0.3rem 0.5rem"
                 gap="0.5rem"
+                left="0.3rem"
+                margin="1.2rem 0 0 0"
               >
-                <ArrowBackIcon alt={"Arrow Icon"} />
+                <ArrowBackIcon alt="Pfeil Icon" size={30} />
                 <p>Alle Items</p>
               </IconPlusTextButton>
             </StyledLink>
@@ -80,7 +86,7 @@ const StyledLink = styled.a`
   text-decoration: none;
 `;
 
-const CategoryContainer = styled.div`
+const CategoryContainer = styled.ul`
   background-color: var(--list-secondary);
   width: 100%;
   align-self: center;
@@ -89,6 +95,7 @@ const CategoryContainer = styled.div`
   border: solid 1px #b3b3b3;
   border-radius: 0.5rem;
   overflow-y: auto;
+  list-style: none;
 `;
 
 const StyledButton = styled.button`

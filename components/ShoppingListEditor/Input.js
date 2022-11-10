@@ -70,4 +70,7 @@ const StyledInput = styled.input`
   border-radius: 2rem;
   border: none;
   font-family: "Inter";
+  background: url(/assets/icons/search.svg) no-repeat scroll 0.6rem 0.4rem;
+  padding-left: 2.8rem;
+  background-color: white;
 `;

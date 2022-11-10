@@ -2,7 +2,6 @@ import styled from "styled-components";
 import { useState } from "react";
 import Link from "next/link";
 import Head from "next/head";
-import Image from "next/image";
 
 import Header from "../components/Header";
 import NavigationBar from "../components/NavigationBar/NavigationBar";
@@ -11,8 +10,9 @@ import ListContainer from "../components/ListContainer";
 import ListEmptyMessage from "../components/ListEmptyMessage";
 import ShoppingList from "../components/ShoppingList/ShoppingList";
 import IconPlusTextButton from "../components/buttons/IconPlusTextButton";
-import searchIcon from "/public/assets/icons/search.svg";
+import { BiCategory as CategoryIcon } from "react-icons/bi";
 import { getAllShoppingItems } from "../services/shoppingItemService";
+import { toggleItemChecked } from "../utils/indexFun";
 
 export async function getServerSideProps() {
   const shoppingItems = await getAllShoppingItems();
@@ -24,23 +24,6 @@ export async function getServerSideProps() {
 export default function Home({ shoppingItems }) {
   const [listItems, setListItems] = useState(shoppingItems);
   const isEmpty = listItems.length === 0;
-
-  async function toggleItemChecked(id, checkedStatus) {
-    const toggeledCheckStatus = { checked: !checkedStatus };
-
-    const response = await fetch("/api/shoppingItems", {
-      method: "PATCH",
-      body: JSON.stringify({ id: id, data: toggeledCheckStatus }),
-    });
-    const fetchedData = await response.json();
-    const updatedCheckedStatus = fetchedData.updatedShoppingItem.checked;
-
-    setListItems((previousItems) =>
-      previousItems.map((item) =>
-        item.id === id ? { ...item, checked: updatedCheckedStatus } : item
-      )
-    );
-  }
 
   return (
     <>
@@ -62,6 +45,7 @@ export default function Home({ shoppingItems }) {
                   listItems={listItems.filter(
                     (shoppingItem) => !shoppingItem.checked
                   )}
+                  listItemSetter={setListItems}
                   onToggleItemChecked={toggleItemChecked}
                 />
                 <StyledText>Fertig:</StyledText>
@@ -70,6 +54,7 @@ export default function Home({ shoppingItems }) {
                   listItems={listItems.filter(
                     (shoppingItem) => shoppingItem.checked
                   )}
+                  listItemSetter={setListItems}
                   onToggleItemChecked={toggleItemChecked}
                 />
               </>
@@ -80,9 +65,11 @@ export default function Home({ shoppingItems }) {
               <IconPlusTextButton
                 padding="0.3rem 0.9rem 0.3rem 0.7rem"
                 gap="0.5rem"
+                left="0.3rem"
+                margin="1.2rem 0 0 0"
               >
-                <Image src={searchIcon} alt="Lupe Icon" />
-                <p>Suche Kategorie</p>
+                <CategoryIcon alt="Kategorie Icon" size={30} />
+                <p>Kategorien</p>
               </IconPlusTextButton>
             </StyledLink>
           </Link>

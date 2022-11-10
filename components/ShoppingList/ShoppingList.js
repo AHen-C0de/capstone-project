@@ -2,7 +2,11 @@ import styled from "styled-components";
 
 import ListItem from "./ListItem";
 
-export default function ShoppingList({ listItems, onToggleItemChecked }) {
+export default function ShoppingList({
+  listItems,
+  onToggleItemChecked,
+  listItemSetter,
+}) {
   return (
     <StyledList>
       {listItems.map(({ id, name, checked }) => (
@@ -11,7 +15,9 @@ export default function ShoppingList({ listItems, onToggleItemChecked }) {
           id={id}
           text={name}
           isChecked={checked}
-          onToggleItemChecked={() => onToggleItemChecked(id, checked)}
+          onToggleItemChecked={() =>
+            onToggleItemChecked(id, checked, listItemSetter)
+          }
         />
       ))}
     </StyledList>
