@@ -143,7 +143,7 @@ const CategoryHeader = styled.h2`
   font-size: 1.8rem;
   text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   padding: 0;
-  margin: 1rem 0;
+  margin: 0.5rem 0 1rem 0;
 `;
 
 const ImageWrapper = styled.div`
