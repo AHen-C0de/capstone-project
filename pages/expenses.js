@@ -11,78 +11,8 @@ export async function getServerSideProps() {
   };
 }
 
-const data3 = {
-  datasets: [
-    {
-      data: [
-        { x: new Date("2015-03-01T13:03:00Z"), y: 25 },
-        { x: new Date("2015-03-14T13:03:00Z"), y: 5 },
-        { x: new Date("2015-03-15T13:03:00Z"), y: 10 },
-        { x: new Date("2015-03-16T13:03:00Z"), y: 20 },
-      ],
-      backgroundColor: "#000000",
-      borderColor: "#000000",
-      borderWidth: 1,
-      showLine: true,
-    },
-  ],
-};
-
-// const options = {
-//   x: {
-//     type: "time",
-//     time: {
-//       // Luxon format string
-//       tooltipFormat: "DD T",
-//     },
-//     title: {
-//       display: true,
-//       text: "Date",
-//     },
-//   },
-//   y: {
-//     title: {
-//       display: true,
-//       text: "value",
-//     },
-//   },
-// };
-
-const config3 = {
-  //type: "line",
-  type: "scatter",
-  data3,
-  options: {
-    x: {
-      type: "time",
-      time: {
-        // Luxon format string
-        tooltipFormat: "DD T",
-      },
-      title: {
-        display: true,
-        text: "Date",
-      },
-    },
-    y: {
-      title: {
-        display: true,
-        text: "value",
-      },
-    },
-  },
-};
-/////////////////////////////////////////////////////
-// const data = [
-//   { x: new Date("2015-03-01T13:03:00Z"), y: 25 },
-//   { x: new Date("2015-03-14T13:03:00Z"), y: 5 },
-//   { x: new Date("2015-03-15T13:03:00Z"), y: 10 },
-//   { x: new Date("2015-03-16T13:03:00Z"), y: 20 },
-// ];
-
 export default function Expenses({ expenses }) {
   console.log("TEST", expenses);
-  //   return <Scatter data={data3} width={50} height={50} options={options} />;
 
   const data = expenses.map((expense) => ({
     x: new Date(expense.date),
@@ -118,12 +48,16 @@ export default function Expenses({ expenses }) {
         },
       },
     },
+    plugins: {
+      legend: {
+        display: false,
+      },
+    },
   };
 
   const plotData = {
     datasets: [
       {
-        label: "",
         data: data,
         // data: [
         //   { x: new Date("2015-03-01T13:03:00Z"), y: 25 },
