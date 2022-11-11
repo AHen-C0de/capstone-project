@@ -47,7 +47,6 @@ export default function Expenses({ expenses }) {
             size: 20,
           },
           stepSize: 20,
-          // Include a dollar sign in the ticks
           callback: function (value) {
             return `${value} €`;
           },
@@ -93,6 +92,17 @@ export default function Expenses({ expenses }) {
     ],
   };
 
+  function handleSubmit(event) {
+    event.preventDefault();
+    const form = event.target;
+
+    const formData = new FormData(form);
+    const data = Object.fromEntries(formData);
+
+    console.log(data);
+    form.reset();
+  }
+
   return (
     <>
       <Head>
@@ -107,6 +117,28 @@ export default function Expenses({ expenses }) {
           <GraphWrapper>
             <Scatter options={plotOptions} data={plotData} />
           </GraphWrapper>
+          <form onSubmit={handleSubmit}>
+            <label htmlFor="amount">Ausgaben hinzufügen</label>
+            <input
+              type="number"
+              min={0.01}
+              max={500}
+              step={0.01}
+              name="amount"
+              id="amount"
+              required
+            />
+            <label htmlFor="date">Datum</label>
+            <input
+              type="date"
+              min="2022-01-01"
+              max="2099-12-12"
+              name="date"
+              id="name"
+              required
+            />
+            <button type="submit">Hinzufügen</button>
+          </form>
         </ContentWrapper>
       </main>
       <NavigationBar />
