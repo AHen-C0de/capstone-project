@@ -6,7 +6,7 @@ import { GiCheckMark as CheckIcon } from "react-icons/gi";
 
 export default function RecipeModalContent({ recipe, onAdd, onDelete }) {
   return (
-    <>
+    <ModalWrapper>
       <RecipeName>{recipe.name}</RecipeName>
       {recipe.variant && (
         <RecipeVariant>{`- ${recipe.variant} -`}</RecipeVariant>
@@ -34,9 +34,13 @@ export default function RecipeModalContent({ recipe, onAdd, onDelete }) {
         <p>Check-In</p>
         <CheckIcon alt="Checkmark Icon" />
       </IconPlusTextButton>
-    </>
+    </ModalWrapper>
   );
 }
+
+const ModalWrapper = styled.div`
+  padding: 1.2rem;
+`;
 
 const Message = styled.p`
   color: red;

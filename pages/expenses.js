@@ -9,6 +9,7 @@ import Header from "../components/Header";
 import NavigationBar from "../components/NavigationBar/NavigationBar";
 import MoneyAddIcon from "../components/icons/MoneyAddIcon";
 import Modal from "../components/Modal";
+import StyledButton from "../components/buttons/StyledButton";
 import { getAllExpenses } from "../services/expensesService";
 
 export async function getServerSideProps() {
@@ -175,7 +176,13 @@ export default function Expenses({ DBexpenses }) {
                     required
                   />
                 </InputWrapper>
-                <button type="submit">Hinzufügen</button>
+                <StyledButton
+                  aria-label="Items zu Liste hizufügen"
+                  padding="0.3rem 0.8rem"
+                  margin="1rem auto 0 auto"
+                >
+                  Hinzufügen
+                </StyledButton>
               </StyledForm>
             </Modal>
           )}
@@ -202,9 +209,14 @@ const StyledForm = styled.form`
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  background-color: var(--list-secondary);
   padding: 1rem;
   border-radius: 1rem;
+  background: rgb(254, 233, 162);
+  background: linear-gradient(
+    90deg,
+    rgba(254, 233, 162, 1) 0%,
+    rgba(255, 216, 81, 1) 92%
+  );
 `;
 
 const InputWrapper = styled.div`
@@ -216,14 +228,11 @@ const StyledLabel = styled.label`
   font-family: "Lily Script One";
   position: relative;
   left: 1.2rem;
-  //top: 0.3rem;
-  //background-color: white;
-  //border: solid 1px grey;
   width: fit-content;
   padding: 0.2rem 0.5rem;
   border-radius: 0.6rem;
   color: var(--background-secondary);
-  font-size: 1.3rem;
+  font-size: 1.5rem;
 `;
 
 const StyledInput = styled.input`
