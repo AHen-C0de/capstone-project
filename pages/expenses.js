@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Scatter } from "react-chartjs-2";
 import { Chart as ChartJS, registerables } from "chart.js/auto";
 import "chartjs-adapter-luxon";
@@ -7,7 +7,6 @@ import Head from "next/head";
 
 import Header from "../components/Header";
 import NavigationBar from "../components/NavigationBar/NavigationBar";
-//import ContentWrapper from "../components/ContentWrapper";
 import { getAllExpenses } from "../services/expensesService";
 
 export async function getServerSideProps() {
@@ -19,19 +18,37 @@ export async function getServerSideProps() {
 
 export default function Expenses({ DBexpenses }) {
   const [expenses, setExpenses] = useState(DBexpenses);
-  console.log(expenses);
+  const [chartData, setChartData] = useState({});
 
-  const data = expenses.map((expense) => ({
-    x: new Date(expense.date),
-    y: expense.amount,
-  }));
+  useEffect(() => {
+    const preparedData = prepareChartData();
+    setChartData(preparedData);
+  }, [expenses]);
 
-  const sortedData = data.sort(
-    (dataPointPre, dataPointPost) =>
-      Number(dataPointPre.x) - Number(dataPointPost.x)
-  );
+  function prepareChartData() {
+    const data = expenses.map((expense) => ({
+      x: new Date(expense.date),
+      y: expense.amount,
+    }));
 
-  const plotOptions = {
+    const sortedData = data.sort(
+      (dataPointPre, dataPointPost) => dataPointPre.x - dataPointPost.x
+    );
+
+    return {
+      datasets: [
+        {
+          data: data,
+          backgroundColor: "rgba(11, 158, 91, 0.5)",
+          borderColor: "#0B7D54",
+          borderWidth: 2,
+          showLine: true,
+        },
+      ],
+    };
+  }
+
+  const chartOptions = {
     scales: {
       y: {
         beginAtZero: true,
@@ -84,18 +101,6 @@ export default function Expenses({ DBexpenses }) {
     maintainAspectRatio: false,
   };
 
-  const plotData = {
-    datasets: [
-      {
-        data: data,
-        backgroundColor: "rgba(11, 158, 91, 0.5)",
-        borderColor: "#0B7D54",
-        borderWidth: 2,
-        showLine: true,
-      },
-    ],
-  };
-
   async function handleSubmit(event) {
     event.preventDefault();
     const form = event.target;
@@ -103,16 +108,16 @@ export default function Expenses({ DBexpenses }) {
     const formData = new FormData(form);
     const data = Object.fromEntries(formData);
 
-    console.log(data);
-
     const response = await fetch("api/expenses", {
       method: "POST",
       body: JSON.stringify(data),
     });
-    const postedExpense = await response.json();
+    const responseObj = await response.json();
 
-    setExpenses((previousExpenses) => [...previousExpenses, postedExpense]);
-
+    setExpenses((previousExpenses) => [
+      ...previousExpenses,
+      responseObj.createdExpense,
+    ]);
     form.reset();
   }
 
@@ -128,7 +133,9 @@ export default function Expenses({ DBexpenses }) {
       <main>
         <ContentWrapper>
           <GraphWrapper>
-            <Scatter options={plotOptions} data={plotData} />
+            {Object.keys(chartData).length !== 0 && (
+              <Scatter options={chartOptions} data={chartData} />
+            )}
           </GraphWrapper>
           <form onSubmit={handleSubmit}>
             <label htmlFor="amount">Ausgaben hinzufügen</label>
