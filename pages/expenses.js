@@ -138,7 +138,7 @@ export default function Expenses({ DBexpenses }) {
           </GraphWrapper>
           {!isShowForm ? (
             <OpenFormButton
-              aria-label="open form"
+              aria-label="Öffne Formular für Ausgaben"
               onClick={() => setIsShowForm(true)}
             >
               <MoneyAddIcon
@@ -203,7 +203,7 @@ const ContentWrapper = styled.div`
 `;
 
 const GraphWrapper = styled.div`
-  height: 50vh;
+  height: 45vh;
 `;
 
 const OpenFormButton = styled.button`
