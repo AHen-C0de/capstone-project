@@ -57,18 +57,13 @@ export default function Expenses({ DBexpenses }) {
         beginAtZero: true,
         title: {
           display: false,
-          text: "| € |",
-          font: {
-            size: 22,
-            family: "Inter",
-          },
         },
         grid: {
           display: false,
         },
         ticks: {
           font: {
-            size: 20,
+            size: "20",
           },
           stepSize: 20,
           callback: function (value) {
@@ -157,28 +152,34 @@ export default function Expenses({ DBexpenses }) {
             </button>
           ) : (
             <>
-              <CloseButton onClose={toggleShowForm} />
               <StyledForm onSubmit={handleSubmit}>
-                <StyledLabel htmlFor="amount">Ausgaben hinzufügen</StyledLabel>
-                <StyledInput
-                  type="number"
-                  min={0.01}
-                  max={500}
-                  step={0.01}
-                  name="amount"
-                  id="amount"
-                  placeholder="0.00 €"
-                  required
-                />
-                <StyledLabel htmlFor="date">Datum</StyledLabel>
-                <StyledInput
-                  type="date"
-                  min="2022-01-01"
-                  max="2099-12-12"
-                  name="date"
-                  id="name"
-                  required
-                />
+                <CloseButton onClose={toggleShowForm} />
+                <InputWrapper>
+                  <StyledLabel htmlFor="amount">
+                    Ausgaben hinzufügen
+                  </StyledLabel>
+                  <StyledInput
+                    type="number"
+                    min={0.01}
+                    max={500}
+                    step={0.01}
+                    name="amount"
+                    id="amount"
+                    placeholder="0.00 €"
+                    required
+                  />
+                </InputWrapper>
+                <InputWrapper>
+                  <StyledLabel htmlFor="date">Datum</StyledLabel>
+                  <StyledInput
+                    type="date"
+                    min="2022-01-01"
+                    max="2099-12-12"
+                    name="date"
+                    id="name"
+                    required
+                  />
+                </InputWrapper>
                 <button type="submit">Hinzufügen</button>
               </StyledForm>
             </>
@@ -205,16 +206,32 @@ const GraphWrapper = styled.div`
 const StyledForm = styled.form`
   display: flex;
   flex-direction: column;
+  gap: 1rem;
   background-color: var(--list-secondary);
   padding: 1rem;
   border-radius: 1rem;
 `;
 
+const InputWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
 const StyledLabel = styled.label`
   font-family: "Lily Script One";
+  position: relative;
+  left: 1.2rem;
+  top: 0.3rem;
+  background-color: white;
+  border: solid 1px grey;
+  width: fit-content;
+  padding: 0.2rem 0.5rem;
+  border-radius: 0.6rem;
+  color: var(--background-secondary);
 `;
 
 const StyledInput = styled.input`
-  padding: 0.5rem;
+  padding: 0.7rem 0.5rem 0.5rem 0.5rem;
   border-radius: 2rem;
+  border: none;
 `;
