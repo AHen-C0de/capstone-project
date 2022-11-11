@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { useState } from "react";
 import { Scatter } from "react-chartjs-2";
 import { Chart as ChartJS, registerables } from "chart.js/auto";
 import "chartjs-adapter-luxon";
@@ -12,11 +13,14 @@ import { getAllExpenses } from "../services/expensesService";
 export async function getServerSideProps() {
   const expenses = await getAllExpenses();
   return {
-    props: { expenses: expenses },
+    props: { DBexpenses: expenses },
   };
 }
 
-export default function Expenses({ expenses }) {
+export default function Expenses({ DBexpenses }) {
+  const [expenses, setExpenses] = useState(DBexpenses);
+  console.log(expenses);
+
   const data = expenses.map((expense) => ({
     x: new Date(expense.date),
     y: expense.amount,
@@ -101,10 +105,13 @@ export default function Expenses({ expenses }) {
 
     console.log(data);
 
-    await fetch("api/expenses", {
+    const response = await fetch("api/expenses", {
       method: "POST",
       body: JSON.stringify(data),
     });
+    const postedExpense = await response.json();
+
+    setExpenses((previousExpenses) => [...previousExpenses, postedExpense]);
 
     form.reset();
   }

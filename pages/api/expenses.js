@@ -1,15 +1,15 @@
 import dbConnect from "../../lib/dbConnect";
 import Expense from "../../models/Expense";
-//import { getAllExpenses } from "../../services/shoppingItemService";
+//import { getAllExpenses } from "../services/expensesService";
 
 export default async function handler(request, response) {
   switch (request.method) {
     // case "GET":
     //   try {
-    //     const shoppingItems = await getAllShoppingItems();
+    //     const expenses = await getAllExpenses();
     //     return response.status(200).json({
-    //       message: "ShoppingItems received",
-    //       shoppingItems: shoppingItems,
+    //       message: "Expenses received",
+    //       expenses: expenses,
     //     });
     //   } catch (err) {
     //     return response.status(400).json(err.message);
@@ -37,10 +37,13 @@ export default async function handler(request, response) {
             createdExpense: createdExpense,
           });
         }
-        return response.status(400).json({
+        return response.status(409).json({
           message: "Sumitted data don't meet required format",
           submittedData: postData,
-          info: { isValidAmount: isValidAmount, isValidDate: isValidDate },
+          validation: {
+            isValidAmount: isValidAmount,
+            isValidDate: isValidDate,
+          },
         });
       } catch (err) {
         return response.status(400).json(err.message);
