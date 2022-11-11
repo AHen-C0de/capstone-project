@@ -138,13 +138,14 @@ export default function Expenses({ DBexpenses }) {
           </GraphWrapper>
           {!isShowForm ? (
             <OpenFormButton
-              aria-label={isShowForm ? "hide form" : "show form"}
+              aria-label="open form"
               onClick={() => setIsShowForm(true)}
             >
               <MoneyAddIcon
                 width={40}
                 height={40}
                 fillColor={"var(--background-primary)"}
+                alt="Geldstapel-Icon"
               />
             </OpenFormButton>
           ) : (
