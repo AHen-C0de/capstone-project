@@ -8,7 +8,7 @@ import Head from "next/head";
 import Header from "../components/Header";
 import NavigationBar from "../components/NavigationBar/NavigationBar";
 import MoneyAddIcon from "../components/icons/MoneyAddIcon";
-import CloseButton from "../components/buttons/CloseButton";
+import Modal from "../components/Modal";
 import { getAllExpenses } from "../services/expensesService";
 
 export async function getServerSideProps() {
@@ -21,7 +21,7 @@ export async function getServerSideProps() {
 export default function Expenses({ DBexpenses }) {
   const [expenses, setExpenses] = useState(DBexpenses);
   const [chartData, setChartData] = useState({});
-  const [isShowForm, setShowForm] = useState(false);
+  const [isShowForm, setIsShowForm] = useState(false);
 
   useEffect(() => {
     const preparedData = prepareChartData();
@@ -119,10 +119,6 @@ export default function Expenses({ DBexpenses }) {
     form.reset();
   }
 
-  function toggleShowForm() {
-    setShowForm((previousIsShowForm) => !previousIsShowForm);
-  }
-
   return (
     <>
       <Head>
@@ -142,7 +138,7 @@ export default function Expenses({ DBexpenses }) {
           {!isShowForm ? (
             <button
               aria-label={isShowForm ? "hide form" : "show form"}
-              onClick={toggleShowForm}
+              onClick={() => setIsShowForm(true)}
             >
               <MoneyAddIcon
                 width={30}
@@ -151,9 +147,8 @@ export default function Expenses({ DBexpenses }) {
               />
             </button>
           ) : (
-            <>
+            <Modal onCloseModal={() => setIsShowForm(false)}>
               <StyledForm onSubmit={handleSubmit}>
-                <CloseButton onClose={toggleShowForm} />
                 <InputWrapper>
                   <StyledLabel htmlFor="amount">
                     Ausgaben hinzufügen
@@ -182,7 +177,7 @@ export default function Expenses({ DBexpenses }) {
                 </InputWrapper>
                 <button type="submit">Hinzufügen</button>
               </StyledForm>
-            </>
+            </Modal>
           )}
         </ContentWrapper>
       </main>

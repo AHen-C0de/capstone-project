@@ -1,19 +1,12 @@
 import styled from "styled-components";
 
-import CloseButton from "../buttons/CloseButton";
 import DeleteButton from "../buttons/DeleteButton";
 import IconPlusTextButton from "../buttons/IconPlusTextButton";
 import { GiCheckMark as CheckIcon } from "react-icons/gi";
 
-export default function RecipeModalContent({
-  recipe,
-  onAdd,
-  onDelete,
-  onCloseModal,
-}) {
+export default function RecipeModalContent({ recipe, onAdd, onDelete }) {
   return (
     <>
-      <CloseButton onClose={onCloseModal} absolutePositionRight="17px" />
       <RecipeName>{recipe.name}</RecipeName>
       {recipe.variant && (
         <RecipeVariant>{`- ${recipe.variant} -`}</RecipeVariant>

@@ -68,12 +68,11 @@ export default function ShoppingListEditor({
         <List listItems={listItems} onDelete={onDelete} />
       </ListContainer>
       {isShowRecipeModal && (
-        <Modal>
+        <Modal onCloseModal={() => setIsShowRecipeModal(false)}>
           <RecipeModalContent
             recipe={clickedRecipe}
             onAdd={handleAddRecipeItems}
             onDelete={deleteRecipeItem}
-            onCloseModal={() => setIsShowRecipeModal(false)}
           />
         </Modal>
       )}

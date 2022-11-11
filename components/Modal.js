@@ -1,9 +1,11 @@
 import styled from "styled-components";
 
-export default function Modal({ children }) {
+export default function Modal({ children, onCloseModal }) {
   return (
-    <ModalBackground>
-      <ModalContainer>{children}</ModalContainer>
+    <ModalBackground onClick={onCloseModal}>
+      <ModalContainer onClick={(event) => event.stopPropagation()}>
+        {children}
+      </ModalContainer>
     </ModalBackground>
   );
 }
