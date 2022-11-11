@@ -24,6 +24,8 @@ export default function Expenses({ DBexpenses }) {
   const [chartData, setChartData] = useState({});
   const [isShowForm, setIsShowForm] = useState(false);
 
+  const maxDate = new Date().toISOString().split("T")[0];
+
   useEffect(() => {
     const preparedData = prepareChartData();
     setChartData(preparedData);
@@ -171,7 +173,7 @@ export default function Expenses({ DBexpenses }) {
                   <StyledInput
                     type="date"
                     min="2022-01-01"
-                    max="2099-12-12"
+                    max={maxDate}
                     name="date"
                     id="name"
                     required
