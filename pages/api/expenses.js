@@ -19,24 +19,29 @@ export default async function handler(request, response) {
       try {
         const postData = JSON.parse(request.body);
 
-        //check whether POST data meet required data format
+        //validate data format
         const date = new Date(postData.date);
-        const amount = postData.amount;
+        const amount = parseFloat(postData.amount);
+
+        const isValidAmount =
+          typeof amount === "number" && amount > 0 && amount <= 500;
         const isValidDate =
           !isNaN(new Date(date)) &&
           date > new Date("2021-12-12") &&
           date < new Date("2099-12-12");
 
-        if (!used_ids.includes(postData.item)) {
-          const createdShoppingItem = await ShoppingItem.create(postData);
+        if (isValidAmount && isValidDate) {
+          const createdExpense = await Expense.create(postData);
           return response.status(201).json({
-            message: "ShoppingItem created",
-            createdShoppingItem: createdShoppingItem,
+            message: "Expense created",
+            createdExpense: createdExpense,
           });
         }
-        return response
-          .status(409)
-          .json({ message: "ShoppingItem already exists" });
+        return response.status(400).json({
+          message: "Sumitted data don't meet required format",
+          submittedData: postData,
+          info: { isValidAmount: isValidAmount, isValidDate: isValidDate },
+        });
       } catch (err) {
         return response.status(400).json(err.message);
       }

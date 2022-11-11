@@ -92,7 +92,7 @@ export default function Expenses({ expenses }) {
     ],
   };
 
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault();
     const form = event.target;
 
@@ -100,6 +100,12 @@ export default function Expenses({ expenses }) {
     const data = Object.fromEntries(formData);
 
     console.log(data);
+
+    await fetch("api/expenses", {
+      method: "POST",
+      body: JSON.stringify(data),
+    });
+
     form.reset();
   }
 
