@@ -9,11 +9,7 @@ export default function RecipeModal({ recipe, onAdd, onDelete, onCloseModal }) {
   return (
     <ModalBackground>
       <ModalContainer>
-        <CloseButton
-          aria-label="schließe Fenster"
-          onClose={onCloseModal}
-          absolutePositionRight="17px"
-        />
+        <CloseButton onClose={onCloseModal} absolutePositionRight="17px" />
         <RecipeName>{recipe.name}</RecipeName>
         {recipe.variant && (
           <RecipeVariant>{`- ${recipe.variant} -`}</RecipeVariant>

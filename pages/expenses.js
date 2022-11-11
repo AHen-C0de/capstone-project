@@ -221,17 +221,20 @@ const StyledLabel = styled.label`
   font-family: "Lily Script One";
   position: relative;
   left: 1.2rem;
-  top: 0.3rem;
-  background-color: white;
-  border: solid 1px grey;
+  //top: 0.3rem;
+  //background-color: white;
+  //border: solid 1px grey;
   width: fit-content;
   padding: 0.2rem 0.5rem;
   border-radius: 0.6rem;
   color: var(--background-secondary);
+  font-size: 1.3rem;
 `;
 
 const StyledInput = styled.input`
-  padding: 0.7rem 0.5rem 0.5rem 0.5rem;
+  padding: 1rem;
   border-radius: 2rem;
   border: none;
+  font-family: "Inter";
+  font-size: 1.2rem;
 `;
