@@ -117,7 +117,7 @@ export default function Expenses({ DBexpenses }) {
       ...previousExpenses,
       responseObj.createdExpense,
     ]);
-    form.reset();
+    setIsShowForm(false);
   }
 
   return (
@@ -202,7 +202,7 @@ const ContentWrapper = styled.div`
 `;
 
 const GraphWrapper = styled.div`
-  height: 40vh;
+  height: 50vh;
 `;
 
 const OpenFormButton = styled.button`
