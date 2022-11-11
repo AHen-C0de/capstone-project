@@ -1,3 +1,4 @@
+import styled from "styled-components";
 import { Scatter } from "react-chartjs-2";
 import { Chart as ChartJS, registerables } from "chart.js/auto";
 import "chartjs-adapter-luxon";
@@ -5,7 +6,7 @@ import Head from "next/head";
 
 import Header from "../components/Header";
 import NavigationBar from "../components/NavigationBar/NavigationBar";
-import ContentWrapper from "../components/ContentWrapper";
+//import ContentWrapper from "../components/ContentWrapper";
 import { getAllExpenses } from "../services/expensesService";
 
 export async function getServerSideProps() {
@@ -31,14 +32,25 @@ export default function Expenses({ expenses }) {
       y: {
         beginAtZero: true,
         title: {
-          display: true,
-          text: "Ausgaben | € |",
+          display: false,
+          text: "| € |",
           font: {
-            size: "15rem",
+            size: 22,
+            family: "Inter",
           },
         },
         grid: {
           display: false,
+        },
+        ticks: {
+          font: {
+            size: 20,
+          },
+          stepSize: 20,
+          // Include a dollar sign in the ticks
+          callback: function (value) {
+            return `${value} €`;
+          },
         },
       },
       x: {
@@ -48,14 +60,16 @@ export default function Expenses({ expenses }) {
           //tooltipFormat: "DD MM",
         },
         title: {
-          display: true,
-          text: "Datum",
-          font: {
-            size: "15rem",
-          },
+          display: false,
         },
         grid: {
           display: false,
+        },
+        ticks: {
+          font: {
+            size: 20,
+          },
+          maxTicksLimit: 5,
         },
       },
     },
@@ -64,6 +78,7 @@ export default function Expenses({ expenses }) {
         display: false,
       },
     },
+    maintainAspectRatio: false,
   };
 
   const plotData = {
@@ -89,10 +104,21 @@ export default function Expenses({ expenses }) {
       <Header>Ausgaben</Header>
       <main>
         <ContentWrapper>
-          <Scatter options={plotOptions} data={plotData} />
+          <GraphWrapper>
+            <Scatter options={plotOptions} data={plotData} />
+          </GraphWrapper>
         </ContentWrapper>
       </main>
       <NavigationBar />
     </>
   );
 }
+
+const ContentWrapper = styled.div`
+  padding: 3rem 1.5rem 3rem 1.5rem;
+  height: 100%;
+`;
+
+const GraphWrapper = styled.div`
+  height: 40vh;
+`;
