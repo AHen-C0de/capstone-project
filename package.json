@@ -10,10 +10,14 @@
     "test": "jest --watch"
   },
   "dependencies": {
+    "chart.js": "^3.9.1",
+    "chartjs-adapter-luxon": "^1.2.0",
+    "luxon": "^3.1.0",
     "mongodb": "^4.11.0",
     "mongoose": "^6.7.1",
     "next": "^12.3.1",
     "react": "^18.2.0",
+    "react-chartjs-2": "^4.3.1",
     "react-dom": "^18.2.0",
     "react-icons": "^4.6.0",
     "styled-components": "^5.3.6"

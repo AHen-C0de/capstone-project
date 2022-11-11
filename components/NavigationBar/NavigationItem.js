@@ -2,13 +2,13 @@ import styled from "styled-components";
 import { useRouter } from "next/router";
 import Link from "next/link";
 
-export default function NavigationItem({ path, icon }) {
+export default function NavigationItem({ path, icon, padding }) {
   const { pathname } = useRouter();
 
   return (
     <Link href={path} passHref>
       <StyledLink active={pathname === path}>
-        <IconBackground>{icon}</IconBackground>
+        <IconBackground padding={padding}>{icon}</IconBackground>
       </StyledLink>
     </Link>
   );
@@ -27,7 +27,8 @@ const IconBackground = styled.div`
   display: flex;
   align-items: center;
   background-color: var(--background-primary);
-  padding: 0.3rem;
+  //padding: 0.3rem;
+  padding: ${({ padding }) => padding};
   border-radius: 0.5rem;
   box-shadow: var(--button-shaddow);
 `;
