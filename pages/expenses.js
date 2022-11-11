@@ -137,16 +137,16 @@ export default function Expenses({ DBexpenses }) {
             )}
           </GraphWrapper>
           {!isShowForm ? (
-            <button
+            <OpenFormButton
               aria-label={isShowForm ? "hide form" : "show form"}
               onClick={() => setIsShowForm(true)}
             >
               <MoneyAddIcon
-                width={30}
-                height={30}
-                fillColor={"var(--background-secondary)"}
+                width={40}
+                height={40}
+                fillColor={"var(--background-primary)"}
               />
-            </button>
+            </OpenFormButton>
           ) : (
             <Modal onCloseModal={() => setIsShowForm(false)}>
               <StyledForm onSubmit={handleSubmit}>
@@ -177,7 +177,7 @@ export default function Expenses({ DBexpenses }) {
                   />
                 </InputWrapper>
                 <StyledButton
-                  aria-label="Items zu Liste hizufügen"
+                  aria-label="Ausgaben hinzufügen"
                   padding="0.3rem 0.8rem"
                   margin="1rem auto 0 auto"
                 >
@@ -203,6 +203,19 @@ const ContentWrapper = styled.div`
 
 const GraphWrapper = styled.div`
   height: 40vh;
+`;
+
+const OpenFormButton = styled.button`
+  width: fit-content;
+  padding: 0.6rem;
+  margin: auto;
+  background-color: var(--background-secondary__dark);
+  border-radius: 0.5rem;
+  border: none;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  &:hover {
+    background-color: var(--background-secondary__hover);
+  }
 `;
 
 const StyledForm = styled.form`
