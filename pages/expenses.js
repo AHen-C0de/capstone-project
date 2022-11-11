@@ -7,6 +7,8 @@ import Head from "next/head";
 
 import Header from "../components/Header";
 import NavigationBar from "../components/NavigationBar/NavigationBar";
+import MoneyAddIcon from "../components/icons/MoneyAddIcon";
+import CloseButton from "../components/buttons/CloseButton";
 import { getAllExpenses } from "../services/expensesService";
 
 export async function getServerSideProps() {
@@ -19,6 +21,7 @@ export async function getServerSideProps() {
 export default function Expenses({ DBexpenses }) {
   const [expenses, setExpenses] = useState(DBexpenses);
   const [chartData, setChartData] = useState({});
+  const [isShowForm, setShowForm] = useState(false);
 
   useEffect(() => {
     const preparedData = prepareChartData();
@@ -121,6 +124,10 @@ export default function Expenses({ DBexpenses }) {
     form.reset();
   }
 
+  function toggleShowForm() {
+    setShowForm((previousIsShowForm) => !previousIsShowForm);
+  }
+
   return (
     <>
       <Head>
@@ -137,28 +144,45 @@ export default function Expenses({ DBexpenses }) {
               <Scatter options={chartOptions} data={chartData} />
             )}
           </GraphWrapper>
-          <form onSubmit={handleSubmit}>
-            <label htmlFor="amount">Ausgaben hinzufügen</label>
-            <input
-              type="number"
-              min={0.01}
-              max={500}
-              step={0.01}
-              name="amount"
-              id="amount"
-              required
-            />
-            <label htmlFor="date">Datum</label>
-            <input
-              type="date"
-              min="2022-01-01"
-              max="2099-12-12"
-              name="date"
-              id="name"
-              required
-            />
-            <button type="submit">Hinzufügen</button>
-          </form>
+          {!isShowForm ? (
+            <button
+              aria-label={isShowForm ? "hide form" : "show form"}
+              onClick={toggleShowForm}
+            >
+              <MoneyAddIcon
+                width={30}
+                height={30}
+                fillColor={"var(--background-secondary)"}
+              />
+            </button>
+          ) : (
+            <>
+              <CloseButton onClose={toggleShowForm} />
+              <StyledForm onSubmit={handleSubmit}>
+                <StyledLabel htmlFor="amount">Ausgaben hinzufügen</StyledLabel>
+                <StyledInput
+                  type="number"
+                  min={0.01}
+                  max={500}
+                  step={0.01}
+                  name="amount"
+                  id="amount"
+                  placeholder="0.00 €"
+                  required
+                />
+                <StyledLabel htmlFor="date">Datum</StyledLabel>
+                <StyledInput
+                  type="date"
+                  min="2022-01-01"
+                  max="2099-12-12"
+                  name="date"
+                  id="name"
+                  required
+                />
+                <button type="submit">Hinzufügen</button>
+              </StyledForm>
+            </>
+          )}
         </ContentWrapper>
       </main>
       <NavigationBar />
@@ -169,8 +193,28 @@ export default function Expenses({ DBexpenses }) {
 const ContentWrapper = styled.div`
   padding: 3rem 1.5rem 3rem 1.5rem;
   height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 `;
 
 const GraphWrapper = styled.div`
   height: 40vh;
+`;
+
+const StyledForm = styled.form`
+  display: flex;
+  flex-direction: column;
+  background-color: var(--list-secondary);
+  padding: 1rem;
+  border-radius: 1rem;
+`;
+
+const StyledLabel = styled.label`
+  font-family: "Lily Script One";
+`;
+
+const StyledInput = styled.input`
+  padding: 0.5rem;
+  border-radius: 2rem;
 `;
