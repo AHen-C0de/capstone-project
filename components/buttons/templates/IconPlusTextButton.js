@@ -4,7 +4,7 @@ import { StyledTextButton } from "./buttonStyles";
 export default function IconPlusText({
   children,
   padding,
-  margin,
+  width,
   gap,
   left,
   onButtonClick,
@@ -12,7 +12,7 @@ export default function IconPlusText({
   return (
     <StyledTextButton
       padding={padding}
-      margin={margin}
+      width={width}
       gap={gap}
       left={left}
       onClick={onButtonClick}

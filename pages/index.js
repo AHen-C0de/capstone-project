@@ -9,8 +9,7 @@ import ContentWrapper from "../components/ContentWrapper";
 import ListContainer from "../components/ListContainer";
 import ListEmptyMessage from "../components/ListEmptyMessage";
 import ShoppingList from "../components/ShoppingList/ShoppingList";
-import IconPlusTextButton from "../components/buttons/IconPlusTextButton";
-import { BiCategory as CategoryIcon } from "react-icons/bi";
+import ShowCategoriesButton from "../components/buttons/ShowCategoriesButton";
 import { getAllShoppingItems } from "../services/shoppingItemService";
 import { toggleItemChecked } from "../utils/indexFun";
 
@@ -62,15 +61,7 @@ export default function Home({ shoppingItems }) {
           </ListContainer>
           <Link href={"/categories"} passHref>
             <StyledLink>
-              <IconPlusTextButton
-                padding="0.3rem 0.9rem 0.3rem 0.7rem"
-                gap="0.5rem"
-                left="0.3rem"
-                margin="1.2rem 0 0 0"
-              >
-                <CategoryIcon alt="Kategorie Icon" size={30} />
-                <p>Kategorien</p>
-              </IconPlusTextButton>
+              <ShowCategoriesButton />
             </StyledLink>
           </Link>
         </ContentWrapper>

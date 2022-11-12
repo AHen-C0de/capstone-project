@@ -9,9 +9,8 @@ import NavigationBar from "../../components/NavigationBar/NavigationBar";
 import ContentWrapper from "../../components/ContentWrapper";
 import ListContainer from "../../components/ListContainer";
 import ShoppingList from "../../components/ShoppingList/ShoppingList";
-import IconPlusTextButton from "../../components/buttons/IconPlusTextButton";
-import { BiCategory as CategoryIcon } from "react-icons/bi";
-import { IoIosArrowBack as ArrowBackIcon } from "react-icons/io";
+import ShowCategoriesButton from "../../components/buttons/ShowCategoriesButton";
+import AllItemsButton from "../../components/buttons/AllItemsButton";
 import { getAllShoppingItems } from "../../services/shoppingItemService";
 import { getCategoryByName } from "../../services/categoryService";
 import { toggleItemChecked } from "../../utils/indexFun";
@@ -82,26 +81,12 @@ export default function Category({ id, name, icon_src, shoppingItems }) {
           <ButtonContainer>
             <Link href={"/categories"} passHref>
               <StyledLink>
-                <IconPlusTextButton
-                  padding="0.3rem 0.9rem 0.3rem 0.7rem"
-                  gap="0.5rem"
-                  margin="1.2rem 0 0 0 "
-                >
-                  <CategoryIcon alt="Kategorie Icon" size={30} />
-                  <p>Kategorien</p>
-                </IconPlusTextButton>
+                <ShowCategoriesButton />
               </StyledLink>
             </Link>
             <Link href={"/"} passHref>
               <StyledLink>
-                <IconPlusTextButton
-                  padding="0.3rem 0.7rem 0.3rem 0.5rem"
-                  gap="0.5rem"
-                  margin="1.2rem 0 0 0 "
-                >
-                  <ArrowBackIcon alt="Pfeil Icon" size={30} />
-                  <p>Alle Items</p>
-                </IconPlusTextButton>
+                <AllItemsButton />
               </StyledLink>
             </Link>
           </ButtonContainer>
@@ -154,5 +139,7 @@ const ImageWrapper = styled.div`
 
 const ButtonContainer = styled.div`
   display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
   justify-content: space-between;
 `;
