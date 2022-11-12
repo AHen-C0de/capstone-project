@@ -14,7 +14,8 @@ const StyledHeader = styled.header`
   justify-content: center;
   width: 100%;
   height: 4rem;
-  background-color: var(--background-secondary);
+  //background-color: var(--background-secondary);
+  background: var(--background-secondary__gradient);
 `;
 
 const StyledHeadline = styled.h1`

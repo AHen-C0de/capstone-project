@@ -51,6 +51,7 @@ const StyledFooter = styled.footer`
   width: 100%;
   height: 4rem;
   background-color: var(--background-secondary);
+  background: var(--background-secondary__gradient);
 `;
 
 const NavBar = styled.nav`

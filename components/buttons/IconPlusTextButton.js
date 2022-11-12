@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import StyledButton from "./StyledButton";
+import { StyledTextButton } from "./buttonStyles";
 
 export default function IconPlusText({
   children,
@@ -10,7 +10,7 @@ export default function IconPlusText({
   onButtonClick,
 }) {
   return (
-    <StyledButton
+    <StyledTextButton
       padding={padding}
       margin={margin}
       gap={gap}
@@ -18,6 +18,6 @@ export default function IconPlusText({
       onClick={onButtonClick}
     >
       {children}
-    </StyledButton>
+    </StyledTextButton>
   );
 }

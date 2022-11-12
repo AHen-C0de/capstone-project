@@ -9,7 +9,10 @@ import Header from "../components/Header";
 import NavigationBar from "../components/NavigationBar/NavigationBar";
 import MoneyAddIcon from "../components/icons/MoneyAddIcon";
 import Modal from "../components/Modal";
-import StyledButton from "../components/buttons/StyledButton";
+import {
+  StyledTextButton,
+  StyledIconButton,
+} from "../components/buttons/buttonStyles";
 import { getAllExpenses } from "../services/expensesService";
 
 export async function getServerSideProps() {
@@ -142,7 +145,7 @@ export default function Expenses({ DBexpenses }) {
             )}
           </GraphWrapper>
           {!isShowForm ? (
-            <OpenFormButton
+            <StyledIconButton
               aria-label="Öffne Formular für Ausgaben"
               onClick={() => setIsShowForm(true)}
             >
@@ -152,7 +155,7 @@ export default function Expenses({ DBexpenses }) {
                 fillColor={"var(--background-primary)"}
                 alt="Geldstapel-Icon"
               />
-            </OpenFormButton>
+            </StyledIconButton>
           ) : (
             <Modal onCloseModal={() => setIsShowForm(false)}>
               <StyledForm onSubmit={handleSubmit}>
@@ -182,13 +185,13 @@ export default function Expenses({ DBexpenses }) {
                     required
                   />
                 </InputWrapper>
-                <StyledButton
+                <StyledTextButton
                   aria-label="Ausgaben hinzufügen"
                   padding="0.3rem 0.8rem"
                   margin="1rem auto 0 auto"
                 >
                   Hinzufügen
-                </StyledButton>
+                </StyledTextButton>
               </StyledForm>
             </Modal>
           )}
@@ -211,19 +214,6 @@ const ContentWrapper = styled.div`
 const GraphWrapper = styled.div`
   height: 60%;
   min-height: 180px;
-`;
-
-const OpenFormButton = styled.button`
-  width: fit-content;
-  padding: 0.6rem;
-  margin: auto;
-  background-color: var(--background-secondary__dark);
-  border-radius: 0.5rem;
-  border: none;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  &:hover {
-    background-color: var(--background-secondary__hover);
-  }
 `;
 
 const StyledForm = styled.form`

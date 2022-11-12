@@ -4,6 +4,12 @@ const GlobalStyle = createGlobalStyle`
   :root {
     --background-primary: #FFFFFF;
     --background-secondary: #0B7D54;
+    --background-secondary__gradient:
+    radial-gradient(
+    circle,
+    rgba(28, 133, 95, 1) 0%,
+    rgba(20, 83, 61, 1) 73%
+  );
     --background-secondary__dark: #095A3D;
     --background-secondary__hover: #06402B;
     --list-primary: #FAD861;
