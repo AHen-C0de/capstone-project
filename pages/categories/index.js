@@ -105,6 +105,11 @@ const StyledButton = styled.button`
   width: 100%;
   padding: 0.6rem;
   background-color: var(--list-primary);
+  background: radial-gradient(
+    circle,
+    rgba(250, 216, 97, 1) 0%,
+    rgba(227, 203, 119, 1) 100%
+  );
   margin: 1rem 0;
   border-radius: 0.5rem;
   border: none;

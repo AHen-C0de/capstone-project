@@ -4,6 +4,7 @@ const StyledTextButton = styled.button`
   display: flex;
   align-items: center;
   position: relative;
+  background-color: var(--background-secondary);
   background: var(--background-secondary__gradient);
   color: var(--background-primary);
   border-radius: 0.2rem;
@@ -18,7 +19,7 @@ const StyledTextButton = styled.button`
   left: ${({ left }) => left || 0};
 
   &:hover {
-    background-color: var(--background-secondary__hover);
+    box-shadow: var(--buttonshaddow__hover);
   }
 `;
 
@@ -26,12 +27,14 @@ const StyledIconButton = styled.button`
   width: fit-content;
   padding: 0.6rem;
   margin: auto;
+  background-color: var(--background-secondary);
   background: var(--background-secondary__gradient);
   border-radius: 0.5rem;
   border: none;
   box-shadow: var(--button-shaddow);
+
   &:hover {
-    background-color: var(--background-secondary__hover);
+    box-shadow: var(--buttonshaddow__hover);
   }
 `;
 

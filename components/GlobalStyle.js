@@ -15,6 +15,7 @@ const GlobalStyle = createGlobalStyle`
     --list-primary: #FAD861;
     --list-secondary: #FFF1C1;
     --button-shaddow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    --buttonshaddow__hover: 2px 7px 7px rgba(0, 0, 0, 0.4);
   }
 
   /* inter-regular - latin */
