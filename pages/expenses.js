@@ -1,3 +1,5 @@
+import styled from "styled-components";
+import { useState, useEffect } from "react";
 import { Scatter } from "react-chartjs-2";
 import { Chart as ChartJS, registerables } from "chart.js/auto";
 import "chartjs-adapter-luxon";
@@ -5,40 +7,73 @@ import Head from "next/head";
 
 import Header from "../components/Header";
 import NavigationBar from "../components/NavigationBar/NavigationBar";
-import ContentWrapper from "../components/ContentWrapper";
+import MoneyAddIcon from "../components/icons/MoneyAddIcon";
+import Modal from "../components/Modal";
+import StyledButton from "../components/buttons/StyledButton";
 import { getAllExpenses } from "../services/expensesService";
 
 export async function getServerSideProps() {
   const expenses = await getAllExpenses();
   return {
-    props: { expenses: expenses },
+    props: { DBexpenses: expenses },
   };
 }
 
-export default function Expenses({ expenses }) {
-  const data = expenses.map((expense) => ({
-    x: new Date(expense.date),
-    y: expense.amount,
-  }));
+export default function Expenses({ DBexpenses }) {
+  const [expenses, setExpenses] = useState(DBexpenses);
+  const [chartData, setChartData] = useState({});
+  const [isShowForm, setIsShowForm] = useState(false);
 
-  const sortedData = data.sort(
-    (dataPointPre, dataPointPost) =>
-      Number(dataPointPre.x) - Number(dataPointPost.x)
-  );
+  const maxDate = new Date().toISOString().split("T")[0];
 
-  const plotOptions = {
+  useEffect(() => {
+    const preparedData = prepareChartData();
+    setChartData(preparedData);
+  }, [expenses]);
+
+  function prepareChartData() {
+    const data = expenses.map((expense) => ({
+      x: new Date(expense.date),
+      y: expense.amount,
+    }));
+
+    const sortedData = data.sort(
+      (dataPointPre, dataPointPost) => dataPointPre.x - dataPointPost.x
+    );
+
+    return {
+      datasets: [
+        {
+          data: data,
+          backgroundColor: "rgba(11, 158, 91, 0.5)",
+          borderColor: "#0B7D54",
+          borderWidth: 2,
+          borderJoinStyle: "round",
+          tension: 0.1,
+          showLine: true,
+        },
+      ],
+    };
+  }
+
+  const chartOptions = {
     scales: {
       y: {
         beginAtZero: true,
         title: {
-          display: true,
-          text: "Ausgaben | € |",
-          font: {
-            size: "15rem",
-          },
+          display: false,
         },
         grid: {
           display: false,
+        },
+        ticks: {
+          font: {
+            size: "20",
+          },
+          stepSize: 20,
+          callback: function (value) {
+            return `${value} €`;
+          },
         },
       },
       x: {
@@ -48,14 +83,17 @@ export default function Expenses({ expenses }) {
           //tooltipFormat: "DD MM",
         },
         title: {
-          display: true,
-          text: "Datum",
-          font: {
-            size: "15rem",
-          },
+          display: false,
         },
         grid: {
-          display: false,
+          display: true,
+        },
+        ticks: {
+          font: {
+            size: 20,
+          },
+
+          minTicksLimit: 3,
         },
       },
     },
@@ -64,19 +102,28 @@ export default function Expenses({ expenses }) {
         display: false,
       },
     },
+    maintainAspectRatio: false,
   };
 
-  const plotData = {
-    datasets: [
-      {
-        data: data,
-        backgroundColor: "rgba(11, 158, 91, 0.5)",
-        borderColor: "#0B7D54",
-        borderWidth: 2,
-        showLine: true,
-      },
-    ],
-  };
+  async function handleSubmit(event) {
+    event.preventDefault();
+    const form = event.target;
+
+    const formData = new FormData(form);
+    const data = Object.fromEntries(formData);
+
+    const response = await fetch("api/expenses", {
+      method: "POST",
+      body: JSON.stringify(data),
+    });
+    const responseObj = await response.json();
+
+    setExpenses((previousExpenses) => [
+      ...previousExpenses,
+      responseObj.createdExpense,
+    ]);
+    setIsShowForm(false);
+  }
 
   return (
     <>
@@ -89,10 +136,130 @@ export default function Expenses({ expenses }) {
       <Header>Ausgaben</Header>
       <main>
         <ContentWrapper>
-          <Scatter options={plotOptions} data={plotData} />
+          <GraphWrapper>
+            {Object.keys(chartData).length !== 0 && (
+              <Scatter options={chartOptions} data={chartData} />
+            )}
+          </GraphWrapper>
+          {!isShowForm ? (
+            <OpenFormButton
+              aria-label="Öffne Formular für Ausgaben"
+              onClick={() => setIsShowForm(true)}
+            >
+              <MoneyAddIcon
+                width={40}
+                height={40}
+                fillColor={"var(--background-primary)"}
+                alt="Geldstapel-Icon"
+              />
+            </OpenFormButton>
+          ) : (
+            <Modal onCloseModal={() => setIsShowForm(false)}>
+              <StyledForm onSubmit={handleSubmit}>
+                <InputWrapper>
+                  <StyledLabel htmlFor="amount">
+                    Ausgaben hinzufügen
+                  </StyledLabel>
+                  <StyledInput
+                    type="number"
+                    min={0.01}
+                    max={500}
+                    step={0.01}
+                    name="amount"
+                    id="amount"
+                    placeholder="0.00 €"
+                    required
+                  />
+                </InputWrapper>
+                <InputWrapper>
+                  <StyledLabel htmlFor="date">Datum</StyledLabel>
+                  <StyledInput
+                    type="date"
+                    min="2022-01-01"
+                    max={maxDate}
+                    name="date"
+                    id="name"
+                    required
+                  />
+                </InputWrapper>
+                <StyledButton
+                  aria-label="Ausgaben hinzufügen"
+                  padding="0.3rem 0.8rem"
+                  margin="1rem auto 0 auto"
+                >
+                  Hinzufügen
+                </StyledButton>
+              </StyledForm>
+            </Modal>
+          )}
         </ContentWrapper>
       </main>
       <NavigationBar />
     </>
   );
 }
+
+const ContentWrapper = styled.div`
+  padding: 3rem 1rem 3rem 0.8rem;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  overflow: auto;
+`;
+
+const GraphWrapper = styled.div`
+  height: 60%;
+  min-height: 180px;
+`;
+
+const OpenFormButton = styled.button`
+  width: fit-content;
+  padding: 0.6rem;
+  margin: auto;
+  background-color: var(--background-secondary__dark);
+  border-radius: 0.5rem;
+  border: none;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  &:hover {
+    background-color: var(--background-secondary__hover);
+  }
+`;
+
+const StyledForm = styled.form`
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1rem;
+  border-radius: 1rem;
+  background: rgb(254, 233, 162);
+  background: linear-gradient(
+    90deg,
+    rgba(254, 233, 162, 1) 0%,
+    rgba(255, 216, 81, 1) 92%
+  );
+`;
+
+const InputWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const StyledLabel = styled.label`
+  font-family: "Lily Script One";
+  position: relative;
+  left: 1.2rem;
+  width: fit-content;
+  padding: 0.2rem 0.5rem;
+  border-radius: 0.6rem;
+  color: var(--background-secondary);
+  font-size: 1.5rem;
+`;
+
+const StyledInput = styled.input`
+  padding: 1rem;
+  border-radius: 2rem;
+  border: none;
+  font-family: "Inter";
+  font-size: 1.2rem;
+`;

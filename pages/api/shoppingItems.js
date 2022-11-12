@@ -15,8 +15,8 @@ export default async function handler(request, response) {
         return response.status(400).json(err.message);
       }
     case "PATCH":
-      await dbConnect();
       try {
+        await dbConnect();
         const patchData = JSON.parse(request.body);
         const updatedShoppingItem = await ShoppingItem.findByIdAndUpdate(
           { _id: patchData.id },
@@ -32,8 +32,8 @@ export default async function handler(request, response) {
         return response.status(400).json(err.message);
       }
     case "DELETE":
-      await dbConnect();
       try {
+        await dbConnect();
         const id = JSON.parse(request.body);
         await ShoppingItem.findByIdAndDelete(id);
         return response
@@ -43,8 +43,8 @@ export default async function handler(request, response) {
         return response.status(400).json(err.message);
       }
     case "POST":
-      await dbConnect();
       try {
+        await dbConnect();
         const postData = JSON.parse(request.body);
 
         //check whether item exists already in shoppingItems collection

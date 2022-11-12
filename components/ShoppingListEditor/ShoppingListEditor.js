@@ -4,7 +4,8 @@ import { useState, useRef } from "react";
 import ListContainer from "../ListContainer";
 import Form from "./Form";
 import List from "./List";
-import RecipeModal from "./RecipeModal";
+import Modal from "../Modal";
+import RecipeModalContent from "./RecipeModalContent";
 
 export default function ShoppingListEditor({
   listItems,
@@ -67,12 +68,13 @@ export default function ShoppingListEditor({
         <List listItems={listItems} onDelete={onDelete} />
       </ListContainer>
       {isShowRecipeModal && (
-        <RecipeModal
-          recipe={clickedRecipe}
-          onAdd={handleAddRecipeItems}
-          onDelete={deleteRecipeItem}
-          onCloseModal={() => setIsShowRecipeModal(false)}
-        />
+        <Modal onCloseModal={() => setIsShowRecipeModal(false)}>
+          <RecipeModalContent
+            recipe={clickedRecipe}
+            onAdd={handleAddRecipeItems}
+            onDelete={deleteRecipeItem}
+          />
+        </Modal>
       )}
     </>
   );

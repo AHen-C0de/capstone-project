@@ -1,8 +1,8 @@
 import styled from "styled-components";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 import Input from "./Input";
-import { handleInput, triggerDropDown } from "../../utils/FormFun";
+import { handleInput, triggerDropDown } from "../../utils/formFun";
 
 export default function Form({
   items,
