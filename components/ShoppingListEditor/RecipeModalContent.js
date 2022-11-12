@@ -19,7 +19,7 @@ export default function RecipeModalContent({ recipe, onAdd, onDelete }) {
               {!isOnList && (
                 <DeleteButton id={id} onDelete={() => onDelete(recipe, id)} />
               )}
-              {isOnList && <Message>- Bereits gelistet -</Message>}
+              {isOnList && <Message>- gelistet -</Message>}
             </RecipeItemWrapper>
           </li>
         ))}

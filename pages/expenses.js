@@ -12,7 +12,7 @@ import Modal from "../components/Modal";
 import {
   StyledTextButton,
   StyledIconButton,
-} from "../components/buttons/buttonStyles";
+} from "../components/buttons/templates/buttonStyles";
 import { getAllExpenses } from "../services/expensesService";
 
 export async function getServerSideProps() {
