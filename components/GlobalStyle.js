@@ -10,8 +10,6 @@ const GlobalStyle = createGlobalStyle`
     rgba(28, 133, 95, 1) 0%,
     rgba(20, 83, 61, 1) 73%
   );
-    --background-secondary__dark: #095A3D;
-    --background-secondary__hover: #06402B;
     --list-primary: #FAD861;
     --list-secondary: #FFF1C1;
     --button-shaddow: 0px 4px 4px rgba(0, 0, 0, 0.25);
@@ -101,6 +99,14 @@ const GlobalStyle = createGlobalStyle`
 
   main {
     overflow-y: hidden;
+  }
+
+  input,
+  textarea,
+  button,
+  select,
+  a {
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
   }
 `;
 
