@@ -32,26 +32,31 @@ const List = styled.ul`
 `;
 
 const ListElement = styled.li`
-  margin-bottom: 0.08rem;
+  margin-bottom: 0.1rem;
 `;
 
 const StyledButton = styled.button`
   width: 100%;
   background-color: var(--list-secondary);
-  padding: 0.3rem;
-  border: solid 1px var(--list-primary);
+  background: var(--list-secondary__gradient);
+  padding: 0.4rem;
+  border: none;
   border-radius: 0.5rem;
   box-shadow: var(--button-shaddow);
   font-family: "Inter";
   font-weight: 400;
+
+  &:hover {
+    box-shadow: var(--buttonshaddow__hover);
+  }
 `;
 
 const ElementText = styled.p`
   font-size: 1.3rem;
-  margin-bottom: 0.2rem;
 `;
 
 const VariantText = styled.p`
+  margin-top: 0.1rem;
   font-size: 1.2rem;
   font-style: italic;
 `;

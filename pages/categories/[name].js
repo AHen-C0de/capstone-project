@@ -143,4 +143,8 @@ const ButtonContainer = styled.div`
   flex-direction: column;
   gap: 0.3rem;
   justify-content: space-between;
+
+  @media (orientation: landscape) {
+    flex-direction: row;
+  }
 `;

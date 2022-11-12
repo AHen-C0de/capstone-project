@@ -18,6 +18,12 @@ const GlobalStyle = createGlobalStyle`
         rgba(250, 216, 97, 1) 61%
       );
     --list-secondary: #FFF1C1;
+    --list-secondary__gradient:
+      radial-gradient(
+        circle,
+        rgba(255, 251, 241, 1) 0%,
+        rgba(255, 246, 214, 1) 69%
+      );
     --button-shaddow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     --buttonshaddow__hover: 2px 7px 7px rgba(0, 0, 0, 0.4);
   }

@@ -185,13 +185,14 @@ export default function Expenses({ DBexpenses }) {
                     required
                   />
                 </InputWrapper>
-                <StyledTextButton
-                  aria-label="Ausgaben hinzufügen"
-                  padding="0.3rem 0.8rem"
-                  margin="1rem auto 0 auto"
-                >
-                  Hinzufügen
-                </StyledTextButton>
+                <ButtonWrapper>
+                  <StyledTextButton
+                    aria-label="Ausgaben hinzufügen"
+                    padding="0.3rem 0.8rem"
+                  >
+                    Hinzufügen
+                  </StyledTextButton>
+                </ButtonWrapper>
               </StyledForm>
             </Modal>
           )}
@@ -238,12 +239,12 @@ const InputWrapper = styled.div`
 const StyledLabel = styled.label`
   font-family: "Lily Script One";
   position: relative;
-  left: 1.2rem;
+  left: 0.8rem;
   width: fit-content;
   padding: 0.2rem 0.5rem;
   border-radius: 0.6rem;
   color: var(--background-secondary);
-  font-size: 1.5rem;
+  font-size: 1.4rem;
 `;
 
 const StyledInput = styled.input`
@@ -252,4 +253,10 @@ const StyledInput = styled.input`
   border: none;
   font-family: "Inter";
   font-size: 1.2rem;
+`;
+
+const ButtonWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-top: 0.5rem;
 `;

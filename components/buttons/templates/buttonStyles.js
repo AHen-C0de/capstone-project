@@ -33,6 +33,7 @@ const StyledIconButton = styled.button`
   border-radius: 0.5rem;
   border: none;
   box-shadow: var(--button-shaddow);
+  cursor: pointer;
 
   &:hover {
     box-shadow: var(--buttonshaddow__hover);
