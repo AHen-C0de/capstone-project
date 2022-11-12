@@ -5,12 +5,18 @@ const GlobalStyle = createGlobalStyle`
     --background-primary: #FFFFFF;
     --background-secondary: #0B7D54;
     --background-secondary__gradient:
-    radial-gradient(
-    circle,
-    rgba(28, 133, 95, 1) 0%,
-    rgba(20, 83, 61, 1) 73%
-  );
+      radial-gradient(
+        circle,
+        rgba(28, 133, 95, 1) 0%,
+        rgba(20, 83, 61, 1) 73%
+      );
     --list-primary: #FAD861;
+    --list-primary__gradient:
+      radial-gradient(
+        circle,
+        rgba(255, 228, 132, 1) 0%,
+        rgba(250, 216, 97, 1) 61%
+      );
     --list-secondary: #FFF1C1;
     --button-shaddow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     --buttonshaddow__hover: 2px 7px 7px rgba(0, 0, 0, 0.4);

@@ -105,11 +105,7 @@ const StyledButton = styled.button`
   width: 100%;
   padding: 0.6rem;
   background-color: var(--list-primary);
-  background: radial-gradient(
-    circle,
-    rgba(250, 216, 97, 1) 0%,
-    rgba(227, 203, 119, 1) 100%
-  );
+  background: var(--list-primary__gradient);
   margin: 1rem 0;
   border-radius: 0.5rem;
   border: none;
@@ -120,5 +116,8 @@ const StyledButton = styled.button`
 
   &:first-child {
     margin-top: 0;
+  }
+  &:hover {
+    box-shadow: var(--buttonshaddow__hover);
   }
 `;
