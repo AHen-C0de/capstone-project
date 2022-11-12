@@ -123,12 +123,13 @@ const CategoryHeader = styled.h2`
   gap: 1rem;
   position: relative;
   left: 1.2rem;
+  bottom: -0.5rem;
   font-family: "Lily Script One";
   font-weight: 700;
   font-size: 1.8rem;
   text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   padding: 0;
-  margin: 0.5rem 0 1rem 0;
+  margin: 0;
 `;
 
 const ImageWrapper = styled.div`
