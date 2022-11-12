@@ -48,6 +48,8 @@ export default function Expenses({ DBexpenses }) {
           backgroundColor: "rgba(11, 158, 91, 0.5)",
           borderColor: "#0B7D54",
           borderWidth: 2,
+          borderJoinStyle: "round",
+          tension: 0.1,
           showLine: true,
         },
       ],
@@ -84,13 +86,14 @@ export default function Expenses({ DBexpenses }) {
           display: false,
         },
         grid: {
-          display: false,
+          display: true,
         },
         ticks: {
           font: {
             size: 20,
           },
-          maxTicksLimit: 5,
+
+          minTicksLimit: 3,
         },
       },
     },
@@ -197,15 +200,17 @@ export default function Expenses({ DBexpenses }) {
 }
 
 const ContentWrapper = styled.div`
-  padding: 3rem 1.5rem 3rem 1.5rem;
+  padding: 3rem 1rem 3rem 0.8rem;
   height: 100%;
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  overflow: auto;
 `;
 
 const GraphWrapper = styled.div`
-  height: 45vh;
+  height: 60%;
+  min-height: 180px;
 `;
 
 const OpenFormButton = styled.button`
