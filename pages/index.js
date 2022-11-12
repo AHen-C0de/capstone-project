@@ -32,7 +32,7 @@ export default function Home({ shoppingItems }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Header>MyShoppingManager</Header>
+      <Header isOverlappingAnimation={true}>MyShoppingManager</Header>
       <main>
         <ContentWrapper>
           <ListContainer>
