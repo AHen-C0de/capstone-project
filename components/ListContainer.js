@@ -9,6 +9,7 @@ const ListContainer = styled.div`
   box-shadow: 5px 10px 7px #7e7e7e;
   height: 100%;
   overflow-y: auto;
+  overflow-x: hidden;
   filter: ${({ isBlur }) => (isBlur ? "blur(5px)" : "none")};
 `;
 

@@ -26,8 +26,7 @@ export default function ShoppingList({
 
 const StyledList = styled.ul`
   list-style: none;
-
-  &:first-child {
+  & li:last-child {
     margin-bottom: 2rem;
   }
 `;

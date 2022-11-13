@@ -49,36 +49,34 @@ export default function Category({ id, name, icon_src, shoppingItems }) {
       <main>
         <Background opacity="0.7" />
         <ContentWrapper>
-          <CategoryHeader>
-            <span>{name}</span>
-            <ImageWrapper>
-              <Image
-                src={icon_src}
-                width={30}
-                height={30}
-                alt={"Kategorie Icon"}
-              />
-            </ImageWrapper>
-          </CategoryHeader>
           <ListContainer>
-            <>
-              <ShoppingList
-                listItems={filteredItems.filter(
-                  (shoppingItem) => !shoppingItem.checked
-                )}
-                listItemSetter={setFilteredItems}
-                onToggleItemChecked={toggleItemChecked}
-              />
-              <StyledText>Fertig:</StyledText>
-              <Line />
-              <ShoppingList
-                listItems={filteredItems.filter(
-                  (shoppingItem) => shoppingItem.checked
-                )}
-                listItemSetter={setFilteredItems}
-                onToggleItemChecked={toggleItemChecked}
-              />
-            </>
+            <CategoryHeader>
+              <span>{name}</span>
+              <ImageWrapper>
+                <Image
+                  src={icon_src}
+                  width={30}
+                  height={30}
+                  alt={"Kategorie Icon"}
+                />
+              </ImageWrapper>
+            </CategoryHeader>
+            <ShoppingList
+              listItems={filteredItems.filter(
+                (shoppingItem) => !shoppingItem.checked
+              )}
+              listItemSetter={setFilteredItems}
+              onToggleItemChecked={toggleItemChecked}
+            />
+            <StyledText>Fertig:</StyledText>
+            <Line />
+            <ShoppingList
+              listItems={filteredItems.filter(
+                (shoppingItem) => shoppingItem.checked
+              )}
+              listItemSetter={setFilteredItems}
+              onToggleItemChecked={toggleItemChecked}
+            />
           </ListContainer>
           <ButtonContainer>
             <Link href={"/categories"} passHref>
@@ -125,13 +123,13 @@ const CategoryHeader = styled.h2`
   gap: 1rem;
   position: relative;
   left: 1.2rem;
-  bottom: -0.5rem;
+  /* bottom: -0.5rem; */
   font-family: "Lily Script One";
   font-weight: 700;
   font-size: 1.8rem;
   text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   padding: 0;
-  margin: 0;
+  margin-bottom: 1.5rem;
 `;
 
 const ImageWrapper = styled.div`
