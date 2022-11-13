@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { useState } from "react";
-import { useSession } from "next-auth/react";
+import { useSession, signIn } from "next-auth/react";
 import { unstable_getServerSession } from "next-auth/next";
 import { authOptions } from "./api/auth/[...nextauth]";
 import Head from "next/head";
@@ -27,7 +27,7 @@ export async function getServerSideProps(context) {
     return {
       props: { items: items, recipes: recipes, shoppingItems: shoppingItems },
     };
-  }
+  } else return { props: {} };
 }
 
 export default function Edit({ items, recipes, shoppingItems }) {
@@ -76,21 +76,34 @@ export default function Edit({ items, recipes, shoppingItems }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Header>Liste bearbeiten</Header>
-      <main>
-        <Background opacity="0.7" />
-        <ContentWrapper>
-          <ShoppingListEditor
-            items={items}
-            recipes={recipes}
-            listItems={listItems}
-            onDelete={deleteItem}
-            onAdd={addItem}
-          />
-        </ContentWrapper>
-      </main>
+      {session ? (
+        <Header>Liste bearbeiten</Header>
+      ) : (
+        <Header isOverlappingAnimation={true}>MyShoppingManager</Header>
+      )}
+      {session ? (
+        <>
+          <main>
+            <Background opacity="0.7" />
+            <ContentWrapper>
+              <ShoppingListEditor
+                items={items}
+                recipes={recipes}
+                listItems={listItems}
+                onDelete={deleteItem}
+                onAdd={addItem}
+              />
+            </ContentWrapper>
+          </main>
 
-      <NavigationBar />
+          <NavigationBar />
+        </>
+      ) : (
+        <>
+          Not signed in <br />
+          <button onClick={() => signIn()}>Sign in</button>
+        </>
+      )}
     </>
   );
 }
