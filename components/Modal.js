@@ -23,6 +23,8 @@ const ModalBackground = styled.div`
   overflow: auto;
   background-color: rgb(0, 0, 0); /* Fallback color */
   background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+  backdrop-filter: blur(5px);
+  z-index: 10;
 `;
 
 const ModalContainer = styled.article`

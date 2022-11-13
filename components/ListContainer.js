@@ -6,10 +6,10 @@ const ListContainer = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  box-shadow: 5px 5px 6px #c2c2c2;
+  box-shadow: 5px 10px 7px #7e7e7e;
   height: 100%;
   overflow-y: auto;
-  filter: ${({ isBlur }) => (isBlur ? "blur(5px)" : "none")};
+  overflow-x: hidden;
 `;
 
 export default ListContainer;

@@ -27,6 +27,7 @@ export default function List({ listItems, onDelete }) {
 const StyledList = styled.ul`
   overflow-y: auto;
   list-style: none;
+  min-height: 200px;
   border-radius: 0.5rem;
   border: ${({ hideBorder }) =>
     hideBorder ? "none" : "solid 2px var(--list-secondary)"};

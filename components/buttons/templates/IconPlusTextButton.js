@@ -1,23 +1,23 @@
 import styled from "styled-components";
-import StyledButton from "./StyledButton";
+import { StyledTextButton } from "./buttonStyles";
 
 export default function IconPlusText({
   children,
   padding,
-  margin,
+  width,
   gap,
   left,
   onButtonClick,
 }) {
   return (
-    <StyledButton
+    <StyledTextButton
       padding={padding}
-      margin={margin}
+      width={width}
       gap={gap}
       left={left}
       onClick={onButtonClick}
     >
       {children}
-    </StyledButton>
+    </StyledTextButton>
   );
 }

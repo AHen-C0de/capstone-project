@@ -6,12 +6,12 @@ import Image from "next/image";
 
 import Header from "../../components/Header";
 import NavigationBar from "../../components/NavigationBar/NavigationBar";
+import Background from "../../components/Background";
 import ContentWrapper from "../../components/ContentWrapper";
 import ListContainer from "../../components/ListContainer";
 import ShoppingList from "../../components/ShoppingList/ShoppingList";
-import IconPlusTextButton from "../../components/buttons/IconPlusTextButton";
-import { BiCategory as CategoryIcon } from "react-icons/bi";
-import { IoIosArrowBack as ArrowBackIcon } from "react-icons/io";
+import ShowCategoriesButton from "../../components/buttons/ShowCategoriesButton";
+import AllItemsButton from "../../components/buttons/AllItemsButton";
 import { getAllShoppingItems } from "../../services/shoppingItemService";
 import { getCategoryByName } from "../../services/categoryService";
 import { toggleItemChecked } from "../../utils/indexFun";
@@ -47,61 +47,46 @@ export default function Category({ id, name, icon_src, shoppingItems }) {
 
       <Header>Kategorien</Header>
       <main>
+        <Background opacity="0.7" />
         <ContentWrapper>
-          <CategoryHeader>
-            <span>{name}</span>
-            <ImageWrapper>
-              <Image
-                src={icon_src}
-                width={30}
-                height={30}
-                alt={"Kategorie Icon"}
-              />
-            </ImageWrapper>
-          </CategoryHeader>
           <ListContainer>
-            <>
-              <ShoppingList
-                listItems={filteredItems.filter(
-                  (shoppingItem) => !shoppingItem.checked
-                )}
-                listItemSetter={setFilteredItems}
-                onToggleItemChecked={toggleItemChecked}
-              />
-              <StyledText>Fertig:</StyledText>
-              <Line />
-              <ShoppingList
-                listItems={filteredItems.filter(
-                  (shoppingItem) => shoppingItem.checked
-                )}
-                listItemSetter={setFilteredItems}
-                onToggleItemChecked={toggleItemChecked}
-              />
-            </>
+            <CategoryHeader>
+              <span>{name}</span>
+              <ImageWrapper>
+                <Image
+                  src={icon_src}
+                  width={30}
+                  height={30}
+                  alt={"Kategorie Icon"}
+                />
+              </ImageWrapper>
+            </CategoryHeader>
+            <ShoppingList
+              listItems={filteredItems.filter(
+                (shoppingItem) => !shoppingItem.checked
+              )}
+              listItemSetter={setFilteredItems}
+              onToggleItemChecked={toggleItemChecked}
+            />
+            <StyledText>Fertig:</StyledText>
+            <Line />
+            <ShoppingList
+              listItems={filteredItems.filter(
+                (shoppingItem) => shoppingItem.checked
+              )}
+              listItemSetter={setFilteredItems}
+              onToggleItemChecked={toggleItemChecked}
+            />
           </ListContainer>
           <ButtonContainer>
             <Link href={"/categories"} passHref>
               <StyledLink>
-                <IconPlusTextButton
-                  padding="0.3rem 0.9rem 0.3rem 0.7rem"
-                  gap="0.5rem"
-                  margin="1.2rem 0 0 0 "
-                >
-                  <CategoryIcon alt="Kategorie Icon" size={30} />
-                  <p>Kategorien</p>
-                </IconPlusTextButton>
+                <ShowCategoriesButton />
               </StyledLink>
             </Link>
             <Link href={"/"} passHref>
               <StyledLink>
-                <IconPlusTextButton
-                  padding="0.3rem 0.7rem 0.3rem 0.5rem"
-                  gap="0.5rem"
-                  margin="1.2rem 0 0 0 "
-                >
-                  <ArrowBackIcon alt="Pfeil Icon" size={30} />
-                  <p>Alle Items</p>
-                </IconPlusTextButton>
+                <AllItemsButton />
               </StyledLink>
             </Link>
           </ButtonContainer>
@@ -143,7 +128,7 @@ const CategoryHeader = styled.h2`
   font-size: 1.8rem;
   text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   padding: 0;
-  margin: 0.5rem 0 1rem 0;
+  margin-bottom: 1.5rem;
 `;
 
 const ImageWrapper = styled.div`
@@ -154,5 +139,11 @@ const ImageWrapper = styled.div`
 
 const ButtonContainer = styled.div`
   display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
   justify-content: space-between;
+
+  @media (orientation: landscape) {
+    flex-direction: row;
+  }
 `;

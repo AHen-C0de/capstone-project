@@ -6,9 +6,9 @@ import Head from "next/head";
 
 import Header from "../../components/Header";
 import NavigationBar from "../../components/NavigationBar/NavigationBar";
+import Background from "../../components/Background";
 import ContentWrapper from "../../components/ContentWrapper";
-import IconPlusTextButton from "../../components/buttons/IconPlusTextButton";
-import { IoIosArrowBack as ArrowBackIcon } from "react-icons/io";
+import AllItemsButton from "../../components/buttons/AllItemsButton";
 import { getAllShoppingItems } from "../../services/shoppingItemService";
 import { getAllCategories } from "../../services/categoryService";
 
@@ -44,6 +44,7 @@ export default function Categories({ shoppingItems, categories }) {
       <Header>Kategorien</Header>
       <main>
         <ContentWrapper>
+          <Background opacity="0.7" />
           <CategoryContainer>
             {filteredCategories.map(({ id, name, icon_src }) => (
               <li key={id}>
@@ -63,15 +64,7 @@ export default function Categories({ shoppingItems, categories }) {
           </CategoryContainer>
           <Link href={"/"} passHref>
             <StyledLink>
-              <IconPlusTextButton
-                padding="0.3rem 0.7rem 0.3rem 0.5rem"
-                gap="0.5rem"
-                left="0.3rem"
-                margin="1.2rem 0 0 0"
-              >
-                <ArrowBackIcon alt="Pfeil Icon" size={30} />
-                <p>Alle Items</p>
-              </IconPlusTextButton>
+              <AllItemsButton />
             </StyledLink>
           </Link>
         </ContentWrapper>
@@ -105,6 +98,7 @@ const StyledButton = styled.button`
   width: 100%;
   padding: 0.6rem;
   background-color: var(--list-primary);
+  background: var(--list-primary__gradient);
   margin: 1rem 0;
   border-radius: 0.5rem;
   border: none;
@@ -115,5 +109,8 @@ const StyledButton = styled.button`
 
   &:first-child {
     margin-top: 0;
+  }
+  &:hover {
+    box-shadow: var(--buttonshaddow__hover);
   }
 `;

@@ -55,7 +55,7 @@ export default function ShoppingListEditor({
 
   return (
     <>
-      <ListContainer isBlur={isShowRecipeModal}>
+      <ListContainer>
         <Form
           items={items}
           recipes={recipes}

@@ -4,6 +4,7 @@ import Head from "next/head";
 
 import Header from "../components/Header";
 import NavigationBar from "../components/NavigationBar/NavigationBar";
+import Background from "../components/Background";
 import ContentWrapper from "../components/ContentWrapper";
 import ShoppingListEditor from "../components/ShoppingListEditor/ShoppingListEditor";
 import { getAllItems } from "../services/itemService";
@@ -61,6 +62,7 @@ export default function Edit({ items, recipes, shoppingItems }) {
 
       <Header>Liste bearbeiten</Header>
       <main>
+        <Background opacity="0.7" />
         <ContentWrapper>
           <ShoppingListEditor
             items={items}

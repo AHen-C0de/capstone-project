@@ -5,12 +5,12 @@ import Head from "next/head";
 
 import Header from "../components/Header";
 import NavigationBar from "../components/NavigationBar/NavigationBar";
+import Background from "../components/Background";
 import ContentWrapper from "../components/ContentWrapper";
 import ListContainer from "../components/ListContainer";
 import ListEmptyMessage from "../components/ListEmptyMessage";
 import ShoppingList from "../components/ShoppingList/ShoppingList";
-import IconPlusTextButton from "../components/buttons/IconPlusTextButton";
-import { BiCategory as CategoryIcon } from "react-icons/bi";
+import ShowCategoriesButton from "../components/buttons/ShowCategoriesButton";
 import { getAllShoppingItems } from "../services/shoppingItemService";
 import { toggleItemChecked } from "../utils/indexFun";
 
@@ -33,8 +33,9 @@ export default function Home({ shoppingItems }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Header>MyShoppingManager</Header>
+      <Header isOverlappingAnimation={true}>MyShoppingManager</Header>
       <main>
+        <Background opacity="0.7" />
         <ContentWrapper>
           <ListContainer>
             {isEmpty ? (
@@ -49,7 +50,7 @@ export default function Home({ shoppingItems }) {
                   onToggleItemChecked={toggleItemChecked}
                 />
                 <StyledText>Fertig:</StyledText>
-                <Line />
+                <Line></Line>
                 <ShoppingList
                   listItems={listItems.filter(
                     (shoppingItem) => shoppingItem.checked
@@ -62,15 +63,7 @@ export default function Home({ shoppingItems }) {
           </ListContainer>
           <Link href={"/categories"} passHref>
             <StyledLink>
-              <IconPlusTextButton
-                padding="0.3rem 0.9rem 0.3rem 0.7rem"
-                gap="0.5rem"
-                left="0.3rem"
-                margin="1.2rem 0 0 0"
-              >
-                <CategoryIcon alt="Kategorie Icon" size={30} />
-                <p>Kategorien</p>
-              </IconPlusTextButton>
+              <ShowCategoriesButton />
             </StyledLink>
           </Link>
         </ContentWrapper>
@@ -90,9 +83,9 @@ const StyledText = styled.span`
 
 const Line = styled.div`
   width: 70%;
-  height: 0.1rem;
-  border-radius: 1rem;
+  border: solid 1px var(--background-secondary);
   background-color: var(--background-secondary);
+  border-radius: 1rem;
   margin: 0.2rem 0 1rem 0;
 `;
 

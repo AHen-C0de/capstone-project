@@ -1,6 +1,3 @@
-import { useState, useEffect } from "react";
-import { nanoid } from "nanoid";
-
 import GlobalStyle from "/components/GlobalStyle";
 
 function MyApp({ Component, pageProps }) {
