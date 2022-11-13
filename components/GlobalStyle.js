@@ -95,7 +95,7 @@ const GlobalStyle = createGlobalStyle`
   }
 
   html, body, #__next {
-    height: 100%;
+    height: 100vh;
   }
 
   body {
@@ -106,7 +106,6 @@ const GlobalStyle = createGlobalStyle`
   #__next {
     display: grid;
     // header main footer
-    height: 100%;
     grid-template-rows: 4rem 1fr 4rem;
   }
 
