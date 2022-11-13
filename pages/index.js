@@ -5,6 +5,7 @@ import Head from "next/head";
 
 import Header from "../components/Header";
 import NavigationBar from "../components/NavigationBar/NavigationBar";
+import Background from "../components/Background";
 import ContentWrapper from "../components/ContentWrapper";
 import ListContainer from "../components/ListContainer";
 import ListEmptyMessage from "../components/ListEmptyMessage";
@@ -34,6 +35,7 @@ export default function Home({ shoppingItems }) {
 
       <Header isOverlappingAnimation={true}>MyShoppingManager</Header>
       <main>
+        <Background opacity="0.7" />
         <ContentWrapper>
           <ListContainer>
             {isEmpty ? (

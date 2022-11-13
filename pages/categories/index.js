@@ -6,8 +6,8 @@ import Head from "next/head";
 
 import Header from "../../components/Header";
 import NavigationBar from "../../components/NavigationBar/NavigationBar";
+import Background from "../../components/Background";
 import ContentWrapper from "../../components/ContentWrapper";
-import IconPlusTextButton from "../../components/buttons/templates/IconPlusTextButton";
 import AllItemsButton from "../../components/buttons/AllItemsButton";
 import { getAllShoppingItems } from "../../services/shoppingItemService";
 import { getAllCategories } from "../../services/categoryService";
@@ -44,6 +44,7 @@ export default function Categories({ shoppingItems, categories }) {
       <Header>Kategorien</Header>
       <main>
         <ContentWrapper>
+          <Background opacity="0.7" />
           <CategoryContainer>
             {filteredCategories.map(({ id, name, icon_src }) => (
               <li key={id}>

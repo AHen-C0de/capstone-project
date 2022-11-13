@@ -92,9 +92,8 @@ export default function Expenses({ DBexpenses }) {
           display: false,
         },
         grid: {
-          display: true,
+          display: false,
           borderColor: "#000000",
-          color: "#000000",
         },
         ticks: {
           color: "#000000",

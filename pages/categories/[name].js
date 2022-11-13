@@ -6,6 +6,7 @@ import Image from "next/image";
 
 import Header from "../../components/Header";
 import NavigationBar from "../../components/NavigationBar/NavigationBar";
+import Background from "../../components/Background";
 import ContentWrapper from "../../components/ContentWrapper";
 import ListContainer from "../../components/ListContainer";
 import ShoppingList from "../../components/ShoppingList/ShoppingList";
@@ -46,6 +47,7 @@ export default function Category({ id, name, icon_src, shoppingItems }) {
 
       <Header>Kategorien</Header>
       <main>
+        <Background opacity="0.7" />
         <ContentWrapper>
           <CategoryHeader>
             <span>{name}</span>
