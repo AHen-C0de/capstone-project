@@ -40,7 +40,6 @@ export default function Edit({ items, recipes, shoppingItems }) {
     const data = {
       item: item.id,
       checked: false,
-      userEmail: session.user.email,
     };
     await fetch("api/shoppingItems", {
       method: "POST",

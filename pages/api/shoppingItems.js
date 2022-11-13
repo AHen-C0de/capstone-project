@@ -53,7 +53,8 @@ export default async function handler(request, response) {
     case "POST":
       try {
         await dbConnect();
-        const postData = JSON.parse(request.body);
+        const postDataNoUser = JSON.parse(request.body);
+        const postData = { ...postDataNoUser, userEmail: session.user.email };
 
         //check whether item exists already in shoppingItems collection
         const shoppingItems = await getShoppingItemsByUser(session.user.email);
