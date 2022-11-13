@@ -1,11 +1,20 @@
 import dbConnect from "../../lib/dbConnect";
 import Expense from "../../models/Expense";
+import { unstable_getServerSession } from "next-auth/next";
+import { authOptions } from "./auth/[...nextauth]";
 
 export default async function handler(request, response) {
+  const session = await unstable_getServerSession(
+    request,
+    response,
+    authOptions
+  );
+
   if (request.method === "POST") {
     try {
       await dbConnect();
-      const postData = JSON.parse(request.body);
+      const postDataNoUser = JSON.parse(request.body);
+      const postData = { ...postDataNoUser, userEmail: session.user.email };
 
       //validate data format
       const date = new Date(postData.date);

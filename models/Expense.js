@@ -5,6 +5,7 @@ const { Schema } = mongoose;
 const expensesSchema = new Schema({
   amount: { type: Number, required: true },
   date: { type: Date, required: true },
+  userEmail: { type: String, required: true },
 });
 
 const Expense =
