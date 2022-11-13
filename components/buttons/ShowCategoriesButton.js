@@ -1,5 +1,3 @@
-import styled from "styled-components";
-
 import IconPlusTextButton from "./templates/IconPlusTextButton";
 import { BiCategory as CategoryIcon } from "react-icons/bi";
 

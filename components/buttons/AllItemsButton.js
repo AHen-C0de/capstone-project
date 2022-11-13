@@ -1,5 +1,3 @@
-import styled from "styled-components";
-
 import IconPlusTextButton from "./templates/IconPlusTextButton";
 import { IoIosArrowBack as ArrowBackIcon } from "react-icons/io";
 
