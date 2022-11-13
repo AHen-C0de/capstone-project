@@ -8,16 +8,17 @@ const StyledTextButton = styled.button`
   background-color: var(--background-secondary);
   background: var(--background-secondary__gradient);
   color: var(--background-primary);
-  border-radius: 0.2rem;
   font-size: 1.2rem;
   font-family: "Inter";
-  font-weight: 500;
   box-shadow: var(--button-shaddow);
+  height: fit-content;
   cursor: pointer;
   padding: ${({ padding }) => padding};
   gap: ${({ gap }) => gap};
   left: ${({ left }) => left || 0};
   width: ${({ width }) => width || "fit-content"};
+  border-radius: ${({ borderRadius }) => borderRadius};
+  font-weight: ${({ fontWeight }) => fontWeight};
 
   &:hover {
     box-shadow: var(--buttonshaddow__hover);

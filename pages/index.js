@@ -1,12 +1,14 @@
 import styled from "styled-components";
 import { useState } from "react";
-import { useSession, signIn } from "next-auth/react";
+import { useSession, signIn, signOut } from "next-auth/react";
 import { unstable_getServerSession } from "next-auth/next";
 import { authOptions } from "./api/auth/[...nextauth]";
 import Link from "next/link";
 import Head from "next/head";
 
 import Header from "../components/Header";
+import SignIn from "../components/SignIn";
+import SignOutButton from "../components/buttons/SignOutButton";
 import NavigationBar from "../components/NavigationBar/NavigationBar";
 import Background from "../components/Background";
 import ContentWrapper from "../components/ContentWrapper";
@@ -49,12 +51,15 @@ export default function Home({ shoppingItems }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Header isOverlappingAnimation={true}>MyShoppingManager</Header>
-      {session ? (
-        <>
-          <main>
-            <Background opacity="0.7" />
-            <ContentWrapper>
+      <Header text="MyShoppingManager" isOverlappingAnimation={true}>
+        <SignOutButton onSignOut={signOut} />
+      </Header>
+
+      <main>
+        <Background opacity="0.7" />
+        {session && (
+          <ContentWrapper>
+            <>
               <ListContainer>
                 {isEmpty ? (
                   <ListEmptyMessage>Leer...</ListEmptyMessage>
@@ -84,16 +89,12 @@ export default function Home({ shoppingItems }) {
                   <ShowCategoriesButton />
                 </StyledLink>
               </Link>
-            </ContentWrapper>
-          </main>
-          <NavigationBar />
-        </>
-      ) : (
-        <>
-          Not signed in <br />
-          <button onClick={() => signIn()}>Sign in</button>
-        </>
-      )}
+            </>
+          </ContentWrapper>
+        )}
+        {!session && <SignIn onSignIn={signIn} />}
+      </main>
+      {session && <NavigationBar />}
     </>
   );
 }

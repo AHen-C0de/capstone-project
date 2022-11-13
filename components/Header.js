@@ -4,7 +4,7 @@ import lottie from "lottie-web";
 import { signOut } from "next-auth/react";
 import SignOutButton from "./buttons/SignOutButton";
 
-export default function Header({ children, isOverlappingAnimation }) {
+export default function Header({ children, text, isOverlappingAnimation }) {
   const animationRef = useRef(null);
 
   useEffect(() => {
@@ -22,9 +22,9 @@ export default function Header({ children, isOverlappingAnimation }) {
     <StyledHeader>
       <AnimationContainer ref={animationRef} />
       <StyledHeadline isOverlappingAnimation={isOverlappingAnimation}>
-        {children}
+        {text}
       </StyledHeadline>
-      <SignOutButton onSignOut={signOut} />
+      {children}
     </StyledHeader>
   );
 }
