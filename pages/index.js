@@ -33,7 +33,6 @@ export async function getServerSideProps(context) {
 
 export default function Home({ shoppingItems }) {
   const { data: session } = useSession();
-  console.log(session);
   const [listItems, setListItems] = useState(shoppingItems);
   const isEmpty = listItems.length === 0;
 
