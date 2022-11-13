@@ -1,8 +1,8 @@
 import styled from "styled-components";
 import { useRef, useEffect } from "react";
 import lottie from "lottie-web";
-import { RiLogoutBoxLine as SignOutIcon } from "react-icons/ri";
-import { useSession, signOut } from "next-auth/react";
+import { signOut } from "next-auth/react";
+import SignOutButton from "./buttons/SignOutButton";
 
 export default function Header({ children, isOverlappingAnimation }) {
   const animationRef = useRef(null);
@@ -24,9 +24,7 @@ export default function Header({ children, isOverlappingAnimation }) {
       <StyledHeadline isOverlappingAnimation={isOverlappingAnimation}>
         {children}
       </StyledHeadline>
-      <button onClick={() => signOut()}>
-        <SignOutIcon />
-      </button>
+      <SignOutButton onSignOut={signOut} />
     </StyledHeader>
   );
 }
@@ -48,7 +46,7 @@ const StyledHeadline = styled.h1`
   font-weight: normal;
   font-size: 1.7rem;
   margin-left: ${({ isOverlappingAnimation }) =>
-    isOverlappingAnimation ? "2.4rem" : 0};
+    isOverlappingAnimation ? "1.2rem" : 0};
 `;
 
 const AnimationContainer = styled.div`
