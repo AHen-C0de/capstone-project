@@ -7,6 +7,7 @@ import Head from "next/head";
 
 import Header from "../components/Header";
 import NavigationBar from "../components/NavigationBar/NavigationBar";
+import Background from "../components/Background";
 import MoneyAddIcon from "../components/icons/MoneyAddIcon";
 import Modal from "../components/Modal";
 import {
@@ -68,8 +69,10 @@ export default function Expenses({ DBexpenses }) {
         },
         grid: {
           display: false,
+          borderColor: "#000000",
         },
         ticks: {
+          color: "#000000",
           font: {
             size: "20",
           },
@@ -90,8 +93,11 @@ export default function Expenses({ DBexpenses }) {
         },
         grid: {
           display: true,
+          borderColor: "#000000",
+          color: "#000000",
         },
         ticks: {
+          color: "#000000",
           font: {
             size: 20,
           },
@@ -138,6 +144,7 @@ export default function Expenses({ DBexpenses }) {
 
       <Header>Ausgaben</Header>
       <main>
+        <Background opacity="0.2" />
         <ContentWrapper>
           <GraphWrapper>
             {Object.keys(chartData).length !== 0 && (
