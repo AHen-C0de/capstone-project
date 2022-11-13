@@ -1,10 +1,10 @@
 import dbConnect from "../lib/dbConnect";
 import Expense from "../models/Expense";
 
-export async function getAllExpenses() {
+export async function getExpensesByUser(userEmail) {
   await dbConnect();
 
-  const expenses = await Expense.find();
+  const expenses = await Expense.find({ userEmail: userEmail });
 
   const sanitizedExpenses = expenses.map(({ amount, date }) => ({
     amount,

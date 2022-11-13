@@ -1,6 +1,8 @@
 import styled from "styled-components";
 import { useState, useEffect } from "react";
 import { useSession, signIn } from "next-auth/react";
+import { unstable_getServerSession } from "next-auth/next";
+import { authOptions } from "./api/auth/[...nextauth]";
 import { Scatter } from "react-chartjs-2";
 import { Chart as ChartJS, registerables } from "chart.js/auto";
 import "chartjs-adapter-luxon";
@@ -15,22 +17,35 @@ import {
   StyledTextButton,
   StyledIconButton,
 } from "../components/buttons/templates/buttonStyles";
-import { getAllExpenses } from "../services/expensesService";
+import { getExpensesByUser } from "../services/expensesService";
 
-export async function getServerSideProps() {
-  const expenses = await getAllExpenses();
-  return {
-    props: { DBexpenses: expenses },
-  };
+export async function getServerSideProps(context) {
+  const session = await unstable_getServerSession(
+    context.req,
+    context.res,
+    authOptions
+  );
+  if (session) {
+    const expenses = await getExpensesByUser(session.user.email);
+    return {
+      props: { DBexpenses: expenses },
+    };
+  } else return { props: {} };
 }
 
 export default function Expenses({ DBexpenses }) {
   const { data: session } = useSession();
-  const [expenses, setExpenses] = useState(DBexpenses);
+  const [expenses, setExpenses] = useState([]);
   const [chartData, setChartData] = useState({});
   const [isShowForm, setIsShowForm] = useState(false);
 
   const maxDate = new Date().toISOString().split("T")[0];
+
+  useEffect(() => {
+    if (session) {
+      setExpenses(DBexpenses);
+    }
+  }, [session]);
 
   useEffect(() => {
     const preparedData = prepareChartData();

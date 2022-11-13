@@ -36,9 +36,8 @@ export default function Home({ shoppingItems }) {
   const [listItems, setListItems] = useState(shoppingItems);
 
   const isEmpty = null;
-  console.log(listItems);
 
-  if (listItems) {
+  if (session) {
     const isEmpty = listItems.length === 0;
   }
 

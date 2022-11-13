@@ -34,8 +34,6 @@ export default function Edit({ items, recipes, shoppingItems }) {
   const { data: session } = useSession();
   const [listItems, setListItems] = useState(shoppingItems);
 
-  console.log(listItems);
-
   async function addItem(item) {
     const data = {
       item: item.id,
