@@ -1,6 +1,8 @@
 import styled from "styled-components";
 import { useState } from "react";
-import { useSession, signIn, signOut } from "next-auth/react";
+import { useSession, signIn } from "next-auth/react";
+import { unstable_getServerSession } from "next-auth/next";
+import { authOptions } from "./api/auth/[...nextauth]";
 import Link from "next/link";
 import Head from "next/head";
 
@@ -12,18 +14,26 @@ import ListContainer from "../components/ListContainer";
 import ListEmptyMessage from "../components/ListEmptyMessage";
 import ShoppingList from "../components/ShoppingList/ShoppingList";
 import ShowCategoriesButton from "../components/buttons/ShowCategoriesButton";
-import { getAllShoppingItems } from "../services/shoppingItemService";
+import { getShoppingItemsByUser } from "../services/shoppingItemService";
 import { toggleItemChecked } from "../utils/indexFun";
 
-export async function getServerSideProps() {
-  const shoppingItems = await getAllShoppingItems();
-  return {
-    props: { shoppingItems: shoppingItems },
-  };
+export async function getServerSideProps(context) {
+  const session = await unstable_getServerSession(
+    context.req,
+    context.res,
+    authOptions
+  );
+  if (session) {
+    const shoppingItems = await getShoppingItemsByUser(session.user.email);
+    return {
+      props: { shoppingItems: shoppingItems },
+    };
+  }
 }
 
 export default function Home({ shoppingItems }) {
   const { data: session } = useSession();
+  console.log(session);
   const [listItems, setListItems] = useState(shoppingItems);
   const isEmpty = listItems.length === 0;
 

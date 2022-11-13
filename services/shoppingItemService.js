@@ -1,10 +1,10 @@
 import dbConnect from "../lib/dbConnect";
 import ShoppingItem from "../models/ShoppingItem";
 
-export async function getAllShoppingItems() {
+export async function getShoppingItemsByUser(userEmail) {
   await dbConnect();
 
-  const shoppingItems = await ShoppingItem.find()
+  const shoppingItems = await ShoppingItem.find({ userEmail: userEmail })
     .populate("item")
     .populate({ path: "item", populate: { path: "category" } });
 

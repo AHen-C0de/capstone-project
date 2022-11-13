@@ -6,6 +6,7 @@ const { Schema } = mongoose;
 const shoppingItemSchema = new Schema({
   item: { type: Schema.Types.ObjectId, ref: "Item", required: true },
   checked: { type: Boolean, required: true },
+  userEmail: { type: String, required: true },
 });
 
 const ShoppingItem =
