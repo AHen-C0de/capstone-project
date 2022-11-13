@@ -24,10 +24,7 @@ export default function Home({ shoppingItems }) {
   const [listItems, setListItems] = useState(shoppingItems);
   const isEmpty = listItems.length === 0;
 
-  const [screenSize, getDimension] = useState({
-    dynamicWidth: window.innerWidth,
-    dynamicHeight: window.innerHeight,
-  });
+  const [screenSize, getDimension] = useState({});
   const setDimension = () => {
     getDimension({
       dynamicWidth: window.innerWidth,
@@ -36,11 +33,22 @@ export default function Home({ shoppingItems }) {
   };
 
   useEffect(() => {
-    window.addEventListener("resize", setDimension);
+    if (typeof window !== "undefined") {
+      getDimension({
+        dynamicWidth: window.innerWidth,
+        dynamicHeight: window.innerHeight,
+      });
+    }
+  }, []);
 
-    return () => {
-      window.removeEventListener("resize", setDimension);
-    };
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      window.addEventListener("resize", setDimension);
+
+      return () => {
+        window.removeEventListener("resize", setDimension);
+      };
+    }
   }, [screenSize]);
 
   return (
