@@ -90,9 +90,9 @@ export default function Form({
     >
       <Input
         id="item"
-        text="Item"
+        text="Produkt"
         ariaLabel="Itemname"
-        placeholderText="Suche ein Item..."
+        placeholderText="Suche ein Produkt..."
         reference={itemInputRef}
         value={itemInput}
         onInput={(event) =>

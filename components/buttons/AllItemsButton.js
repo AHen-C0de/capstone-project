@@ -4,13 +4,13 @@ import { IoIosArrowBack as ArrowBackIcon } from "react-icons/io";
 export default function AllItemButton() {
   return (
     <IconPlusTextButton
-      padding="0.3rem"
-      width={"10.5rem"}
-      gap="1.1rem"
+      padding="0.2rem 0.2rem 0.2rem 0rem"
+      width={"11rem"}
+      gap="0.2rem"
       left={"0.2rem"}
     >
       <ArrowBackIcon alt="Pfeil Icon" size={30} />
-      <p>Alle Items</p>
+      <p>Alle Produkte</p>
     </IconPlusTextButton>
   );
 }
