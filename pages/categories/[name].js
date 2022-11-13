@@ -123,7 +123,6 @@ const CategoryHeader = styled.h2`
   gap: 1rem;
   position: relative;
   left: 1.2rem;
-  /* bottom: -0.5rem; */
   font-family: "Lily Script One";
   font-weight: 700;
   font-size: 1.8rem;

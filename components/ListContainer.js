@@ -10,7 +10,6 @@ const ListContainer = styled.div`
   height: 100%;
   overflow-y: auto;
   overflow-x: hidden;
-  filter: ${({ isBlur }) => (isBlur ? "blur(5px)" : "none")};
 `;
 
 export default ListContainer;
