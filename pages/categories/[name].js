@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { useState, useEffect } from "react";
-import { useSession, signIn } from "next-auth/react";
+import { useSession, signIn, signOut } from "next-auth/react";
 import { unstable_getServerSession } from "next-auth/next";
 import { authOptions } from "../api/auth/[...nextauth]";
 import Link from "next/link";
@@ -8,6 +8,8 @@ import Head from "next/head";
 import Image from "next/image";
 
 import Header from "../../components/Header";
+import SignIn from "../../components/SignIn";
+import SignOutButton from "../../components/buttons/SignOutButton";
 import NavigationBar from "../../components/NavigationBar/NavigationBar";
 import Background from "../../components/Background";
 import ContentWrapper from "../../components/ContentWrapper";
@@ -63,66 +65,62 @@ export default function Category({ id, name, icon_src, shoppingItems }) {
       </Head>
 
       {session ? (
-        <Header>Kategorien</Header>
+        <Header text="Kategorien">
+          <SignOutButton onSignOut={signOut} />
+        </Header>
       ) : (
-        <Header isOverlappingAnimation={true}>MyShoppingManager</Header>
+        <Header text="MyShoppingManager" isOverlappingAnimation={true} />
       )}
-      {session ? (
-        <>
-          <main>
-            <Background opacity="0.7" />
-            <ContentWrapper>
-              <ListContainer>
-                <CategoryHeader>
-                  <span>{name}</span>
-                  <ImageWrapper>
-                    <Image
-                      src={icon_src}
-                      width={30}
-                      height={30}
-                      alt={"Kategorie Icon"}
-                    />
-                  </ImageWrapper>
-                </CategoryHeader>
-                <ShoppingList
-                  listItems={filteredItems.filter(
-                    (shoppingItem) => !shoppingItem.checked
-                  )}
-                  listItemSetter={setFilteredItems}
-                  onToggleItemChecked={toggleItemChecked}
-                />
-                <StyledText>Fertig:</StyledText>
-                <Line />
-                <ShoppingList
-                  listItems={filteredItems.filter(
-                    (shoppingItem) => shoppingItem.checked
-                  )}
-                  listItemSetter={setFilteredItems}
-                  onToggleItemChecked={toggleItemChecked}
-                />
-              </ListContainer>
-              <ButtonContainer>
-                <Link href={"/categories"} passHref>
-                  <StyledLink>
-                    <ShowCategoriesButton />
-                  </StyledLink>
-                </Link>
-                <Link href={"/"} passHref>
-                  <StyledLink>
-                    <AllItemsButton />
-                  </StyledLink>
-                </Link>
-              </ButtonContainer>
-            </ContentWrapper>
-          </main>
-          <NavigationBar />
-        </>
-      ) : (
-        <>
-          Not signed in <br />
-          <button onClick={() => signIn()}>Sign in</button>
-        </>
-      )}
+      <main>
+        <Background opacity="0.7" />
+        {session && (
+          <ContentWrapper>
+            <ListContainer>
+              <CategoryHeader>
+                <span>{name}</span>
+                <ImageWrapper>
+                  <Image
+                    src={icon_src}
+                    width={30}
+                    height={30}
+                    alt={"Kategorie Icon"}
+                  />
+                </ImageWrapper>
+              </CategoryHeader>
+              <ShoppingList
+                listItems={filteredItems.filter(
+                  (shoppingItem) => !shoppingItem.checked
+                )}
+                listItemSetter={setFilteredItems}
+                onToggleItemChecked={toggleItemChecked}
+              />
+              <StyledText>Fertig:</StyledText>
+              <Line />
+              <ShoppingList
+                listItems={filteredItems.filter(
+                  (shoppingItem) => shoppingItem.checked
+                )}
+                listItemSetter={setFilteredItems}
+                onToggleItemChecked={toggleItemChecked}
+              />
+            </ListContainer>
+            <ButtonContainer>
+              <Link href={"/categories"} passHref>
+                <StyledLink>
+                  <ShowCategoriesButton />
+                </StyledLink>
+              </Link>
+              <Link href={"/"} passHref>
+                <StyledLink>
+                  <AllItemsButton />
+                </StyledLink>
+              </Link>
+            </ButtonContainer>
+          </ContentWrapper>
+        )}
+        {!session && <SignIn onSignIn={signIn} />}
+      </main>
+      {session && <NavigationBar />}
     </>
   );
 }

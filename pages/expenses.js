@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { useState, useEffect } from "react";
-import { useSession, signIn } from "next-auth/react";
+import { useSession, signIn, signOut } from "next-auth/react";
 import { unstable_getServerSession } from "next-auth/next";
 import { authOptions } from "./api/auth/[...nextauth]";
 import { Scatter } from "react-chartjs-2";
@@ -9,6 +9,8 @@ import "chartjs-adapter-luxon";
 import Head from "next/head";
 
 import Header from "../components/Header";
+import SignIn from "../components/SignIn";
+import SignOutButton from "../components/buttons/SignOutButton";
 import NavigationBar from "../components/NavigationBar/NavigationBar";
 import Background from "../components/Background";
 import MoneyAddIcon from "../components/icons/MoneyAddIcon";
@@ -160,82 +162,78 @@ export default function Expenses({ DBexpenses }) {
       </Head>
 
       {session ? (
-        <Header>Ausgaben</Header>
+        <Header text="Ausgaben">
+          <SignOutButton onSignOut={signOut} />
+        </Header>
       ) : (
-        <Header isOverlappingAnimation={true}>MyShoppingManager</Header>
+        <Header text="MyShoppingManager" isOverlappingAnimation={true} />
       )}
-      {session ? (
-        <>
-          <main>
-            <Background opacity="0.2" />
-            <ContentWrapper>
-              <GraphWrapper>
-                {Object.keys(chartData).length !== 0 && (
-                  <Scatter options={chartOptions} data={chartData} />
-                )}
-              </GraphWrapper>
-              {!isShowForm ? (
-                <StyledIconButton
-                  aria-label="Öffne Formular für Ausgaben"
-                  onClick={() => setIsShowForm(true)}
-                >
-                  <MoneyAddIcon
-                    width={40}
-                    height={40}
-                    fillColor={"var(--background-primary)"}
-                    alt="Geldstapel-Icon"
-                  />
-                </StyledIconButton>
-              ) : (
-                <Modal onCloseModal={() => setIsShowForm(false)}>
-                  <StyledForm onSubmit={handleSubmit}>
-                    <InputWrapper>
-                      <StyledLabel htmlFor="amount">
-                        Ausgaben hinzufügen
-                      </StyledLabel>
-                      <StyledInput
-                        type="number"
-                        min={0.01}
-                        max={500}
-                        step={0.01}
-                        name="amount"
-                        id="amount"
-                        placeholder="0.00 €"
-                        required
-                      />
-                    </InputWrapper>
-                    <InputWrapper>
-                      <StyledLabel htmlFor="date">Datum</StyledLabel>
-                      <StyledInput
-                        type="date"
-                        min="2022-01-01"
-                        max={maxDate}
-                        name="date"
-                        id="name"
-                        required
-                      />
-                    </InputWrapper>
-                    <ButtonWrapper>
-                      <StyledTextButton
-                        aria-label="Ausgaben hinzufügen"
-                        padding="0.3rem 0.8rem"
-                      >
-                        Hinzufügen
-                      </StyledTextButton>
-                    </ButtonWrapper>
-                  </StyledForm>
-                </Modal>
+      <main>
+        <Background opacity="0.2" />
+        {session && (
+          <ContentWrapper>
+            <GraphWrapper>
+              {Object.keys(chartData).length !== 0 && (
+                <Scatter options={chartOptions} data={chartData} />
               )}
-            </ContentWrapper>
-          </main>
-          <NavigationBar />
-        </>
-      ) : (
-        <>
-          Not signed in <br />
-          <button onClick={() => signIn()}>Sign in</button>
-        </>
-      )}
+            </GraphWrapper>
+            {!isShowForm ? (
+              <StyledIconButton
+                aria-label="Öffne Formular für Ausgaben"
+                onClick={() => setIsShowForm(true)}
+              >
+                <MoneyAddIcon
+                  width={40}
+                  height={40}
+                  fillColor={"var(--background-primary)"}
+                  alt="Geldstapel-Icon"
+                />
+              </StyledIconButton>
+            ) : (
+              <Modal onCloseModal={() => setIsShowForm(false)}>
+                <StyledForm onSubmit={handleSubmit}>
+                  <InputWrapper>
+                    <StyledLabel htmlFor="amount">
+                      Ausgaben hinzufügen
+                    </StyledLabel>
+                    <StyledInput
+                      type="number"
+                      min={0.01}
+                      max={500}
+                      step={0.01}
+                      name="amount"
+                      id="amount"
+                      placeholder="0.00 €"
+                      required
+                    />
+                  </InputWrapper>
+                  <InputWrapper>
+                    <StyledLabel htmlFor="date">Datum</StyledLabel>
+                    <StyledInput
+                      type="date"
+                      min="2022-01-01"
+                      max={maxDate}
+                      name="date"
+                      id="name"
+                      required
+                    />
+                  </InputWrapper>
+                  <ButtonWrapper>
+                    <StyledTextButton
+                      aria-label="Ausgaben hinzufügen"
+                      padding="0.3rem 0.8rem"
+                    >
+                      Hinzufügen
+                    </StyledTextButton>
+                  </ButtonWrapper>
+                </StyledForm>
+              </Modal>
+            )}
+          </ContentWrapper>
+        )}
+        {!session && <SignIn onSignIn={signIn} />}
+      </main>
+      {session && <NavigationBar />}
     </>
   );
 }

@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { useState } from "react";
-import { useSession, signIn } from "next-auth/react";
+import { useSession, signIn, signOut } from "next-auth/react";
 import { unstable_getServerSession } from "next-auth/next";
 import { authOptions } from "../api/auth/[...nextauth]";
 import Image from "next/image";
@@ -8,6 +8,8 @@ import Link from "next/link";
 import Head from "next/head";
 
 import Header from "../../components/Header";
+import SignIn from "../../components/SignIn";
+import SignOutButton from "../../components/buttons/SignOutButton";
 import NavigationBar from "../../components/NavigationBar/NavigationBar";
 import Background from "../../components/Background";
 import ContentWrapper from "../../components/ContentWrapper";
@@ -60,47 +62,44 @@ export default function Categories({ shoppingItems, categories }) {
       </Head>
 
       {session ? (
-        <Header>Kategorien</Header>
+        <Header text="Kategorien">
+          <SignOutButton onSignOut={signOut} />
+        </Header>
       ) : (
-        <Header isOverlappingAnimation={true}>MyShoppingManager</Header>
+        <Header text="MyShoppingManager" isOverlappingAnimation={true} />
       )}
-      {session ? (
-        <>
-          <main>
-            <ContentWrapper>
-              <Background opacity="0.7" />
-              <CategoryContainer>
-                {filteredCategories.map(({ id, name, icon_src }) => (
-                  <li key={id}>
-                    <Link href={`/categories/${name}`}>
-                      <StyledButton>
-                        <span>{name}</span>
-                        <Image
-                          src={icon_src}
-                          width={30}
-                          height={30}
-                          alt={`${name} Icon`}
-                        />
-                      </StyledButton>
-                    </Link>
-                  </li>
-                ))}
-              </CategoryContainer>
-              <Link href={"/"} passHref>
-                <StyledLink>
-                  <AllItemsButton />
-                </StyledLink>
-              </Link>
-            </ContentWrapper>
-          </main>
-          <NavigationBar />
-        </>
-      ) : (
-        <>
-          Not signed in <br />
-          <button onClick={() => signIn()}>Sign in</button>
-        </>
-      )}
+      <main>
+        <Background opacity="0.7" />
+        {session && (
+          <ContentWrapper>
+            <Background opacity="0.7" />
+            <CategoryContainer>
+              {filteredCategories.map(({ id, name, icon_src }) => (
+                <li key={id}>
+                  <Link href={`/categories/${name}`}>
+                    <StyledButton>
+                      <span>{name}</span>
+                      <Image
+                        src={icon_src}
+                        width={30}
+                        height={30}
+                        alt={`${name} Icon`}
+                      />
+                    </StyledButton>
+                  </Link>
+                </li>
+              ))}
+            </CategoryContainer>
+            <Link href={"/"} passHref>
+              <StyledLink>
+                <AllItemsButton />
+              </StyledLink>
+            </Link>
+          </ContentWrapper>
+        )}
+        {!session && <SignIn onSignIn={signIn} />}
+      </main>
+      {session && <NavigationBar />}
     </>
   );
 }

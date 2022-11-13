@@ -52,7 +52,7 @@ export default function Home({ shoppingItems }) {
       </Head>
 
       <Header text="MyShoppingManager" isOverlappingAnimation={true}>
-        <SignOutButton onSignOut={signOut} />
+        {session && <SignOutButton onSignOut={signOut} />}
       </Header>
 
       <main>

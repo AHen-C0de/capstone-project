@@ -1,11 +1,13 @@
 import styled from "styled-components";
 import { useState } from "react";
-import { useSession, signIn } from "next-auth/react";
+import { useSession, signIn, signOut } from "next-auth/react";
 import { unstable_getServerSession } from "next-auth/next";
 import { authOptions } from "./api/auth/[...nextauth]";
 import Head from "next/head";
 
 import Header from "../components/Header";
+import SignIn from "../components/SignIn";
+import SignOutButton from "../components/buttons/SignOutButton";
 import NavigationBar from "../components/NavigationBar/NavigationBar";
 import Background from "../components/Background";
 import ContentWrapper from "../components/ContentWrapper";
@@ -75,33 +77,28 @@ export default function Edit({ items, recipes, shoppingItems }) {
       </Head>
 
       {session ? (
-        <Header>Liste bearbeiten</Header>
+        <Header text="Liste bearbeiten">
+          <SignOutButton onSignOut={signOut} />
+        </Header>
       ) : (
-        <Header isOverlappingAnimation={true}>MyShoppingManager</Header>
+        <Header text="MyShoppingManager" isOverlappingAnimation={true} />
       )}
-      {session ? (
-        <>
-          <main>
-            <Background opacity="0.7" />
-            <ContentWrapper>
-              <ShoppingListEditor
-                items={items}
-                recipes={recipes}
-                listItems={listItems}
-                onDelete={deleteItem}
-                onAdd={addItem}
-              />
-            </ContentWrapper>
-          </main>
-
-          <NavigationBar />
-        </>
-      ) : (
-        <>
-          Not signed in <br />
-          <button onClick={() => signIn()}>Sign in</button>
-        </>
-      )}
+      <main>
+        <Background opacity="0.7" />
+        {session && (
+          <ContentWrapper>
+            <ShoppingListEditor
+              items={items}
+              recipes={recipes}
+              listItems={listItems}
+              onDelete={deleteItem}
+              onAdd={addItem}
+            />
+          </ContentWrapper>
+        )}
+        {!session && <SignIn onSignIn={signIn} />}
+      </main>
+      {session && <NavigationBar />}
     </>
   );
 }
