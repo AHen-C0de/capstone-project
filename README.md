@@ -1,6 +1,4 @@
-# MyShoppingManager ![shopping cart animation](https://assets2.lottiefiles.com/packages/lf20_mphcontv.json)
-
-![test](https://assets1.lottiefiles.com/datafiles/HN7OcWNnoqje6iXIiZdWzKxvLIbfeCGTmvXmEm1h/data.json)
+# MyShoppingManager
 
 An application to manage your next supermarket trip. Create a current shopping list and track your expenses. Just log in via Github and get started.
 
@@ -14,8 +12,6 @@ An application to manage your next supermarket trip. Create a current shopping l
 <span class="techstack jest-green">Jest</span>
 <span class="techstack chartjs-pink">Chartjs</span>
 <span class="techstack next-auth-purple">Next-auth</span>
-
-<iframe src="https://embed.lottiefiles.com/animation/57057"></iframe>
 
 <style>
     .techstack {
