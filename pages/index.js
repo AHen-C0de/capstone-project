@@ -14,6 +14,7 @@ import Background from "../components/Background";
 import ContentWrapper from "../components/ContentWrapper";
 import ListContainer from "../components/ListContainer";
 import ListEmptyMessage from "../components/ListEmptyMessage";
+import { SeparatorLine } from "../components/BasicComponents";
 import ShoppingList from "../components/ShoppingList/ShoppingList";
 import ShowCategoriesButton from "../components/buttons/ShowCategoriesButton";
 import { getShoppingItemsByUser } from "../services/shoppingItemService";
@@ -73,7 +74,7 @@ export default function Home({ shoppingItems }) {
                       onToggleItemChecked={toggleItemChecked}
                     />
                     <StyledText>Fertig:</StyledText>
-                    <Line></Line>
+                    <SeparatorLine />
                     <ShoppingList
                       listItems={listItems.filter(
                         (shoppingItem) => shoppingItem.checked
@@ -106,14 +107,6 @@ const StyledText = styled.span`
   font-size: 1.6rem;
   position: relative;
   left: 1rem;
-`;
-
-const Line = styled.div`
-  width: 70%;
-  border: solid 1px var(--background-secondary);
-  background-color: var(--background-secondary);
-  border-radius: 1rem;
-  margin: 0.2rem 0 1rem 0;
 `;
 
 const StyledLink = styled.a`
