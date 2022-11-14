@@ -169,7 +169,7 @@ export default function Expenses({ DBexpenses }) {
         <Header text="MyShoppingManager" isOverlappingAnimation={true} />
       )}
       <main>
-        <Background opacity="0.2" />
+        {session ? <Background opacity="0.2" /> : <Background opacity="0.7" />}
         {session ? (
           <ContentWrapper>
             <GraphWrapper>
