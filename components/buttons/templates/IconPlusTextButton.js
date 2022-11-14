@@ -7,6 +7,8 @@ export default function IconPlusText({
   width,
   gap,
   left,
+  borderRadius,
+  fontWeight,
   onButtonClick,
 }) {
   return (
@@ -15,6 +17,8 @@ export default function IconPlusText({
       width={width}
       gap={gap}
       left={left}
+      borderRadius={borderRadius}
+      fontWeight={fontWeight}
       onClick={onButtonClick}
     >
       {children}

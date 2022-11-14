@@ -1,27 +1,47 @@
 import styled from "styled-components";
 import { useState } from "react";
+import { useSession, signIn, signOut } from "next-auth/react";
+import { unstable_getServerSession } from "next-auth/next";
+import { authOptions } from "../api/auth/[...nextauth]";
 import Image from "next/image";
 import Link from "next/link";
 import Head from "next/head";
 
 import Header from "../../components/Header";
+import SignIn from "../../components/SignIn";
+import SignOutButton from "../../components/buttons/SignOutButton";
 import NavigationBar from "../../components/NavigationBar/NavigationBar";
 import Background from "../../components/Background";
 import ContentWrapper from "../../components/ContentWrapper";
 import AllItemsButton from "../../components/buttons/AllItemsButton";
-import { getAllShoppingItems } from "../../services/shoppingItemService";
+import { getShoppingItemsByUser } from "../../services/shoppingItemService";
 import { getAllCategories } from "../../services/categoryService";
+import { useEffect } from "react";
 
-export async function getServerSideProps() {
-  const shoppingItems = await getAllShoppingItems();
-  const categories = await getAllCategories();
-  return {
-    props: { shoppingItems: shoppingItems, categories: categories },
-  };
+export async function getServerSideProps(context) {
+  const session = await unstable_getServerSession(
+    context.req,
+    context.res,
+    authOptions
+  );
+  if (session) {
+    const shoppingItems = await getShoppingItemsByUser(session.user.email);
+    const categories = await getAllCategories();
+    return {
+      props: { shoppingItems: shoppingItems, categories: categories },
+    };
+  } else return { props: {} };
 }
 
 export default function Categories({ shoppingItems, categories }) {
-  const [filteredCategories, setFilteredCategories] = useState(getCategories());
+  const { data: session } = useSession();
+  const [filteredCategories, setFilteredCategories] = useState([]);
+
+  useEffect(() => {
+    if (session) {
+      setFilteredCategories(getCategories());
+    }
+  }, [session]);
 
   function getCategories() {
     const usedCategoryIds = shoppingItems.map(
@@ -41,35 +61,46 @@ export default function Categories({ shoppingItems, categories }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Header>Kategorien</Header>
+      {session ? (
+        <Header text="Kategorien">
+          <SignOutButton onSignOut={signOut} />
+        </Header>
+      ) : (
+        <Header text="MyShoppingManager" isOverlappingAnimation={true} />
+      )}
       <main>
-        <ContentWrapper>
-          <Background opacity="0.7" />
-          <CategoryContainer>
-            {filteredCategories.map(({ id, name, icon_src }) => (
-              <li key={id}>
-                <Link href={`/categories/${name}`}>
-                  <StyledButton>
-                    <span>{name}</span>
-                    <Image
-                      src={icon_src}
-                      width={30}
-                      height={30}
-                      alt={`${name} Icon`}
-                    />
-                  </StyledButton>
-                </Link>
-              </li>
-            ))}
-          </CategoryContainer>
-          <Link href={"/"} passHref>
-            <StyledLink>
-              <AllItemsButton />
-            </StyledLink>
-          </Link>
-        </ContentWrapper>
+        <Background opacity="0.7" />
+        {session ? (
+          <ContentWrapper>
+            <Background opacity="0.7" />
+            <CategoryContainer>
+              {filteredCategories.map(({ id, name, icon_src }) => (
+                <li key={id}>
+                  <Link href={`/categories/${name}`}>
+                    <StyledButton>
+                      <span>{name}</span>
+                      <Image
+                        src={icon_src}
+                        width={30}
+                        height={30}
+                        alt={`${name} Icon`}
+                      />
+                    </StyledButton>
+                  </Link>
+                </li>
+              ))}
+            </CategoryContainer>
+            <Link href={"/"} passHref>
+              <StyledLink>
+                <AllItemsButton />
+              </StyledLink>
+            </Link>
+          </ContentWrapper>
+        ) : (
+          <SignIn onSignIn={signIn} />
+        )}
       </main>
-      <NavigationBar />
+      {session && <NavigationBar />}
     </>
   );
 }

@@ -1,30 +1,46 @@
 import styled from "styled-components";
 import { useState } from "react";
+import { useSession, signIn, signOut } from "next-auth/react";
+import { unstable_getServerSession } from "next-auth/next";
+import { authOptions } from "./api/auth/[...nextauth]";
 import Head from "next/head";
 
 import Header from "../components/Header";
+import SignIn from "../components/SignIn";
+import SignOutButton from "../components/buttons/SignOutButton";
 import NavigationBar from "../components/NavigationBar/NavigationBar";
 import Background from "../components/Background";
 import ContentWrapper from "../components/ContentWrapper";
 import ShoppingListEditor from "../components/ShoppingListEditor/ShoppingListEditor";
 import { getAllItems } from "../services/itemService";
 import { getAllRecipes } from "../services/recipeService";
-import { getAllShoppingItems } from "../services/shoppingItemService";
+import { getShoppingItemsByUser } from "../services/shoppingItemService";
 
-export async function getServerSideProps() {
-  const items = await getAllItems();
-  const recipes = await getAllRecipes();
-  const shoppingItems = await getAllShoppingItems();
-  return {
-    props: { items: items, recipes: recipes, shoppingItems: shoppingItems },
-  };
+export async function getServerSideProps(context) {
+  const session = await unstable_getServerSession(
+    context.req,
+    context.res,
+    authOptions
+  );
+  if (session) {
+    const items = await getAllItems();
+    const recipes = await getAllRecipes();
+    const shoppingItems = await getShoppingItemsByUser(session.user.email);
+    return {
+      props: { items: items, recipes: recipes, shoppingItems: shoppingItems },
+    };
+  } else return { props: {} };
 }
 
 export default function Edit({ items, recipes, shoppingItems }) {
+  const { data: session } = useSession();
   const [listItems, setListItems] = useState(shoppingItems);
 
   async function addItem(item) {
-    const data = { item: item.id, checked: false };
+    const data = {
+      item: item.id,
+      checked: false,
+    };
     await fetch("api/shoppingItems", {
       method: "POST",
       body: JSON.stringify(data),
@@ -60,21 +76,30 @@ export default function Edit({ items, recipes, shoppingItems }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Header>Liste bearbeiten</Header>
+      {session ? (
+        <Header text="Liste bearbeiten">
+          <SignOutButton onSignOut={signOut} />
+        </Header>
+      ) : (
+        <Header text="MyShoppingManager" isOverlappingAnimation={true} />
+      )}
       <main>
         <Background opacity="0.7" />
-        <ContentWrapper>
-          <ShoppingListEditor
-            items={items}
-            recipes={recipes}
-            listItems={listItems}
-            onDelete={deleteItem}
-            onAdd={addItem}
-          />
-        </ContentWrapper>
+        {session ? (
+          <ContentWrapper>
+            <ShoppingListEditor
+              items={items}
+              recipes={recipes}
+              listItems={listItems}
+              onDelete={deleteItem}
+              onAdd={addItem}
+            />
+          </ContentWrapper>
+        ) : (
+          <SignIn onSignIn={signIn} />
+        )}
       </main>
-
-      <NavigationBar />
+      {session && <NavigationBar />}
     </>
   );
 }

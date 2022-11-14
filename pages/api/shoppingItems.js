@@ -1,12 +1,20 @@
 import dbConnect from "../../lib/dbConnect";
 import ShoppingItem from "../../models/ShoppingItem";
-import { getAllShoppingItems } from "../../services/shoppingItemService";
+import { unstable_getServerSession } from "next-auth/next";
+import { authOptions } from "./auth/[...nextauth]";
+import { getShoppingItemsByUser } from "../../services/shoppingItemService";
 
 export default async function handler(request, response) {
+  const session = await unstable_getServerSession(
+    request,
+    response,
+    authOptions
+  );
+
   switch (request.method) {
     case "GET":
       try {
-        const shoppingItems = await getAllShoppingItems();
+        const shoppingItems = await getShoppingItemsByUser(session.user.email);
         return response.status(200).json({
           message: "ShoppingItems received",
           shoppingItems: shoppingItems,
@@ -45,10 +53,11 @@ export default async function handler(request, response) {
     case "POST":
       try {
         await dbConnect();
-        const postData = JSON.parse(request.body);
+        const postDataNoUser = JSON.parse(request.body);
+        const postData = { ...postDataNoUser, userEmail: session.user.email };
 
         //check whether item exists already in shoppingItems collection
-        const shoppingItems = await getAllShoppingItems();
+        const shoppingItems = await getShoppingItemsByUser(session.user.email);
         const used_ids = shoppingItems.map(
           (shoppingItem) => shoppingItem.item_id
         );

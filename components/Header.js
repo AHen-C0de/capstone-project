@@ -1,8 +1,10 @@
 import styled from "styled-components";
 import { useRef, useEffect } from "react";
 import lottie from "lottie-web";
+import { signOut } from "next-auth/react";
+import SignOutButton from "./buttons/SignOutButton";
 
-export default function Header({ children, isOverlappingAnimation }) {
+export default function Header({ children, text, isOverlappingAnimation }) {
   const animationRef = useRef(null);
 
   useEffect(() => {
@@ -20,8 +22,9 @@ export default function Header({ children, isOverlappingAnimation }) {
     <StyledHeader>
       <AnimationContainer ref={animationRef} />
       <StyledHeadline isOverlappingAnimation={isOverlappingAnimation}>
-        {children}
+        {text}
       </StyledHeadline>
+      {children}
     </StyledHeader>
   );
 }
@@ -30,7 +33,6 @@ const StyledHeader = styled.header`
   display: flex;
   align-items: center;
   justify-content: center;
-
   width: 100%;
   height: 4rem;
   padding: 0.5rem;
@@ -44,7 +46,7 @@ const StyledHeadline = styled.h1`
   font-weight: normal;
   font-size: 1.7rem;
   margin-left: ${({ isOverlappingAnimation }) =>
-    isOverlappingAnimation ? "2.4rem" : 0};
+    isOverlappingAnimation ? "1.2rem" : 0};
 `;
 
 const AnimationContainer = styled.div`

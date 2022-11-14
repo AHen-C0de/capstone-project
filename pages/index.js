@@ -1,9 +1,14 @@
 import styled from "styled-components";
 import { useState } from "react";
+import { useSession, signIn, signOut } from "next-auth/react";
+import { unstable_getServerSession } from "next-auth/next";
+import { authOptions } from "./api/auth/[...nextauth]";
 import Link from "next/link";
 import Head from "next/head";
 
 import Header from "../components/Header";
+import SignIn from "../components/SignIn";
+import SignOutButton from "../components/buttons/SignOutButton";
 import NavigationBar from "../components/NavigationBar/NavigationBar";
 import Background from "../components/Background";
 import ContentWrapper from "../components/ContentWrapper";
@@ -11,19 +16,32 @@ import ListContainer from "../components/ListContainer";
 import ListEmptyMessage from "../components/ListEmptyMessage";
 import ShoppingList from "../components/ShoppingList/ShoppingList";
 import ShowCategoriesButton from "../components/buttons/ShowCategoriesButton";
-import { getAllShoppingItems } from "../services/shoppingItemService";
+import { getShoppingItemsByUser } from "../services/shoppingItemService";
 import { toggleItemChecked } from "../utils/indexFun";
 
-export async function getServerSideProps() {
-  const shoppingItems = await getAllShoppingItems();
-  return {
-    props: { shoppingItems: shoppingItems },
-  };
+export async function getServerSideProps(context) {
+  const session = await unstable_getServerSession(
+    context.req,
+    context.res,
+    authOptions
+  );
+  if (session) {
+    const shoppingItems = await getShoppingItemsByUser(session.user.email);
+    return {
+      props: { shoppingItems: shoppingItems },
+    };
+  } else return { props: {} };
 }
 
 export default function Home({ shoppingItems }) {
+  const { data: session } = useSession();
   const [listItems, setListItems] = useState(shoppingItems);
-  const isEmpty = listItems.length === 0;
+
+  const isEmpty = null;
+
+  if (session) {
+    const isEmpty = listItems.length === 0;
+  }
 
   return (
     <>
@@ -33,42 +51,51 @@ export default function Home({ shoppingItems }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Header isOverlappingAnimation={true}>MyShoppingManager</Header>
+      <Header text="MyShoppingManager" isOverlappingAnimation={true}>
+        {session && <SignOutButton onSignOut={signOut} />}
+      </Header>
+
       <main>
         <Background opacity="0.7" />
-        <ContentWrapper>
-          <ListContainer>
-            {isEmpty ? (
-              <ListEmptyMessage>Leer...</ListEmptyMessage>
-            ) : (
-              <>
-                <ShoppingList
-                  listItems={listItems.filter(
-                    (shoppingItem) => !shoppingItem.checked
-                  )}
-                  listItemSetter={setListItems}
-                  onToggleItemChecked={toggleItemChecked}
-                />
-                <StyledText>Fertig:</StyledText>
-                <Line></Line>
-                <ShoppingList
-                  listItems={listItems.filter(
-                    (shoppingItem) => shoppingItem.checked
-                  )}
-                  listItemSetter={setListItems}
-                  onToggleItemChecked={toggleItemChecked}
-                />
-              </>
-            )}
-          </ListContainer>
-          <Link href={"/categories"} passHref>
-            <StyledLink>
-              <ShowCategoriesButton />
-            </StyledLink>
-          </Link>
-        </ContentWrapper>
+        {session ? (
+          <ContentWrapper>
+            <>
+              <ListContainer>
+                {isEmpty ? (
+                  <ListEmptyMessage>Leer...</ListEmptyMessage>
+                ) : (
+                  <>
+                    <ShoppingList
+                      listItems={listItems.filter(
+                        (shoppingItem) => !shoppingItem.checked
+                      )}
+                      listItemSetter={setListItems}
+                      onToggleItemChecked={toggleItemChecked}
+                    />
+                    <StyledText>Fertig:</StyledText>
+                    <Line></Line>
+                    <ShoppingList
+                      listItems={listItems.filter(
+                        (shoppingItem) => shoppingItem.checked
+                      )}
+                      listItemSetter={setListItems}
+                      onToggleItemChecked={toggleItemChecked}
+                    />
+                  </>
+                )}
+              </ListContainer>
+              <Link href={"/categories"} passHref>
+                <StyledLink>
+                  <ShowCategoriesButton />
+                </StyledLink>
+              </Link>
+            </>
+          </ContentWrapper>
+        ) : (
+          <SignIn onSignIn={signIn} />
+        )}
       </main>
-      <NavigationBar />
+      {session && <NavigationBar />}
     </>
   );
 }

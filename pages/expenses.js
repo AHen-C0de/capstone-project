@@ -1,11 +1,16 @@
 import styled from "styled-components";
 import { useState, useEffect } from "react";
+import { useSession, signIn, signOut } from "next-auth/react";
+import { unstable_getServerSession } from "next-auth/next";
+import { authOptions } from "./api/auth/[...nextauth]";
 import { Scatter } from "react-chartjs-2";
 import { Chart as ChartJS, registerables } from "chart.js/auto";
 import "chartjs-adapter-luxon";
 import Head from "next/head";
 
 import Header from "../components/Header";
+import SignIn from "../components/SignIn";
+import SignOutButton from "../components/buttons/SignOutButton";
 import NavigationBar from "../components/NavigationBar/NavigationBar";
 import Background from "../components/Background";
 import MoneyAddIcon from "../components/icons/MoneyAddIcon";
@@ -14,21 +19,35 @@ import {
   StyledTextButton,
   StyledIconButton,
 } from "../components/buttons/templates/buttonStyles";
-import { getAllExpenses } from "../services/expensesService";
+import { getExpensesByUser } from "../services/expensesService";
 
-export async function getServerSideProps() {
-  const expenses = await getAllExpenses();
-  return {
-    props: { DBexpenses: expenses },
-  };
+export async function getServerSideProps(context) {
+  const session = await unstable_getServerSession(
+    context.req,
+    context.res,
+    authOptions
+  );
+  if (session) {
+    const expenses = await getExpensesByUser(session.user.email);
+    return {
+      props: { DBexpenses: expenses },
+    };
+  } else return { props: {} };
 }
 
 export default function Expenses({ DBexpenses }) {
-  const [expenses, setExpenses] = useState(DBexpenses);
+  const { data: session } = useSession();
+  const [expenses, setExpenses] = useState([]);
   const [chartData, setChartData] = useState({});
   const [isShowForm, setIsShowForm] = useState(false);
 
   const maxDate = new Date().toISOString().split("T")[0];
+
+  useEffect(() => {
+    if (session) {
+      setExpenses(DBexpenses);
+    }
+  }, [session]);
 
   useEffect(() => {
     const preparedData = prepareChartData();
@@ -142,70 +161,80 @@ export default function Expenses({ DBexpenses }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Header>Ausgaben</Header>
+      {session ? (
+        <Header text="Ausgaben">
+          <SignOutButton onSignOut={signOut} />
+        </Header>
+      ) : (
+        <Header text="MyShoppingManager" isOverlappingAnimation={true} />
+      )}
       <main>
         <Background opacity="0.2" />
-        <ContentWrapper>
-          <GraphWrapper>
-            {Object.keys(chartData).length !== 0 && (
-              <Scatter options={chartOptions} data={chartData} />
+        {session ? (
+          <ContentWrapper>
+            <GraphWrapper>
+              {Object.keys(chartData).length !== 0 && (
+                <Scatter options={chartOptions} data={chartData} />
+              )}
+            </GraphWrapper>
+            {!isShowForm ? (
+              <StyledIconButton
+                aria-label="Öffne Formular für Ausgaben"
+                onClick={() => setIsShowForm(true)}
+              >
+                <MoneyAddIcon
+                  width={40}
+                  height={40}
+                  fillColor={"var(--background-primary)"}
+                  alt="Geldstapel-Icon"
+                />
+              </StyledIconButton>
+            ) : (
+              <Modal onCloseModal={() => setIsShowForm(false)}>
+                <StyledForm onSubmit={handleSubmit}>
+                  <InputWrapper>
+                    <StyledLabel htmlFor="amount">
+                      Ausgaben hinzufügen
+                    </StyledLabel>
+                    <StyledInput
+                      type="number"
+                      min={0.01}
+                      max={500}
+                      step={0.01}
+                      name="amount"
+                      id="amount"
+                      placeholder="0.00 €"
+                      required
+                    />
+                  </InputWrapper>
+                  <InputWrapper>
+                    <StyledLabel htmlFor="date">Datum</StyledLabel>
+                    <StyledInput
+                      type="date"
+                      min="2022-01-01"
+                      max={maxDate}
+                      name="date"
+                      id="name"
+                      required
+                    />
+                  </InputWrapper>
+                  <ButtonWrapper>
+                    <StyledTextButton
+                      aria-label="Ausgaben hinzufügen"
+                      padding="0.3rem 0.8rem"
+                    >
+                      Hinzufügen
+                    </StyledTextButton>
+                  </ButtonWrapper>
+                </StyledForm>
+              </Modal>
             )}
-          </GraphWrapper>
-          {!isShowForm ? (
-            <StyledIconButton
-              aria-label="Öffne Formular für Ausgaben"
-              onClick={() => setIsShowForm(true)}
-            >
-              <MoneyAddIcon
-                width={40}
-                height={40}
-                fillColor={"var(--background-primary)"}
-                alt="Geldstapel-Icon"
-              />
-            </StyledIconButton>
-          ) : (
-            <Modal onCloseModal={() => setIsShowForm(false)}>
-              <StyledForm onSubmit={handleSubmit}>
-                <InputWrapper>
-                  <StyledLabel htmlFor="amount">
-                    Ausgaben hinzufügen
-                  </StyledLabel>
-                  <StyledInput
-                    type="number"
-                    min={0.01}
-                    max={500}
-                    step={0.01}
-                    name="amount"
-                    id="amount"
-                    placeholder="0.00 €"
-                    required
-                  />
-                </InputWrapper>
-                <InputWrapper>
-                  <StyledLabel htmlFor="date">Datum</StyledLabel>
-                  <StyledInput
-                    type="date"
-                    min="2022-01-01"
-                    max={maxDate}
-                    name="date"
-                    id="name"
-                    required
-                  />
-                </InputWrapper>
-                <ButtonWrapper>
-                  <StyledTextButton
-                    aria-label="Ausgaben hinzufügen"
-                    padding="0.3rem 0.8rem"
-                  >
-                    Hinzufügen
-                  </StyledTextButton>
-                </ButtonWrapper>
-              </StyledForm>
-            </Modal>
-          )}
-        </ContentWrapper>
+          </ContentWrapper>
+        ) : (
+          <SignIn onSignIn={signIn} />
+        )}
       </main>
-      <NavigationBar />
+      {session && <NavigationBar />}
     </>
   );
 }
