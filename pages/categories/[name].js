@@ -119,7 +119,7 @@ export default function Category({ id, name, icon_src, shoppingItems }) {
             </ButtonContainer>
           </ContentWrapper>
         ) : (
-          <SignIn onSignIn={signIn} />
+          <SignIn onSignIn={() => signIn("github")} />
         )}
       </main>
       {session && <NavigationBar />}

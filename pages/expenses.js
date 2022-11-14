@@ -231,7 +231,7 @@ export default function Expenses({ DBexpenses }) {
             )}
           </ContentWrapper>
         ) : (
-          <SignIn onSignIn={signIn} />
+          <SignIn onSignIn={() => signIn("github")} />
         )}
       </main>
       {session && <NavigationBar />}

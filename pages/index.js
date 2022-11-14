@@ -93,7 +93,7 @@ export default function Home({ shoppingItems }) {
             </>
           </ContentWrapper>
         ) : (
-          <SignIn onSignIn={signIn} />
+          <SignIn onSignIn={() => signIn("github")} />
         )}
       </main>
       {session && <NavigationBar />}
