@@ -73,7 +73,7 @@ export default function Category({ id, name, icon_src, shoppingItems }) {
       )}
       <main>
         <Background opacity="0.7" />
-        {session && (
+        {session ? (
           <ContentWrapper>
             <ListContainer>
               <CategoryHeader>
@@ -117,8 +117,9 @@ export default function Category({ id, name, icon_src, shoppingItems }) {
               </Link>
             </ButtonContainer>
           </ContentWrapper>
+        ) : (
+          <SignIn onSignIn={signIn} />
         )}
-        {!session && <SignIn onSignIn={signIn} />}
       </main>
       {session && <NavigationBar />}
     </>

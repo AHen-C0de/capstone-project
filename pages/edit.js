@@ -85,7 +85,7 @@ export default function Edit({ items, recipes, shoppingItems }) {
       )}
       <main>
         <Background opacity="0.7" />
-        {session && (
+        {session ? (
           <ContentWrapper>
             <ShoppingListEditor
               items={items}
@@ -95,8 +95,9 @@ export default function Edit({ items, recipes, shoppingItems }) {
               onAdd={addItem}
             />
           </ContentWrapper>
+        ) : (
+          <SignIn onSignIn={signIn} />
         )}
-        {!session && <SignIn onSignIn={signIn} />}
       </main>
       {session && <NavigationBar />}
     </>

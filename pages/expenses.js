@@ -170,7 +170,7 @@ export default function Expenses({ DBexpenses }) {
       )}
       <main>
         <Background opacity="0.2" />
-        {session && (
+        {session ? (
           <ContentWrapper>
             <GraphWrapper>
               {Object.keys(chartData).length !== 0 && (
@@ -230,8 +230,9 @@ export default function Expenses({ DBexpenses }) {
               </Modal>
             )}
           </ContentWrapper>
+        ) : (
+          <SignIn onSignIn={signIn} />
         )}
-        {!session && <SignIn onSignIn={signIn} />}
       </main>
       {session && <NavigationBar />}
     </>

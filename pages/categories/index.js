@@ -70,7 +70,7 @@ export default function Categories({ shoppingItems, categories }) {
       )}
       <main>
         <Background opacity="0.7" />
-        {session && (
+        {session ? (
           <ContentWrapper>
             <Background opacity="0.7" />
             <CategoryContainer>
@@ -96,8 +96,9 @@ export default function Categories({ shoppingItems, categories }) {
               </StyledLink>
             </Link>
           </ContentWrapper>
+        ) : (
+          <SignIn onSignIn={signIn} />
         )}
-        {!session && <SignIn onSignIn={signIn} />}
       </main>
       {session && <NavigationBar />}
     </>

@@ -57,7 +57,7 @@ export default function Home({ shoppingItems }) {
 
       <main>
         <Background opacity="0.7" />
-        {session && (
+        {session ? (
           <ContentWrapper>
             <>
               <ListContainer>
@@ -91,8 +91,9 @@ export default function Home({ shoppingItems }) {
               </Link>
             </>
           </ContentWrapper>
+        ) : (
+          <SignIn onSignIn={signIn} />
         )}
-        {!session && <SignIn onSignIn={signIn} />}
       </main>
       {session && <NavigationBar />}
     </>
