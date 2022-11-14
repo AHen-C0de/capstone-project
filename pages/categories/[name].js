@@ -15,7 +15,7 @@ import Background from "../../components/Background";
 import ContentWrapper from "../../components/ContentWrapper";
 import ListContainer from "../../components/ListContainer";
 import ShoppingList from "../../components/ShoppingList/ShoppingList";
-import { SeparatorLine } from "../components/BasicComponents";
+import { SeparatorLine } from "../../components/BasicComponents";
 import ShowCategoriesButton from "../../components/buttons/ShowCategoriesButton";
 import AllItemsButton from "../../components/buttons/AllItemsButton";
 import { getShoppingItemsByUser } from "../../services/shoppingItemService";
