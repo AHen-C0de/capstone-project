@@ -5,17 +5,17 @@ import ShoppingList from "./ShoppingList";
 const shoppingListItems = [
   {
     id: "a",
-    item: { id: "1", name: "Brot" },
+    name: "Brot",
     checked: false,
   },
   {
     id: "b",
-    item: { id: "1", name: "Bananen" },
+    name: "Bananen",
     checked: false,
   },
   {
     id: "c",
-    item: { id: "1", name: "Milch" },
+    name: "Milch",
     checked: true,
   },
 ];

@@ -5,18 +5,15 @@ import ShoppingListEditor from "./ShoppingListEditor";
 const shoppingListItems = [
   {
     id: "a",
-    item: { id: "1", name: "Brot" },
-    checked: false,
+    name: "Brot",
   },
   {
     id: "b",
-    item: { id: "1", name: "Bananen" },
-    checked: false,
+    name: "Bananen",
   },
   {
     id: "c",
-    item: { id: "1", name: "Milch" },
-    checked: true,
+    name: "Milch",
   },
 ];
 
