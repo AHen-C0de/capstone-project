@@ -14,3 +14,5 @@ https://user-images.githubusercontent.com/100531381/201706675-f9b684fb-d435-4b67
 - [x] `Mongoose`
 - [x] `Jest`
 - [x] `Next-auth`
+- [x] `Chart.js`
+- [x] `lotti-web`
