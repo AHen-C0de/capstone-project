@@ -1,4 +1,3 @@
-import styled from "styled-components";
 import { useState } from "react";
 import { useSession, signIn, signOut } from "next-auth/react";
 import { unstable_getServerSession } from "next-auth/next";
