@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { useState } from "react";
 import Head from "next/head";
 
 import NavigationBar from "../components/NavigationBar/NavigationBar";
@@ -11,6 +12,29 @@ import "../components/Input/Input"
 import Input from "../components/Input/Input";
 
 export default function Add() {
+  const [itemInput, setItemInput] = useState("")
+
+  function TMPhandleInput(event) {
+    const inputString = event.target.value
+    setItemInput(inputString)
+  }
+
+  async function addItem(inputString) {
+    const data = {
+      item: inputString,
+    };
+    await fetch("api/addItems", {
+      method: "POST",
+      body: JSON.stringify(data)
+    });
+  }
+
+  function handleSubmit(event) {
+    event.preventDefault()
+    addItem(itemInput)
+    console.log(itemInput)
+  }
+
     return (
       <>
         <Head>
@@ -22,13 +46,20 @@ export default function Add() {
         <main>
           <Background opacity="0.7" />
           <ContentWrapper>
-            <StyledForm>
+            <StyledForm
+              aria-label="Produkt speichern"
+              autoComplete="off"
+              onSubmit={handleSubmit}
+            >
               <Input
                 id="item"
                 labelText="Neues Produkt"
                 ariaLabel="Produktname"
                 placeholderText="Gebe ein Produkt ein..."
+                value={itemInput}
+                onInput={TMPhandleInput}
               />
+              <button type="submit">submit</button>
             </StyledForm>
           </ContentWrapper>
         </main>

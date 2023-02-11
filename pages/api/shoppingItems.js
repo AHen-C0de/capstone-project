@@ -78,6 +78,6 @@ export default async function handler(request, response) {
     default:
       return response
         .status(405)
-        .json({ message: "HTTP method is not allowed" });
+        .json({ message: "HTTP method is not allowed." });
   }
 }
