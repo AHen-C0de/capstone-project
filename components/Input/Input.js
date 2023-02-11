@@ -4,26 +4,28 @@ import DropDown from "./DropDown";
 
 export default function Input({
   id,
-  text,
+  labelText,
   ariaLabel,
   placeholderText,
+  showIcon = false,
   reference = null,
   value,
   onInput,
   onFocus,
   onBlur,
-  dropDownItems,
-  dropDownAriaLabel,
-  onDropDownClick,
+  dropDownItems = null,
+  dropDownAriaLabel = null,
+  onDropDownClick = null,
 }) {
   return (
     <InputWrapper>
-      <StyledLabel htmlFor={id}>{text}</StyledLabel>
+      <StyledLabel htmlFor={id}>{labelText}</StyledLabel>
       <StyledInput
         type="text"
         id={id}
         aria-label={ariaLabel}
         placeholder={placeholderText}
+        showIcon={showIcon}
         maxLength="30"
         ref={reference} //used to set autofocus after submit
         value={value}
@@ -31,7 +33,7 @@ export default function Input({
         onFocus={onFocus}
         onBlur={onBlur}
       />
-      {dropDownItems.length > 0 && (
+      {((dropDownItems != null) && (dropDownItems.length > 0)) && (
         <DropDown
           optionElements={dropDownItems}
           ariaLabel={dropDownAriaLabel}
@@ -70,7 +72,11 @@ const StyledInput = styled.input`
   border-radius: 2rem;
   border: none;
   font-family: "Inter";
-  background: url(/assets/icons/search.svg) no-repeat scroll 0.6rem 0.4rem;
-  padding-left: 2.8rem;
+  background: ${({ showIcon }) =>
+      showIcon ? 
+      "url(/assets/icons/search.svg) no-repeat scroll 0.6rem 0.4rem" 
+      : "none"
+    };
+  padding-left: ${({ showIcon }) => showIcon ? "2.8rem" : "1rem"};
   background-color: white;
 `;
