@@ -12,16 +12,17 @@ import "../components/Input/Input"
 import Input from "../components/Input/Input";
 
 export default function Add() {
-  const [itemInput, setItemInput] = useState("")
+  const [itemInput,     setItemInput]     = useState("")
+  const [categoryInput, setCategoryInput] = useState("")
 
-  function handleInput(event) {
+  function handleInput(event, inputSetter) {
     const inputString = event.target.value
-    setItemInput(inputString)
+    inputSetter(inputString)
   }
 
-  async function addItem(inputString) {
+  async function addItem(item) {
     const data = {
-      item: inputString,
+      item: item,
     };
     await fetch("api/addItems", {
       method: "POST",
@@ -29,9 +30,19 @@ export default function Add() {
     });
   }
 
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault()
-    addItem(itemInput)
+    const form = event.target
+
+    const formData = new FormData(form);
+    const data = Object.fromEntries(formData);
+    console.log(event.target)
+    console.log(formData)
+    console.log(data)
+    console.log(itemInput)
+    console.log(categoryInput)
+    
+    await addItem(data)
   }
 
     return (
@@ -54,21 +65,30 @@ export default function Add() {
                 <legend>Neues Produkt</legend>
                 <Input
                   id="item"
+                  name="item_name"
                   labelText="Name"
                   ariaLabel="Produktname"
                   placeholderText="Gebe ein Produkt ein..."
                   value={itemInput}
-                  onInput={handleInput}
+                  onInput={(event) => handleInput(event, setItemInput)}
                 />
                 <Input
                   id="category"
+                  name="category_name"
                   labelText="Kategorie"
                   ariaLabel="Kategoriename"
                   placeholderText="Für welche Kategorie?"
-                  value={""}
-                  onInput={handleInput}
+                  value={categoryInput}
+                  onInput={(event) => handleInput(event, setCategoryInput)}
                 />
               </fieldset>
+              <button type="submit">submit</button>
+            </StyledForm>
+            <StyledForm
+              aria-label="Produkt speichern"
+              autoComplete="off"
+              onSubmit={handleSubmit}
+            >
               <fieldset>
                 <legend>Neue Kategorie</legend>
                 <Input
@@ -76,8 +96,8 @@ export default function Add() {
                   labelText="Name"
                   ariaLabel="neuer Kategoriename"
                   placeholderText="Kategorie nicht dabei?"
-                  value={""}
-                  onInput={handleInput}
+                  // value={""}
+                  // onInput={(event) => handleInput(event, setItemInput)}
                 />
               </fieldset>
               <button type="submit">submit</button>

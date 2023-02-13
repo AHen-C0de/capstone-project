@@ -4,6 +4,7 @@ import DropDown from "./DropDown";
 
 export default function Input({
   id,
+  name=null,
   labelText,
   ariaLabel,
   placeholderText,
@@ -23,6 +24,7 @@ export default function Input({
       <StyledInput
         type="text"
         id={id}
+        name={name}
         aria-label={ariaLabel}
         placeholder={placeholderText}
         showIcon={showIcon}

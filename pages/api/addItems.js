@@ -6,15 +6,15 @@ import Item from "../../models/Item";
 export default async function handler(request, response) {
   if (request.method === "POST") {
     try {
-      await dbConnect();
+      // await dbConnect();
       const items = await getAllItems();
       const postData = JSON.parse(request.body);
       
-      const createdItem = await Item.create(postData)
+      // const createdItem = await Item.create(postData)
   
       return response.status(201).json({
         message: "Item created",
-        createdItem: createdItem,
+        createdItem: postData,
       });
     } catch (error) {
       return response.status(400).json(error.message)
