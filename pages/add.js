@@ -14,7 +14,7 @@ import Input from "../components/Input/Input";
 export default function Add() {
   const [itemInput, setItemInput] = useState("")
 
-  function TMPhandleInput(event) {
+  function handleInput(event) {
     const inputString = event.target.value
     setItemInput(inputString)
   }
@@ -32,7 +32,6 @@ export default function Add() {
   function handleSubmit(event) {
     event.preventDefault()
     addItem(itemInput)
-    console.log(itemInput)
   }
 
     return (
@@ -57,7 +56,7 @@ export default function Add() {
                 ariaLabel="Produktname"
                 placeholderText="Gebe ein Produkt ein..."
                 value={itemInput}
-                onInput={TMPhandleInput}
+                onInput={handleInput}
               />
               <button type="submit">submit</button>
             </StyledForm>
