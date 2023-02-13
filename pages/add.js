@@ -50,14 +50,36 @@ export default function Add() {
               autoComplete="off"
               onSubmit={handleSubmit}
             >
-              <Input
-                id="item"
-                labelText="Neues Produkt"
-                ariaLabel="Produktname"
-                placeholderText="Gebe ein Produkt ein..."
-                value={itemInput}
-                onInput={handleInput}
-              />
+              <fieldset>
+                <legend>Neues Produkt</legend>
+                <Input
+                  id="item"
+                  labelText="Name"
+                  ariaLabel="Produktname"
+                  placeholderText="Gebe ein Produkt ein..."
+                  value={itemInput}
+                  onInput={handleInput}
+                />
+                <Input
+                  id="category"
+                  labelText="Kategorie"
+                  ariaLabel="Kategoriename"
+                  placeholderText="Für welche Kategorie?"
+                  value={""}
+                  onInput={handleInput}
+                />
+              </fieldset>
+              <fieldset>
+                <legend>Neue Kategorie</legend>
+                <Input
+                  id="new_category"
+                  labelText="Name"
+                  ariaLabel="neuer Kategoriename"
+                  placeholderText="Kategorie nicht dabei?"
+                  value={""}
+                  onInput={handleInput}
+                />
+              </fieldset>
               <button type="submit">submit</button>
             </StyledForm>
           </ContentWrapper>
