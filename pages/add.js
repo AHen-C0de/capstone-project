@@ -8,16 +8,59 @@ import SignIn from "../components/SignIn";
 import SignOutButton from "../components/buttons/SignOutButton";
 import Background from "../components/Background";
 import ContentWrapper from "../components/ContentWrapper";
-import "../components/Input/Input"
+import "../components/Input/Input";
 import Input from "../components/Input/Input";
+import { getAllCategories } from "../services/categoryService";
+import { handleInput, triggerDropDown } from "../utils/formFun";
 
-export default function Add() {
-  const [itemInput,     setItemInput]     = useState("")
-  const [categoryInput, setCategoryInput] = useState("")
+//TODO: Add session to serverSideProps and component
 
-  function handleInput(event, inputSetter) {
-    const inputString = event.target.value
-    inputSetter(inputString)
+export async function getServerSideProps(context) {
+  // const session = await unstable_getServerSession(
+  //   context.req,
+  //   context.res,
+  //   authOptions
+  // );
+  // if (session) {
+  const categories = await getAllCategories();
+  return {
+    props: { categories: categories },
+  };
+  // } else return { props: {} };
+}
+
+export default function Add({ categories }) {
+  //input values
+  const [itemInput, setItemInput] = useState("");
+  const [categoryInput, setCategoryInput] = useState("");
+  //rendering
+  const [dropDownCategories, setDropDownCategories] = useState([]);
+  console.log("DropDown", dropDownCategories);
+
+  function handleInputREFACTOR(event, inputSetter) {
+    const inputString = event.target.value;
+    inputSetter(inputString);
+  }
+
+  //TODO: Refactor all methods of this kind to reduce redundancy
+  /**
+   * Match category input with all categories from DB
+   * @param {String} inputValue from Category input field in Product form
+   * @returns {string[]} matched Categories
+   */
+
+  function matchCategoryInput(inputValue) {
+    const editedInput = inputValue.trim().toLowerCase();
+    //clear drop down when clearing input field
+    if (editedInput === "") {
+      return [];
+    }
+
+    const matchedCategories = categories.filter((category) =>
+      category.name.toLowerCase().startsWith(editedInput)
+    );
+    console.log("Match", matchedCategories);
+    return matchedCategories;
   }
 
   async function addItem(item) {
@@ -26,87 +69,94 @@ export default function Add() {
     };
     await fetch("api/addItems", {
       method: "POST",
-      body: JSON.stringify(data)
+      body: JSON.stringify(data),
     });
   }
 
   async function handleSubmit(event) {
-    event.preventDefault()
-    const form = event.target
+    event.preventDefault();
+    const form = event.target;
 
     const formData = new FormData(form);
     const data = Object.fromEntries(formData);
-    console.log(event.target)
-    console.log(formData)
-    console.log(data)
-    console.log(itemInput)
-    console.log(categoryInput)
-    
-    await addItem(data)
+    console.log(event.target);
+
+    await addItem(data);
   }
 
-    return (
-      <>
-        <Head>
-          <title>Produkte hinzufügen</title>
-        </Head>
-        <Header text="Produkte hinzufügen">
-          {/* <SignOutButton onSignOut={signOut} /> */}
-        </Header>
-        <main>
-          <Background opacity="0.7" />
-          <ContentWrapper>
-            <StyledForm
-              aria-label="Produkt speichern"
-              autoComplete="off"
-              onSubmit={handleSubmit}
-            >
-              <fieldset>
-                <legend>Neues Produkt</legend>
-                <Input
-                  id="item"
-                  name="item_name"
-                  labelText="Name"
-                  ariaLabel="Produktname"
-                  placeholderText="Gebe ein Produkt ein..."
-                  value={itemInput}
-                  onInput={(event) => handleInput(event, setItemInput)}
-                />
-                <Input
-                  id="category"
-                  name="category_name"
-                  labelText="Kategorie"
-                  ariaLabel="Kategoriename"
-                  placeholderText="Für welche Kategorie?"
-                  value={categoryInput}
-                  onInput={(event) => handleInput(event, setCategoryInput)}
-                />
-              </fieldset>
-              <button type="submit">submit</button>
-            </StyledForm>
-            <StyledForm
-              aria-label="Produkt speichern"
-              autoComplete="off"
-              onSubmit={handleSubmit}
-            >
-              <fieldset>
-                <legend>Neue Kategorie</legend>
-                <Input
-                  id="new_category"
-                  labelText="Name"
-                  ariaLabel="neuer Kategoriename"
-                  placeholderText="Kategorie nicht dabei?"
-                  // value={""}
-                  // onInput={(event) => handleInput(event, setItemInput)}
-                />
-              </fieldset>
-              <button type="submit">submit</button>
-            </StyledForm>
-          </ContentWrapper>
-        </main>
-        <NavigationBar />
-      </>
-    )
+  return (
+    <>
+      <Head>
+        <title>Produkte hinzufügen</title>
+      </Head>
+      <Header text="Produkte hinzufügen">
+        {/* <SignOutButton onSignOut={signOut} /> */}
+      </Header>
+      <main>
+        <Background opacity="0.7" />
+        <ContentWrapper>
+          <StyledForm
+            aria-label="Produkt speichern"
+            autoComplete="off"
+            onSubmit={handleSubmit}
+          >
+            <fieldset>
+              <legend>Neues Produkt</legend>
+              <Input
+                id="item"
+                name="name"
+                labelText="Name"
+                ariaLabel="Produktname"
+                placeholderText="Gebe ein Produkt ein..."
+                value={itemInput}
+                onInput={(event) => handleInputREFACTOR(event, setItemInput)}
+              />
+              <Input
+                id="category"
+                name="category"
+                labelText="Kategorie"
+                ariaLabel="Kategoriename"
+                placeholderText="Welche Kategorie?"
+                showIcon={true}
+                value={categoryInput}
+                onInput={(event) =>
+                  handleInput(
+                    event,
+                    setCategoryInput,
+                    setDropDownCategories,
+                    matchCategoryInput
+                  )
+                }
+                dropDownItems={dropDownCategories}
+                dropDownAriaLabel="Kategorie auswählen"
+                // onDropDownClick={}
+              />
+            </fieldset>
+            <button type="submit">submit</button>
+          </StyledForm>
+          <StyledForm
+            aria-label="Produkt speichern"
+            autoComplete="off"
+            onSubmit={handleSubmit}
+          >
+            <fieldset>
+              <legend>Neue Kategorie</legend>
+              <Input
+                id="new_category"
+                labelText="Name"
+                ariaLabel="neuer Kategoriename"
+                placeholderText="Kategorie nicht dabei?"
+                // value={""}
+                // onInput={(event) => handleInput(event, setItemInput)}
+              />
+            </fieldset>
+            <button type="submit">submit</button>
+          </StyledForm>
+        </ContentWrapper>
+      </main>
+      <NavigationBar />
+    </>
+  );
 }
 
 const StyledForm = styled.form`
@@ -119,4 +169,4 @@ const StyledForm = styled.form`
   height: 100%;
   border-radius: 0.5rem;
   border: 1px solid var(--list-primary);
-`
+`;

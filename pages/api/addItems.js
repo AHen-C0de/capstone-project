@@ -3,6 +3,7 @@ import { getAllItems } from "../../services/itemService";
 import Expense from "../../models/Item"
 import Item from "../../models/Item";
 
+//TODO: add session
 export default async function handler(request, response) {
   if (request.method === "POST") {
     try {

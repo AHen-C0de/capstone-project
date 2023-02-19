@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { useState } from "react";
 
 import Input from "../Input/Input";
-import { handleInput, triggerDropDown } from "../../utils/editFormFun";
+import { handleInput, triggerDropDown } from "../../utils/formFun";
 
 export default function Form({
   items,
@@ -13,11 +13,11 @@ export default function Form({
   itemInputRef,
 }) {
   //input values
-  const [itemInput,   setItemInput]   = useState("");
+  const [itemInput, setItemInput] = useState("");
   const [recipeInput, setRecipeInput] = useState("");
   //rendering
-  const [dropDownItems,    setDropDownItems]    = useState([]);
-  const [dropDownRecipes,  setDropDownRecipes]  = useState([]);
+  const [dropDownItems, setDropDownItems] = useState([]);
+  const [dropDownRecipes, setDropDownRecipes] = useState([]);
   const [isFocusItemInput, setIsFocusItemInput] = useState(false);
 
   //match item input with all items from DB
