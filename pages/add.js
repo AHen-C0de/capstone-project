@@ -35,12 +35,8 @@ export default function Add({ categories }) {
   const [categoryInput, setCategoryInput] = useState("");
   //rendering
   const [dropDownCategories, setDropDownCategories] = useState([]);
-  console.log("DropDown", dropDownCategories);
-
-  function handleInputREFACTOR(event, inputSetter) {
-    const inputString = event.target.value;
-    inputSetter(inputString);
-  }
+  //buffer clicked elements
+  const [clickedCategory, setClickedCategory] = useState({});
 
   //TODO: Refactor all methods of this kind to reduce redundancy
   /**
@@ -48,7 +44,6 @@ export default function Add({ categories }) {
    * @param {String} inputValue from Category input field in Product form
    * @returns {string[]} matched Categories
    */
-
   function matchCategoryInput(inputValue) {
     const editedInput = inputValue.trim().toLowerCase();
     //clear drop down when clearing input field
@@ -59,29 +54,30 @@ export default function Add({ categories }) {
     const matchedCategories = categories.filter((category) =>
       category.name.toLowerCase().startsWith(editedInput)
     );
-    console.log("Match", matchedCategories);
     return matchedCategories;
   }
 
-  async function addItem(item) {
-    const data = {
-      item: item,
+  function handleClickCategory(category) {
+    setClickedCategory(category); //buffer category for POST request
+    setCategoryInput(category.name); //write clicked category into input field
+    setDropDownCategories([]); //close DropDown
+  }
+
+  async function addItem(name, category_id) {
+    console.log(item);
+    const item = {
+      name: name,
+      category: category_id,
     };
     await fetch("api/addItems", {
       method: "POST",
-      body: JSON.stringify(data),
+      body: JSON.stringify(item),
     });
   }
 
   async function handleSubmit(event) {
     event.preventDefault();
-    const form = event.target;
-
-    const formData = new FormData(form);
-    const data = Object.fromEntries(formData);
-    console.log(event.target);
-
-    await addItem(data);
+    await addItem(itemInput, clickedCategory.id);
   }
 
   return (
@@ -109,7 +105,7 @@ export default function Add({ categories }) {
                 ariaLabel="Produktname"
                 placeholderText="Gebe ein Produkt ein..."
                 value={itemInput}
-                onInput={(event) => handleInputREFACTOR(event, setItemInput)}
+                onInput={(event) => handleInput(event, setItemInput)}
               />
               <Input
                 id="category"
@@ -129,7 +125,7 @@ export default function Add({ categories }) {
                 }
                 dropDownItems={dropDownCategories}
                 dropDownAriaLabel="Kategorie auswählen"
-                // onDropDownClick={}
+                onDropDownClick={handleClickCategory}
               />
             </fieldset>
             <button type="submit">submit</button>

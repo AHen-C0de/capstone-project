@@ -1,8 +1,16 @@
 //open drop down when typing into input field
-function handleInput(event, inputSetter, dropDownSetter, inputMatcher) {
+function handleInput(
+  event,
+  inputSetter,
+  dropDownSetter = null,
+  inputMatcher = null
+) {
   const inputString = event.target.value;
   inputSetter(inputString);
-  triggerDropDown(inputString, dropDownSetter, inputMatcher);
+
+  if (dropDownSetter) {
+    triggerDropDown(inputString, dropDownSetter, inputMatcher);
+  }
 }
 
 //evoke rendering drop down buttons for elements that match input
