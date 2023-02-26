@@ -53,8 +53,8 @@ export default async function handler(request, response) {
     case "POST":
       try {
         await dbConnect();
-        const postDataNoUser = JSON.parse(request.body);
-        const postData = { ...postDataNoUser, userEmail: session.user.email };
+        const postData = JSON.parse(request.body);
+        const postDataPlusUser = { ...postData, userEmail: session.user.email };
 
         //check whether item exists already in shoppingItems collection
         const shoppingItems = await getShoppingItemsByUser(session.user.email);
@@ -62,15 +62,17 @@ export default async function handler(request, response) {
           (shoppingItem) => shoppingItem.item_id
         );
 
-        if (!used_ids.includes(postData.item)) {
-          const createdShoppingItem = await ShoppingItem.create(postData);
+        if (!used_ids.includes(postDataPlusUser.item)) {
+          const createdShoppingItem = await ShoppingItem.create(
+            postDataPlusUser
+          );
           return response.status(201).json({
             message: "ShoppingItem created",
             createdShoppingItem: createdShoppingItem,
           });
         }
         return response
-          .status(409)
+          .status(422)
           .json({ message: "ShoppingItem already exists" });
       } catch (err) {
         return response.status(400).json(err.message);

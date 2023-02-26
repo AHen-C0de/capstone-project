@@ -1,7 +1,7 @@
 import dbConnect from "../lib/dbConnect";
 import Category from "../models/Category";
 
-export async function getAllCategories() {
+async function getAllCategories() {
   await dbConnect();
 
   const categories = await Category.find();
@@ -15,7 +15,16 @@ export async function getAllCategories() {
   return sanitizedCategories;
 }
 
-export async function getCategoryByName(name) {
+async function getAllCategoryIDs() {
+  await dbConnect();
+  const categories = await Category.find();
+
+  const sanitizedCategoryIDs = categories.map(({ id }) => id);
+
+  return sanitizedCategoryIDs;
+}
+
+async function getCategoryByName(name) {
   await dbConnect();
 
   const category = await Category.findOne({ name: name });
@@ -28,3 +37,5 @@ export async function getCategoryByName(name) {
 
   return sanitizedCategory;
 }
+
+export { getAllCategories, getAllCategoryIDs, getCategoryByName };

@@ -14,6 +14,7 @@ import { getAllCategories } from "../services/categoryService";
 import { handleInput, triggerDropDown } from "../utils/formFun";
 
 //TODO: Add session to serverSideProps and component
+//TODO: change all imports to relative path
 
 export async function getServerSideProps(context) {
   // const session = await unstable_getServerSession(
@@ -38,6 +39,7 @@ export default function Add({ categories }) {
   //buffer clicked elements
   const [clickedCategory, setClickedCategory] = useState({});
 
+  //TODO: Don't allow to submit data, when not picking category from dropDown -> show alter message to user
   //TODO: Refactor all methods of this kind to reduce redundancy
   /**
    * Match category input with all categories from DB
@@ -64,14 +66,13 @@ export default function Add({ categories }) {
   }
 
   async function addItem(name, category_id) {
-    console.log(item);
-    const item = {
+    const data = {
       name: name,
       category: category_id,
     };
     await fetch("api/addItems", {
       method: "POST",
-      body: JSON.stringify(item),
+      body: JSON.stringify(data),
     });
   }
 
