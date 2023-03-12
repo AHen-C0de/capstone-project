@@ -10,6 +10,7 @@ import Background from "../components/Background";
 import ContentWrapper from "../components/ContentWrapper";
 import "../components/Input/Input";
 import Input from "../components/Input/Input";
+import Modal from "../components/Modal";
 import { getAllCategories } from "../services/categoryService";
 import { handleInput, triggerDropDown } from "../utils/formFun";
 
@@ -35,37 +36,26 @@ export default function Add({ categories }) {
   const [itemInput, setItemInput] = useState("");
   const [categoryInput, setCategoryInput] = useState("");
   //rendering
-  const [dropDownCategories, setDropDownCategories] = useState([]);
+  const [showCategoryModal, setShowCategoryModal] = useState(false);
+  const [showChosenCategory, setShowChosenCategory] = useState(false);
   //buffer clicked elements
   const [clickedCategory, setClickedCategory] = useState({});
 
   //TODO: Don't allow to submit data, when not picking category from dropDown -> show alter message to user
   //TODO: Refactor all methods of this kind to reduce redundancy
-  /**
-   * Match category input with all categories from DB
-   * @param {String} inputValue from Category input field in Product form
-   * @returns {string[]} matched Categories
-   */
-  function matchCategoryInput(inputValue) {
-    const editedInput = inputValue.trim().toLowerCase();
-    //clear drop down when clearing input field
-    if (editedInput === "") {
-      return [];
-    }
 
-    const matchedCategories = categories.filter((category) =>
-      category.name.toLowerCase().startsWith(editedInput)
-    );
-    return matchedCategories;
+  function onClickCategory(category) {
+    setClickedCategory(category); //buffer category for rendering & POST request
+    setShowCategoryModal(false); //close category modal
+    setShowChosenCategory(true); //display chosen category
   }
 
-  function handleClickCategory(category) {
-    setClickedCategory(category); //buffer category for POST request
-    setCategoryInput(category.name); //write clicked category into input field
-    setDropDownCategories([]); //close DropDown
+  async function handleProductSubmit(event) {
+    event.preventDefault();
+    await addProduct(itemInput, clickedCategory.id);
   }
 
-  async function addItem(name, category_id) {
+  async function addProduct(name, category_id) {
     const data = {
       name: name,
       category: category_id,
@@ -74,11 +64,6 @@ export default function Add({ categories }) {
       method: "POST",
       body: JSON.stringify(data),
     });
-  }
-
-  async function handleSubmit(event) {
-    event.preventDefault();
-    await addItem(itemInput, clickedCategory.id);
   }
 
   return (
@@ -95,7 +80,7 @@ export default function Add({ categories }) {
           <StyledForm
             aria-label="Produkt speichern"
             autoComplete="off"
-            onSubmit={handleSubmit}
+            onSubmit={handleProductSubmit}
           >
             <fieldset>
               <legend>Neues Produkt</legend>
@@ -108,33 +93,38 @@ export default function Add({ categories }) {
                 value={itemInput}
                 onInput={(event) => handleInput(event, setItemInput)}
               />
-              <Input
-                id="category"
-                name="category"
-                labelText="Kategorie"
-                ariaLabel="Kategoriename"
-                placeholderText="Welche Kategorie?"
-                showIcon={true}
-                value={categoryInput}
-                onInput={(event) =>
-                  handleInput(
-                    event,
-                    setCategoryInput,
-                    setDropDownCategories,
-                    matchCategoryInput
-                  )
-                }
-                dropDownItems={dropDownCategories}
-                dropDownAriaLabel="Kategorie auswählen"
-                onDropDownClick={handleClickCategory}
-              />
+              {showChosenCategory && <p>{clickedCategory.name}</p>}
+              <button type="button" onClick={() => setShowCategoryModal(true)}>
+                Wähle eine Kategorie...
+              </button>
+
+              {showCategoryModal && (
+                <Modal onCloseModal={() => setShowCategoryModal(false)}>
+                  <ol>
+                    {categories.map((category) => (
+                      <li>
+                        <button
+                          type="button"
+                          onClick={() => onClickCategory(category)}
+                        >
+                          {category.name}
+                        </button>
+                      </li>
+                    ))}
+                  </ol>
+                </Modal>
+              )}
+
+              <button type="submit" style={{ display: "block" }}>
+                submit
+              </button>
+              {/* //TODO: remove inline style from submit button */}
             </fieldset>
-            <button type="submit">submit</button>
           </StyledForm>
           <StyledForm
             aria-label="Produkt speichern"
             autoComplete="off"
-            onSubmit={handleSubmit}
+            onSubmit={handleProductSubmit}
           >
             <fieldset>
               <legend>Neue Kategorie</legend>
