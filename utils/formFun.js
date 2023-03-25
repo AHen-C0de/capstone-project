@@ -1,10 +1,5 @@
 //open drop down when typing into input field
-function handleInput(
-  event,
-  inputSetter,
-  dropDownSetter = null,
-  inputMatcher = null
-) {
+function handleInput(event, inputSetter, dropDownSetter, inputMatcher) {
   const inputString = event.target.value;
   inputSetter(inputString);
 

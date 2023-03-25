@@ -12,7 +12,6 @@ import "../components/Input/Input";
 import Input from "../components/Input/Input";
 import Modal from "../components/Modal";
 import { getAllCategories } from "../services/categoryService";
-import { handleInput, triggerDropDown } from "../utils/formFun";
 
 //TODO: Add session to serverSideProps and component
 //TODO: change all imports to relative path
@@ -50,17 +49,32 @@ export default function Add({ categories }) {
     setShowChosenCategory(true); //display chosen category
   }
 
-  async function handleProductSubmit(event) {
+  async function handleItemSubmit(event) {
     event.preventDefault();
-    await addProduct(itemInput, clickedCategory.id);
+    await addItem(itemInput, clickedCategory.id);
   }
 
-  async function addProduct(name, category_id) {
+  async function addItem(name, category_id) {
     const data = {
       name: name,
       category: category_id,
     };
     await fetch("api/addItems", {
+      method: "POST",
+      body: JSON.stringify(data),
+    });
+  }
+
+  async function handleCategorySubmit(event) {
+    event.preventDefault();
+    await addCategory(categoryInput);
+  }
+
+  async function addCategory(name) {
+    const data = {
+      name: name,
+    };
+    await fetch("api/addCategory", {
       method: "POST",
       body: JSON.stringify(data),
     });
@@ -80,7 +94,7 @@ export default function Add({ categories }) {
           <StyledForm
             aria-label="Produkt speichern"
             autoComplete="off"
-            onSubmit={handleProductSubmit}
+            onSubmit={handleItemSubmit}
           >
             <fieldset>
               <legend>Neues Produkt</legend>
@@ -91,7 +105,7 @@ export default function Add({ categories }) {
                 ariaLabel="Produktname"
                 placeholderText="Gebe ein Produkt ein..."
                 value={itemInput}
-                onInput={(event) => handleInput(event, setItemInput)}
+                onInput={(event) => setItemInput(event.target.value)}
               />
               {showChosenCategory && <p>{clickedCategory.name}</p>}
               <button type="button" onClick={() => setShowCategoryModal(true)}>
@@ -102,7 +116,7 @@ export default function Add({ categories }) {
                 <Modal onCloseModal={() => setShowCategoryModal(false)}>
                   <ol>
                     {categories.map((category) => (
-                      <li>
+                      <li key={category.id}>
                         <button
                           type="button"
                           onClick={() => onClickCategory(category)}
@@ -114,17 +128,13 @@ export default function Add({ categories }) {
                   </ol>
                 </Modal>
               )}
-
-              <button type="submit" style={{ display: "block" }}>
-                submit
-              </button>
-              {/* //TODO: remove inline style from submit button */}
             </fieldset>
+            <button type="submit">submit</button>
           </StyledForm>
           <StyledForm
             aria-label="Produkt speichern"
             autoComplete="off"
-            onSubmit={handleProductSubmit}
+            onSubmit={handleCategorySubmit}
           >
             <fieldset>
               <legend>Neue Kategorie</legend>
@@ -133,8 +143,8 @@ export default function Add({ categories }) {
                 labelText="Name"
                 ariaLabel="neuer Kategoriename"
                 placeholderText="Kategorie nicht dabei?"
-                // value={""}
-                // onInput={(event) => handleInput(event, setItemInput)}
+                value={categoryInput}
+                onInput={(event) => setCategoryInput(event.target.value)}
               />
             </fieldset>
             <button type="submit">submit</button>

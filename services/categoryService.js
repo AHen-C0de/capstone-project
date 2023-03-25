@@ -38,4 +38,18 @@ async function getCategoryByName(name) {
   return sanitizedCategory;
 }
 
-export { getAllCategories, getAllCategoryIDs, getCategoryByName };
+async function getAllCategoryNames() {
+  await dbConnect();
+  const categories = await Category.find();
+
+  const sanitizedNames = categories.map(({ name }) => name);
+
+  return sanitizedNames;
+}
+
+export {
+  getAllCategories,
+  getAllCategoryIDs,
+  getCategoryByName,
+  getAllCategoryNames,
+};
