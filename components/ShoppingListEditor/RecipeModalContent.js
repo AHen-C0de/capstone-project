@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 import DeleteButton from "../buttons/DeleteButton";
-import IconPlusTextButton from "../buttons/templates/IconPlusTextButton";
+import { IconPlusTextButton } from "../buttons/templates";
 import { GiCheckMark as CheckIcon } from "react-icons/gi";
 
 export default function RecipeModalContent({ recipe, onAdd, onDelete }) {

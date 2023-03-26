@@ -4,7 +4,7 @@ import DropDown from "./DropDown";
 
 export default function Input({
   id,
-  name=null,
+  name,
   labelText,
   ariaLabel,
   placeholderText,
@@ -35,7 +35,7 @@ export default function Input({
         onFocus={onFocus}
         onBlur={onBlur}
       />
-      {((dropDownItems != null) && (dropDownItems.length > 0)) && (
+      {dropDownItems != null && dropDownItems.length > 0 && (
         <DropDown
           optionElements={dropDownItems}
           ariaLabel={dropDownAriaLabel}
@@ -75,10 +75,9 @@ const StyledInput = styled.input`
   border: none;
   font-family: "Inter";
   background: ${({ showIcon }) =>
-      showIcon ? 
-      "url(/assets/icons/search.svg) no-repeat scroll 0.6rem 0.4rem" 
-      : "none"
-    };
-  padding-left: ${({ showIcon }) => showIcon ? "2.8rem" : "1rem"};
+    showIcon
+      ? "url(/assets/icons/search.svg) no-repeat scroll 0.6rem 0.4rem"
+      : "none"};
+  padding-left: ${({ showIcon }) => (showIcon ? "2.8rem" : "1rem")};
   background-color: white;
 `;

@@ -41,7 +41,7 @@ export default async function handler(request, response) {
       if (is_valid) {
         const createdCategory = await Category.create({
           name: cleanedName,
-          icon_src: "/assets/icons/questionsmark.svg",
+          icon_src: "/assets/icons/questionmark.svg",
         });
 
         return response.status(201).json({

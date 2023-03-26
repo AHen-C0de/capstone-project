@@ -18,7 +18,7 @@ import Modal from "../components/Modal";
 import {
   StyledTextButton,
   StyledIconButton,
-} from "../components/buttons/templates/buttonStyles";
+} from "../components/buttons/templates";
 import { getExpensesByUser } from "../services/expensesService";
 
 export async function getServerSideProps(context) {
@@ -219,10 +219,7 @@ export default function Expenses({ DBexpenses }) {
                     />
                   </InputWrapper>
                   <ButtonWrapper>
-                    <StyledTextButton
-                      aria-label="Ausgaben hinzufügen"
-                      padding="0.3rem 0.8rem"
-                    >
+                    <StyledTextButton aria-label="Ausgaben hinzufügen">
                       Hinzufügen
                     </StyledTextButton>
                   </ButtonWrapper>

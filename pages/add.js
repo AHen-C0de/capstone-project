@@ -7,12 +7,14 @@ import Header from "../components/Header";
 import SignIn from "../components/SignIn";
 import SignOutButton from "../components/buttons/SignOutButton";
 import Background from "../components/Background";
-import ContentWrapper from "../components/ContentWrapper";
-import "../components/Input/Input";
+import { ContentWrapper } from "../components/BasicComponents";
 import Input from "../components/Input/Input";
 import Modal from "../components/Modal";
+import { StyledTextButton } from "../components/buttons/templates";
 import { getAllCategories } from "../services/categoryService";
 
+//TODO: Load Categories in item input when clicking button, so lately added categories are loaded !!!
+//TODO: reset form when sent
 //TODO: Add session to serverSideProps and component
 //TODO: change all imports to relative path
 
@@ -36,17 +38,16 @@ export default function Add({ categories }) {
   const [categoryInput, setCategoryInput] = useState("");
   //rendering
   const [showCategoryModal, setShowCategoryModal] = useState(false);
-  const [showChosenCategory, setShowChosenCategory] = useState(false);
   //buffer clicked elements
-  const [clickedCategory, setClickedCategory] = useState({});
+  const [clickedCategory, setClickedCategory] = useState(null);
 
+  //TODO: give all buttons font-family: 'Inter'
   //TODO: Don't allow to submit data, when not picking category from dropDown -> show alter message to user
   //TODO: Refactor all methods of this kind to reduce redundancy
 
   function onClickCategory(category) {
     setClickedCategory(category); //buffer category for rendering & POST request
     setShowCategoryModal(false); //close category modal
-    setShowChosenCategory(true); //display chosen category
   }
 
   async function handleItemSubmit(event) {
@@ -90,64 +91,75 @@ export default function Add({ categories }) {
       </Header>
       <main>
         <Background opacity="0.7" />
-        <ContentWrapper>
+        <ContentWrapper gap="3rem">
           <StyledForm
             aria-label="Produkt speichern"
             autoComplete="off"
             onSubmit={handleItemSubmit}
           >
-            <fieldset>
-              <legend>Neues Produkt</legend>
-              <Input
-                id="item"
-                name="name"
-                labelText="Name"
-                ariaLabel="Produktname"
-                placeholderText="Gebe ein Produkt ein..."
-                value={itemInput}
-                onInput={(event) => setItemInput(event.target.value)}
-              />
-              {showChosenCategory && <p>{clickedCategory.name}</p>}
-              <button type="button" onClick={() => setShowCategoryModal(true)}>
-                Wähle eine Kategorie...
-              </button>
+            <Input
+              id="item"
+              name="name"
+              labelText="Neues Produkt"
+              placeholderText="Gebe ein Produkt ein..."
+              value={itemInput}
+              onInput={(event) => setItemInput(event.target.value)}
+            />
+            <ChooseCategoryButton
+              type="button"
+              onClick={() => setShowCategoryModal(true)}
+            >
+              {clickedCategory != null
+                ? clickedCategory.name
+                : "Wähle eine Kategorie..."}
+            </ChooseCategoryButton>
 
-              {showCategoryModal && (
-                <Modal onCloseModal={() => setShowCategoryModal(false)}>
-                  <ol>
-                    {categories.map((category) => (
-                      <li key={category.id}>
-                        <button
-                          type="button"
-                          onClick={() => onClickCategory(category)}
-                        >
-                          {category.name}
-                        </button>
-                      </li>
-                    ))}
-                  </ol>
-                </Modal>
-              )}
-            </fieldset>
-            <button type="submit">submit</button>
+            {showCategoryModal && (
+              <Modal
+                onCloseModal={() => setShowCategoryModal(false)}
+                backgroundColor="var(--list-secondary)"
+              >
+                <StyledCategoryList>
+                  {categories.map((category) => (
+                    <li key={category.id}>
+                      <StyledCategoryButton
+                        type="button"
+                        onClick={() => onClickCategory(category)}
+                      >
+                        {category.name}
+                      </StyledCategoryButton>
+                    </li>
+                  ))}
+                </StyledCategoryList>
+              </Modal>
+            )}
+            <StyledTextButton
+              type="submit"
+              aria-label="Produkt speichern"
+              margin="1rem 0 0 0"
+            >
+              Hinzufügen
+            </StyledTextButton>
           </StyledForm>
           <StyledForm
             aria-label="Produkt speichern"
             autoComplete="off"
             onSubmit={handleCategorySubmit}
           >
-            <fieldset>
-              <legend>Neue Kategorie</legend>
-              <Input
-                id="new_category"
-                labelText="Name"
-                ariaLabel="neuer Kategoriename"
-                placeholderText="Kategorie nicht dabei?"
-                value={categoryInput}
-                onInput={(event) => setCategoryInput(event.target.value)}
-              />
-            </fieldset>
-            <button type="submit">submit</button>
+            <Input
+              id="new_category"
+              labelText="Neue Kategorie"
+              placeholderText="Kategorie nicht dabei?"
+              value={categoryInput}
+              onInput={(event) => setCategoryInput(event.target.value)}
+            />
+            <StyledTextButton
+              type="submit"
+              aria-label="Kategorie speichern"
+              margin="1rem 0 0 0"
+            >
+              Hinzufügen
+            </StyledTextButton>
           </StyledForm>
         </ContentWrapper>
       </main>
@@ -159,11 +171,36 @@ export default function Add({ categories }) {
 const StyledForm = styled.form`
   display: flex;
   flex-direction: column;
+  align-items: center;
+  gap: 0.7rem;
   background-color: var(--list-secondary);
   padding: 1rem;
   width: 100%;
   box-shadow: var(--listContainer-shadow);
-  height: 100%;
   border-radius: 0.5rem;
   border: 1px solid var(--list-primary);
+`;
+
+const ChooseCategoryButton = styled.button`
+  background: var(--list-primary__gradient);
+  background-color: var(--list-primary);
+  padding: 0.5rem 0;
+  border-radius: 2rem;
+  font-size: 1.1rem;
+  width: 90%;
+  font-family: "Inter";
+`;
+
+const StyledCategoryList = styled.ul`
+  list-style: none;
+  padding: 1rem 3.5rem;
+`;
+
+const StyledCategoryButton = styled.button`
+  width: 100%;
+  padding: 0.5rem;
+  background: var(--list-primary__gradient);
+  background-color: var(--list-primary);
+  border-radius: 0.5rem;
+  font-family: "Inter";
 `;

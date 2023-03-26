@@ -12,7 +12,7 @@ import SignIn from "../../components/SignIn";
 import SignOutButton from "../../components/buttons/SignOutButton";
 import NavigationBar from "../../components/NavigationBar/NavigationBar";
 import Background from "../../components/Background";
-import ContentWrapper from "../../components/ContentWrapper";
+import { ContentWrapper } from "../../components/BasicComponents";
 import AllItemsButton from "../../components/buttons/AllItemsButton";
 import { getShoppingItemsByUser } from "../../services/shoppingItemService";
 import { getAllCategories } from "../../services/categoryService";

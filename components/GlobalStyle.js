@@ -24,6 +24,8 @@ const GlobalStyle = createGlobalStyle`
         rgba(255, 251, 241, 1) 0%,
         rgba(255, 246, 214, 1) 69%
       );
+    --button-borderRadius: 0.3rem;
+    --button-padding: 0.3rem 0.8rem;
     --button-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     --buttonshadow__hover: 2px 7px 7px rgba(0, 0, 0, 0.4);
     --listContainer-shadow: 5px 10px 7px #7e7e7e;

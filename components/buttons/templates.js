@@ -13,12 +13,14 @@ const StyledTextButton = styled.button`
   box-shadow: var(--button-shadow);
   height: fit-content;
   cursor: pointer;
-  padding: ${({ padding }) => padding};
+  padding: ${({ padding }) => (padding ? padding : "var(--button-padding)")};
   gap: ${({ gap }) => gap};
   left: ${({ left }) => left || 0};
   width: ${({ width }) => width || "fit-content"};
-  border-radius: ${({ borderRadius }) => borderRadius};
+  border-radius: ${({ borderRadius }) =>
+    borderRadius ? borderRadius : "var(--button-borderRadius)"};
   font-weight: ${({ fontWeight }) => fontWeight};
+  margin: ${({ margin }) => (margin ? margin : "0")};
 
   &:hover {
     box-shadow: var(--buttonshadow__hover);
@@ -41,4 +43,29 @@ const StyledIconButton = styled.button`
   }
 `;
 
-export { StyledTextButton, StyledIconButton };
+function IconPlusTextButton({
+  children,
+  padding,
+  width,
+  gap,
+  left,
+  borderRadius,
+  fontWeight,
+  onButtonClick,
+}) {
+  return (
+    <StyledTextButton
+      padding={padding}
+      width={width}
+      gap={gap}
+      left={left}
+      borderRadius={borderRadius}
+      fontWeight={fontWeight}
+      onClick={onButtonClick}
+    >
+      {children}
+    </StyledTextButton>
+  );
+}
+
+export { StyledTextButton, StyledIconButton, IconPlusTextButton };

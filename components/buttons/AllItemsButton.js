@@ -1,4 +1,4 @@
-import IconPlusTextButton from "./templates/IconPlusTextButton";
+import { IconPlusTextButton } from "./templates";
 import { IoIosArrowBack as ArrowBackIcon } from "react-icons/io";
 
 export default function AllItemButton() {
@@ -8,7 +8,6 @@ export default function AllItemButton() {
       width="11rem"
       gap="0.2rem"
       left="0.2rem"
-      borderRadius="0.3rem"
       fontWeight={500}
     >
       <ArrowBackIcon alt="Pfeil Icon" size={30} />
