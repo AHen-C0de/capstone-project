@@ -1,4 +1,4 @@
-import IconPlusTextButton from "./templates/IconPlusTextButton";
+import { IconPlusTextButton } from "./templates";
 import { BiCategory as CategoryIcon } from "react-icons/bi";
 
 export default function ShowCategoriesButton() {
@@ -8,7 +8,6 @@ export default function ShowCategoriesButton() {
       width="11rem"
       gap="0.7rem"
       left="0.2rem"
-      borderRadius="0.3rem"
       fontWeight={500}
     >
       <CategoryIcon alt="Kategorie Icon" size={30} />

@@ -1,5 +1,4 @@
-import styled from "styled-components";
-import IconPlusTextButton from "./templates/IconPlusTextButton";
+import { IconPlusTextButton } from "./templates";
 import { RiLoginBoxLine as SignInIcon } from "react-icons/ri";
 
 export default function SignInButton({ onSignIn }) {

@@ -1,9 +1,12 @@
 import styled from "styled-components";
 
-export default function Modal({ children, onCloseModal }) {
+export default function Modal({ children, onCloseModal, backgroundColor }) {
   return (
     <ModalBackground onClick={onCloseModal}>
-      <ModalContainer onClick={(event) => event.stopPropagation()}>
+      <ModalContainer
+        onClick={(event) => event.stopPropagation()}
+        backgroundColor={backgroundColor}
+      >
         {children}
       </ModalContainer>
     </ModalBackground>
@@ -30,9 +33,10 @@ const ModalBackground = styled.div`
 const ModalContainer = styled.article`
   width: 82%;
   max-width: 350px;
-  background-color: white;
   position: absolute;
   border-radius: 1rem;
   justify-self: center;
   z-index: 20;
+  background-color: ${({ backgroundColor }) =>
+    backgroundColor ? backgroundColor : "white"};
 `;

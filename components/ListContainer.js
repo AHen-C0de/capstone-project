@@ -6,7 +6,7 @@ const ListContainer = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  box-shadow: 5px 10px 7px #7e7e7e;
+  box-shadow: var(--listContainer-shadow);
   height: 100%;
   overflow-y: auto;
   overflow-x: hidden;

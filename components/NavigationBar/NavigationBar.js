@@ -4,6 +4,7 @@ import NavigationItem from "./NavigationItem";
 import ListIcon from "../icons/ListIcon";
 import WriteIcon from "../icons/WriteIcon";
 import MoneyIcon from "../icons/MoneyIcon";
+import AddIcon from "../icons/AddIcon"
 
 export default function NavigationBar() {
   return (
@@ -41,6 +42,17 @@ export default function NavigationBar() {
             />
           }
           padding="0.2rem"
+        ></NavigationItem>
+        <NavigationItem
+          path="/add"
+          icon={
+            <AddIcon
+              fillColor="var(--background-secondary)"
+              width="2rem"
+              height="2rem"
+            />
+          }
+          padding="0.4rem"
         ></NavigationItem>
       </NavBar>
     </StyledFooter>

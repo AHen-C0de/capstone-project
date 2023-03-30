@@ -2,7 +2,10 @@
 function handleInput(event, inputSetter, dropDownSetter, inputMatcher) {
   const inputString = event.target.value;
   inputSetter(inputString);
-  triggerDropDown(inputString, dropDownSetter, inputMatcher);
+
+  if (dropDownSetter) {
+    triggerDropDown(inputString, dropDownSetter, inputMatcher);
+  }
 }
 
 //evoke rendering drop down buttons for elements that match input

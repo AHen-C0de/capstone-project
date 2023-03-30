@@ -12,7 +12,7 @@ import SignIn from "../../components/SignIn";
 import SignOutButton from "../../components/buttons/SignOutButton";
 import NavigationBar from "../../components/NavigationBar/NavigationBar";
 import Background from "../../components/Background";
-import ContentWrapper from "../../components/ContentWrapper";
+import { ContentWrapper } from "../../components/BasicComponents";
 import ListContainer from "../../components/ListContainer";
 import ShoppingList from "../../components/ShoppingList/ShoppingList";
 import { SeparatorLine } from "../../components/BasicComponents";

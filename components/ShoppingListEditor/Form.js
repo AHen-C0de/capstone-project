@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { useState } from "react";
 
-import Input from "./Input";
+import Input from "../Input/Input";
 import { handleInput, triggerDropDown } from "../../utils/formFun";
 
 export default function Form({
@@ -90,9 +90,10 @@ export default function Form({
     >
       <Input
         id="item"
-        text="Produkt"
+        labelText="Produkt"
         ariaLabel="Itemname"
         placeholderText="Suche ein Produkt..."
+        showIcon={true}
         reference={itemInputRef}
         value={itemInput}
         onInput={(event) =>
@@ -108,9 +109,10 @@ export default function Form({
       />
       <Input
         id="recipeItems"
-        text="Rezepte"
+        labelText="Rezepte"
         ariaLabel="Rezeptname"
         placeholderText="Suche ein Rezept..."
+        showIcon={true}
         value={recipeInput}
         onInput={(event) =>
           handleInput(

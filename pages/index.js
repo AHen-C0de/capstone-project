@@ -11,7 +11,7 @@ import SignIn from "../components/SignIn";
 import SignOutButton from "../components/buttons/SignOutButton";
 import NavigationBar from "../components/NavigationBar/NavigationBar";
 import Background from "../components/Background";
-import ContentWrapper from "../components/ContentWrapper";
+import { ContentWrapper } from "../components/BasicComponents";
 import ListContainer from "../components/ListContainer";
 import ListEmptyMessage from "../components/ListEmptyMessage";
 import { SeparatorLine } from "../components/BasicComponents";
@@ -38,10 +38,9 @@ export default function Home({ shoppingItems }) {
   const { data: session } = useSession();
   const [listItems, setListItems] = useState(shoppingItems);
 
-  const isEmpty = null;
-
+  let isEmpty = null;
   if (session) {
-    const isEmpty = listItems.length === 0;
+    isEmpty = listItems.length === 0;
   }
 
   return (

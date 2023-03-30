@@ -1,4 +1,3 @@
-import styled from "styled-components";
 import { useState } from "react";
 import { useSession, signIn, signOut } from "next-auth/react";
 import { unstable_getServerSession } from "next-auth/next";
@@ -10,7 +9,7 @@ import SignIn from "../components/SignIn";
 import SignOutButton from "../components/buttons/SignOutButton";
 import NavigationBar from "../components/NavigationBar/NavigationBar";
 import Background from "../components/Background";
-import ContentWrapper from "../components/ContentWrapper";
+import { ContentWrapper } from "../components/BasicComponents";
 import ShoppingListEditor from "../components/ShoppingListEditor/ShoppingListEditor";
 import { getAllItems } from "../services/itemService";
 import { getAllRecipes } from "../services/recipeService";
