@@ -41,6 +41,7 @@ export default function Add({ categories }) {
   //buffer clicked elements
   const [clickedCategory, setClickedCategory] = useState(null);
 
+  //TODO: fix bug of not displaying "Leer" in shopping list if empty
   //TODO: give all buttons font-family: 'Inter'
   //TODO: Don't allow to submit data, when not picking category from dropDown -> show alter message to user
   //TODO: Refactor all methods of this kind to reduce redundancy
@@ -52,6 +53,15 @@ export default function Add({ categories }) {
 
   async function handleItemSubmit(event) {
     event.preventDefault();
+
+    if (itemInput.trim() === "") {
+      alert("Gebe ein Produkt ein!");
+      return;
+    } else if (clickedCategory === null) {
+      alert("Wähle eine Kategorie!");
+      return;
+    }
+
     await addItem(itemInput, clickedCategory.id);
   }
 
@@ -60,14 +70,26 @@ export default function Add({ categories }) {
       name: name,
       category: category_id,
     };
-    await fetch("api/addItems", {
+    const response = await fetch("api/addItems", {
       method: "POST",
       body: JSON.stringify(data),
     });
+    const response_data = await response.json();
+    if (response.status === 201) {
+      alert(`${response_data.message}`);
+    } else {
+      alert(`${response_data.error} ${response_data.message}`);
+    }
   }
 
   async function handleCategorySubmit(event) {
     event.preventDefault();
+
+    if (categoryInput.trim() === "") {
+      alert("Gebe eine Kategorie ein!");
+      return;
+    }
+
     await addCategory(categoryInput);
   }
 
@@ -75,10 +97,16 @@ export default function Add({ categories }) {
     const data = {
       name: name,
     };
-    await fetch("api/addCategory", {
+    const response = await fetch("api/addCategory", {
       method: "POST",
       body: JSON.stringify(data),
     });
+    const response_data = await response.json();
+    if (response.status === 201) {
+      alert(`${response_data.message}`);
+    } else {
+      alert(`${response_data.error} ${response_data.message}`);
+    }
   }
 
   return (

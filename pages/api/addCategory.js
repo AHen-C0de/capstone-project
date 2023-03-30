@@ -55,7 +55,10 @@ export default async function handler(request, response) {
         error: error_msg,
       });
     } catch (error) {
-      return response.status(400).json(error.message);
+      return response.status(400).json({
+        message: "No Category was created.",
+        error: error.message,
+      });
     }
   } else {
     return response
