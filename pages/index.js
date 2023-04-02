@@ -18,7 +18,6 @@ import { SeparatorLine } from "../components/BasicComponents";
 import ShoppingList from "../components/ShoppingList/ShoppingList";
 import ShowCategoriesButton from "../components/buttons/ShowCategoriesButton";
 import { getShoppingItemsByUser } from "../services/shoppingItemService";
-import { toggleItemChecked } from "../utils/indexFun";
 
 export async function getServerSideProps(context) {
   const session = await unstable_getServerSession(
@@ -42,6 +41,16 @@ export default function Home({ shoppingItems }) {
   if (session) {
     isEmpty = listItems.length === 0;
   }
+
+  function toggleItemChecked(id) {
+    setListItems((previousItems) =>
+      previousItems.map((item) =>
+        item.id === id ? { ...item, checked: !item.checked } : item
+      )
+    );
+  }
+
+  //TODO: change tab icon
 
   return (
     <>
