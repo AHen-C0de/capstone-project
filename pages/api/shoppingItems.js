@@ -11,6 +11,8 @@ export default async function handler(request, response) {
     authOptions
   );
 
+  // TODO: turn delete and post action into transaction -> roll DB back if one wasnt successful
+
   switch (request.method) {
     case "GET":
       try {
@@ -22,31 +24,26 @@ export default async function handler(request, response) {
       } catch (err) {
         return response.status(400).json(err.message);
       }
-    case "PATCH":
-      try {
-        await dbConnect();
-        const patchData = JSON.parse(request.body);
-        const updatedShoppingItem = await ShoppingItem.findByIdAndUpdate(
-          { _id: patchData.id },
-          { $set: patchData.data },
-          { new: true } //set 'new' to return updated document
-        );
-
-        return response.status(200).json({
-          message: "ShoppingItem updated",
-          updatedShoppingItem: updatedShoppingItem,
-        });
-      } catch (err) {
-        return response.status(400).json(err.message);
-      }
     case "DELETE":
       try {
         await dbConnect();
-        const id = JSON.parse(request.body);
-        await ShoppingItem.findByIdAndDelete(id);
-        return response
-          .status(200)
-          .json({ message: "ShoppingItem deleted", deletedId: id });
+        const { type, data } = JSON.parse(request.body);
+
+        if (type === "single") {
+          await ShoppingItem.findByIdAndDelete(data);
+          return response
+            .status(200)
+            .json({ message: "ShoppingItem deleted", deletedId: data });
+        } else if (type === "refresh") {
+          const db_response = await ShoppingItem.deleteMany({
+            _id: { $in: data },
+          });
+
+          return response.status(200).json({
+            message: "Item(s) were deleted",
+            db_response: db_response,
+          });
+        }
       } catch (err) {
         return response.status(400).json(err.message);
       }

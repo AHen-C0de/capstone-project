@@ -58,7 +58,7 @@ export default function Edit({ items, recipes, shoppingItems }) {
   async function deleteItem(id) {
     const response = await fetch("/api/shoppingItems", {
       method: "DELETE",
-      body: JSON.stringify(id),
+      body: JSON.stringify({ type: "single", data: id }),
     });
     const fetchedData = await response.json();
 

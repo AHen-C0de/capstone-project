@@ -4,8 +4,8 @@ import { IoIosArrowBack as ArrowBackIcon } from "react-icons/io";
 export default function AllItemButton() {
   return (
     <IconPlusTextButton
-      padding="0.2rem 0.2rem 0.2rem 0rem"
-      width="11rem"
+      padding="0.2rem 0.5rem"
+      width="fit-content"
       gap="0.2rem"
       left="0.2rem"
       fontWeight={500}

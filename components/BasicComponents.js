@@ -20,4 +20,8 @@ const SeparatorLine = styled.div`
   margin: 0.2rem 0 1rem 0;
 `;
 
-export { ContentWrapper, SeparatorLine };
+const ButtonWrapper = styled.div`
+  width: fit-content;
+`;
+
+export { ContentWrapper, SeparatorLine, ButtonWrapper };

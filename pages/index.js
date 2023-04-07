@@ -11,14 +11,15 @@ import SignIn from "../components/SignIn";
 import SignOutButton from "../components/buttons/SignOutButton";
 import NavigationBar from "../components/NavigationBar/NavigationBar";
 import Background from "../components/Background";
-import { ContentWrapper } from "../components/BasicComponents";
+import { ContentWrapper, ButtonWrapper } from "../components/BasicComponents";
 import ListContainer from "../components/ListContainer";
 import ListEmptyMessage from "../components/ListEmptyMessage";
 import { SeparatorLine } from "../components/BasicComponents";
 import ShoppingList from "../components/ShoppingList/ShoppingList";
 import ShowCategoriesButton from "../components/buttons/ShowCategoriesButton";
+import FinishButton from "../components/buttons/FinishButton";
+
 import { getShoppingItemsByUser } from "../services/shoppingItemService";
-import { toggleItemChecked } from "../utils/indexFun";
 
 export async function getServerSideProps(context) {
   const session = await unstable_getServerSession(
@@ -42,6 +43,39 @@ export default function Home({ shoppingItems }) {
   if (session) {
     isEmpty = listItems.length === 0;
   }
+
+  function toggleItemChecked(id) {
+    setListItems((previousItems) =>
+      previousItems.map((item) =>
+        item.id === id ? { ...item, checked: !item.checked } : item
+      )
+    );
+  }
+
+  async function finishList() {
+    const checkedItem_ids = listItems
+      .filter((item) => item.checked)
+      .map((item) => item.id);
+
+    // 1. delete respective items per ID
+    await fetch("api/shoppingItems", {
+      method: "DELETE",
+      body: JSON.stringify({ type: "refresh", data: checkedItem_ids }),
+    });
+
+    // 2. get current list from DB
+    const response = await fetch("api/shoppingItems", {
+      method: "GET",
+    });
+    const responseData = await response.json();
+    const shoppingItems = responseData.shoppingItems;
+
+    setListItems(shoppingItems);
+  }
+
+  //TODO: change tab icon
+  //TODO: get rid of component 'IconPlusTextButton' because it's basically just handing down properties to its nested 'StyledTextButton' component
+  //TODO: add toast message for Einkauf beendet
 
   return (
     <>
@@ -84,11 +118,14 @@ export default function Home({ shoppingItems }) {
                   </>
                 )}
               </ListContainer>
-              <Link href={"/categories"} passHref>
-                <StyledLink>
-                  <ShowCategoriesButton />
-                </StyledLink>
-              </Link>
+              <ButtonWrapper>
+                <Link href={"/categories"} passHref>
+                  <StyledLink>
+                    <ShowCategoriesButton />
+                  </StyledLink>
+                </Link>
+                <FinishButton onFinish={finishList} />
+              </ButtonWrapper>
             </>
           </ContentWrapper>
         ) : (

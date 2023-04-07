@@ -12,7 +12,10 @@ import SignIn from "../../components/SignIn";
 import SignOutButton from "../../components/buttons/SignOutButton";
 import NavigationBar from "../../components/NavigationBar/NavigationBar";
 import Background from "../../components/Background";
-import { ContentWrapper } from "../../components/BasicComponents";
+import {
+  ContentWrapper,
+  ButtonWrapper,
+} from "../../components/BasicComponents";
 import ListContainer from "../../components/ListContainer";
 import ShoppingList from "../../components/ShoppingList/ShoppingList";
 import { SeparatorLine } from "../../components/BasicComponents";
@@ -20,7 +23,6 @@ import ShowCategoriesButton from "../../components/buttons/ShowCategoriesButton"
 import AllItemsButton from "../../components/buttons/AllItemsButton";
 import { getShoppingItemsByUser } from "../../services/shoppingItemService";
 import { getCategoryByName } from "../../services/categoryService";
-import { toggleItemChecked } from "../../utils/indexFun";
 
 export async function getServerSideProps(context) {
   const { name } = context.params;
@@ -105,7 +107,7 @@ export default function Category({ id, name, icon_src, shoppingItems }) {
                 onToggleItemChecked={toggleItemChecked}
               />
             </ListContainer>
-            <ButtonContainer>
+            <ButtonWrapper>
               <Link href={"/categories"} passHref>
                 <StyledLink>
                   <ShowCategoriesButton />
@@ -116,7 +118,7 @@ export default function Category({ id, name, icon_src, shoppingItems }) {
                   <AllItemsButton />
                 </StyledLink>
               </Link>
-            </ButtonContainer>
+            </ButtonWrapper>
           </ContentWrapper>
         ) : (
           <SignIn onSignIn={() => signIn("github")} />
@@ -157,15 +159,4 @@ const ImageWrapper = styled.div`
   filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
   display: flex;
   align-items: center;
-`;
-
-const ButtonContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 0.3rem;
-  justify-content: space-between;
-
-  @media (orientation: landscape) {
-    flex-direction: row;
-  }
 `;

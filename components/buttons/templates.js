@@ -3,7 +3,7 @@ import styled from "styled-components";
 const StyledTextButton = styled.button`
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   position: relative;
   background-color: var(--background-secondary);
   background: var(--background-secondary__gradient);
@@ -49,6 +49,7 @@ function IconPlusTextButton({
   width,
   gap,
   left,
+  margin,
   borderRadius,
   fontWeight,
   onButtonClick,
@@ -59,6 +60,7 @@ function IconPlusTextButton({
       width={width}
       gap={gap}
       left={left}
+      margin={margin}
       borderRadius={borderRadius}
       fontWeight={fontWeight}
       onClick={onButtonClick}
