@@ -11,12 +11,14 @@ import SignIn from "../components/SignIn";
 import SignOutButton from "../components/buttons/SignOutButton";
 import NavigationBar from "../components/NavigationBar/NavigationBar";
 import Background from "../components/Background";
-import { ContentWrapper } from "../components/BasicComponents";
+import { ContentWrapper, ButtonWrapper } from "../components/BasicComponents";
 import ListContainer from "../components/ListContainer";
 import ListEmptyMessage from "../components/ListEmptyMessage";
 import { SeparatorLine } from "../components/BasicComponents";
 import ShoppingList from "../components/ShoppingList/ShoppingList";
 import ShowCategoriesButton from "../components/buttons/ShowCategoriesButton";
+import FinishButton from "../components/buttons/FinishButton";
+
 import { getShoppingItemsByUser } from "../services/shoppingItemService";
 
 export async function getServerSideProps(context) {
@@ -51,6 +53,7 @@ export default function Home({ shoppingItems }) {
   }
 
   //TODO: change tab icon
+  //TODO: get rid of component 'IconPlusTextButton' because it's basically just handing down properties to its nested 'StyledTextButton' component
 
   return (
     <>
@@ -93,11 +96,14 @@ export default function Home({ shoppingItems }) {
                   </>
                 )}
               </ListContainer>
-              <Link href={"/categories"} passHref>
-                <StyledLink>
-                  <ShowCategoriesButton />
-                </StyledLink>
-              </Link>
+              <ButtonWrapper>
+                <Link href={"/categories"} passHref>
+                  <StyledLink>
+                    <ShowCategoriesButton />
+                  </StyledLink>
+                </Link>
+                <FinishButton />
+              </ButtonWrapper>
             </>
           </ContentWrapper>
         ) : (
