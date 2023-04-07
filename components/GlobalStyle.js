@@ -98,14 +98,13 @@ const GlobalStyle = createGlobalStyle`
   }
 
   html, body, #__next {
-    height: 100vh;
+    height: 100%;
   }
 
   body {
     font-family: 'Inter';
     background-color: var(--background-primary);
     margin: 0;
-    height: 100%,
   }
 
   #__next {
