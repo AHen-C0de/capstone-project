@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { IconPlusTextButton } from "./templates";
 import FinishIcon from "../icons/FinishIcon";
 
-export default function FinishButton() {
+export default function FinishButton({ onFinish }) {
   return (
     <IconPlusTextButton
       padding="0.2rem 0.5rem"
@@ -11,6 +11,7 @@ export default function FinishButton() {
       gap="0.5rem"
       left="0.2rem"
       fontWeight={500}
+      onButtonClick={onFinish}
     >
       <FinishIcon
         fillColor="var(--background-primary)"

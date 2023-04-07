@@ -52,8 +52,30 @@ export default function Home({ shoppingItems }) {
     );
   }
 
+  async function finishList() {
+    const checkedItem_ids = listItems
+      .filter((item) => item.checked)
+      .map((item) => item.id);
+
+    // 1. delete respective items per ID
+    await fetch("api/shoppingItems", {
+      method: "DELETE",
+      body: JSON.stringify({ type: "refresh", data: checkedItem_ids }),
+    });
+
+    // 2. get current list from DB
+    const response = await fetch("api/shoppingItems", {
+      method: "GET",
+    });
+    const responseData = await response.json();
+    const shoppingItems = responseData.shoppingItems;
+
+    setListItems(shoppingItems);
+  }
+
   //TODO: change tab icon
   //TODO: get rid of component 'IconPlusTextButton' because it's basically just handing down properties to its nested 'StyledTextButton' component
+  //TODO: add toast message for Einkauf beendet
 
   return (
     <>
@@ -102,7 +124,7 @@ export default function Home({ shoppingItems }) {
                     <ShowCategoriesButton />
                   </StyledLink>
                 </Link>
-                <FinishButton />
+                <FinishButton onFinish={finishList} />
               </ButtonWrapper>
             </>
           </ContentWrapper>
