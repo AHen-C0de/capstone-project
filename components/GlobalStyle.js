@@ -99,12 +99,12 @@ const GlobalStyle = createGlobalStyle`
 
   html, body, #__next {
     height: 100%;
+    margin: 0;
   }
 
   body {
     font-family: 'Inter';
     background-color: var(--background-primary);
-    margin: 0;
   }
 
   #__next {
