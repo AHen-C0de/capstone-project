@@ -8,7 +8,7 @@ const ContentWrapper = styled.div`
   width: 100%;
   max-width: 400px;
   padding: 1.2rem 1.5rem;
-  height: calc(100% - 8rem);
+  height: 100%;
   gap: ${({ gap }) => (gap ? gap : "1rem")};
 `;
 
