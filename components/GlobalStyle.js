@@ -104,6 +104,8 @@ const GlobalStyle = createGlobalStyle`
   body {
     font-family: 'Inter';
     background-color: var(--background-primary);
+    margin: 0;
+    height: 100%,
   }
 
   #__next {
