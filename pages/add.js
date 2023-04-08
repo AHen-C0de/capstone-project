@@ -13,7 +13,6 @@ import Modal from "../components/Modal";
 import { StyledTextButton } from "../components/buttons/templates";
 import { getAllCategories } from "../services/categoryService";
 
-//TODO: Load Categories in item input when clicking button, so lately added categories are loaded !!!
 //TODO: Add session to serverSideProps and component
 //TODO: change all imports to relative path
 
@@ -44,6 +43,7 @@ export default function Add({ loaded_categories }) {
   //TODO: give all buttons font-family: 'Inter'
   //TODO: Refactor all methods of this kind to reduce redundancy
   //TODO: set auto-focus to item input after submitting category
+  //TODO: display Icon in the Category Buttons in the Modal
 
   function onClickCategory(category) {
     setClickedCategory(category); //buffer category for rendering & POST request
@@ -92,27 +92,32 @@ export default function Add({ loaded_categories }) {
     }
 
     await addCategory(categoryInput);
+    const fetched_categories = await getCategories();
 
     setCategoryInput("");
+    setCategories(fetched_categories);
   }
 
   async function addCategory(name) {
-    const post_response = await fetch("api/categories", {
+    const response = await fetch("api/categories", {
       method: "POST",
       body: JSON.stringify(name),
     });
-    const post_response_data = await post_response.json();
-    if (post_response.status === 201) {
-      alert(`${post_response_data.message}`);
+    const response_data = await response.json();
+    if (response.status === 201) {
+      alert(`${response_data.message}`);
     } else {
-      alert(`${post_response_data.error} ${post_response_data.message}`);
+      alert(`${response_data.error} ${response_data.message}`);
     }
+  }
 
-    const get_response = await fetch("api/categories", {
+  async function getCategories() {
+    const response = await fetch("api/categories", {
       method: "GET",
     });
-    const get_response_data = await get_response.json();
-    setCategories(get_response_data.categories);
+
+    const response_data = await response.json();
+    return response_data.categories;
   }
 
   return (
