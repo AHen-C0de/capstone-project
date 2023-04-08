@@ -63,6 +63,8 @@ export default function Add({ categories }) {
     }
 
     await addItem(itemInput, clickedCategory.id);
+    setItemInput("");
+    setClickedCategory(null);
   }
 
   async function addItem(name, category_id) {
@@ -91,6 +93,8 @@ export default function Add({ categories }) {
     }
 
     await addCategory(categoryInput);
+
+    setCategoryInput("");
   }
 
   async function addCategory(name) {
