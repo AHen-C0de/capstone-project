@@ -1,6 +1,9 @@
 import dbConnect from "../../lib/dbConnect";
 import Category from "../../models/Category";
-import { getAllCategoryNames } from "../../services/categoryService";
+import {
+  getAllCategoryNames,
+  getAllCategories,
+} from "../../services/categoryService";
 
 /**
  * Check validity of to-post item
@@ -23,15 +26,27 @@ function checkData(categoryName, dbCategoryNames) {
 
 //TODO: add session
 export default async function handler(request, response) {
-  if (request.method === "POST") {
+  if (request.method === "GET") {
+    try {
+      await dbConnect();
+      const categories = await getAllCategories();
+
+      return response.status(200).json({
+        message: "Categories received.",
+        categories: categories,
+      });
+    } catch (error) {
+      return response.status(400).json(error.message);
+    }
+  } else if (request.method === "POST") {
     try {
       await dbConnect();
       const dbCategoryNames = await getAllCategoryNames();
 
-      const postData = JSON.parse(request.body);
+      const name = JSON.parse(request.body);
 
       // clean category name
-      let cleanedName = postData.name.trim();
+      let cleanedName = name.trim();
       //   - make first letter uppercase
       cleanedName = cleanedName.charAt(0).toUpperCase() + cleanedName.slice(1);
 

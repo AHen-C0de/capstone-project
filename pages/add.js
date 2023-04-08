@@ -14,7 +14,6 @@ import { StyledTextButton } from "../components/buttons/templates";
 import { getAllCategories } from "../services/categoryService";
 
 //TODO: Load Categories in item input when clicking button, so lately added categories are loaded !!!
-//TODO: reset form when sent
 //TODO: Add session to serverSideProps and component
 //TODO: change all imports to relative path
 
@@ -27,13 +26,14 @@ export async function getServerSideProps(context) {
   // if (session) {
   const categories = await getAllCategories();
   return {
-    props: { categories: categories },
+    props: { loaded_categories: categories },
   };
   // } else return { props: {} };
 }
 
-export default function Add({ categories }) {
+export default function Add({ loaded_categories }) {
   //input values
+  const [categories, setCategories] = useState(loaded_categories);
   const [itemInput, setItemInput] = useState("");
   const [categoryInput, setCategoryInput] = useState("");
   //rendering
@@ -41,10 +41,9 @@ export default function Add({ categories }) {
   //buffer clicked elements
   const [clickedCategory, setClickedCategory] = useState(null);
 
-  //TODO: fix bug of not displaying "Leer" in shopping list if empty
   //TODO: give all buttons font-family: 'Inter'
-  //TODO: Don't allow to submit data, when not picking category from dropDown -> show alter message to user
   //TODO: Refactor all methods of this kind to reduce redundancy
+  //TODO: set auto-focus to item input after submitting category
 
   function onClickCategory(category) {
     setClickedCategory(category); //buffer category for rendering & POST request
@@ -98,19 +97,22 @@ export default function Add({ categories }) {
   }
 
   async function addCategory(name) {
-    const data = {
-      name: name,
-    };
-    const response = await fetch("api/addCategory", {
+    const post_response = await fetch("api/categories", {
       method: "POST",
-      body: JSON.stringify(data),
+      body: JSON.stringify(name),
     });
-    const response_data = await response.json();
-    if (response.status === 201) {
-      alert(`${response_data.message}`);
+    const post_response_data = await post_response.json();
+    if (post_response.status === 201) {
+      alert(`${post_response_data.message}`);
     } else {
-      alert(`${response_data.error} ${response_data.message}`);
+      alert(`${post_response_data.error} ${post_response_data.message}`);
     }
+
+    const get_response = await fetch("api/categories", {
+      method: "GET",
+    });
+    const get_response_data = await get_response.json();
+    setCategories(get_response_data.categories);
   }
 
   return (
