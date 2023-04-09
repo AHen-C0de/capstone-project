@@ -1,3 +1,6 @@
+import { unstable_getServerSession } from "next-auth/next";
+import { authOptions } from "./auth/[...nextauth]";
+
 import dbConnect from "../../lib/dbConnect";
 import Item from "../../models/Item";
 import { getAllItemNames } from "../../services/itemService";
@@ -27,53 +30,60 @@ function checkData(item, dbItemNames, dbCategoryIDs) {
   return [true, error_msg];
 }
 
-//TODO: add session
 export default async function handler(request, response) {
-  if (request.method === "POST") {
-    try {
-      await dbConnect();
-      const dbItemNames = await getAllItemNames();
-      const dbCategoryIDs = await getAllCategoryIDs();
+  const session = await unstable_getServerSession(
+    request,
+    response,
+    authOptions
+  );
+  if (session) {
+    if (request.method === "POST") {
+      try {
+        await dbConnect();
+        const dbItemNames = await getAllItemNames();
+        const dbCategoryIDs = await getAllCategoryIDs();
 
-      const postData = JSON.parse(request.body);
+        const postData = JSON.parse(request.body);
 
-      // clean item name
-      let cleanedName = postData.name.trim();
-      //   - make first letter uppercase
-      cleanedName = cleanedName.charAt(0).toUpperCase() + cleanedName.slice(1);
-      const cleanedData = {
-        ...postData,
-        name: cleanedName,
-      };
-      // check data validity
-      const [is_valid, error_msg] = checkData(
-        cleanedData,
-        dbItemNames,
-        dbCategoryIDs
-      );
+        // clean item name
+        let cleanedName = postData.name.trim();
+        //   - make first letter uppercase
+        cleanedName =
+          cleanedName.charAt(0).toUpperCase() + cleanedName.slice(1);
+        const cleanedData = {
+          ...postData,
+          name: cleanedName,
+        };
+        // check data validity
+        const [is_valid, error_msg] = checkData(
+          cleanedData,
+          dbItemNames,
+          dbCategoryIDs
+        );
 
-      if (is_valid) {
-        const createdItem = await Item.create(cleanedData);
+        if (is_valid) {
+          const createdItem = await Item.create(cleanedData);
 
-        return response.status(201).json({
-          message: "Item created.",
-          createdItem: createdItem,
+          return response.status(201).json({
+            message: "Item created.",
+            createdItem: createdItem,
+          });
+        }
+
+        return response.status(422).json({
+          message: "No Item was created.",
+          error: error_msg,
+        });
+      } catch (error) {
+        return response.status(400).json({
+          message: "No Item was created.",
+          error: error.message,
         });
       }
-
-      return response.status(422).json({
-        message: "No Item was created.",
-        error: error_msg,
-      });
-    } catch (error) {
-      return response.status(400).json({
-        message: "No Item was created.",
-        error: error.message,
-      });
+    } else {
+      return response
+        .status(405)
+        .json({ message: "HTTP method is not allowed." });
     }
-  } else {
-    return response
-      .status(405)
-      .json({ message: "HTTP method is not allowed." });
   }
 }

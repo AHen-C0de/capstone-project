@@ -1,6 +1,9 @@
 import styled from "styled-components";
-import { useState } from "react";
 import Head from "next/head";
+import { useState } from "react";
+import { useSession, signIn, signOut } from "next-auth/react";
+import { unstable_getServerSession } from "next-auth/next";
+import { authOptions } from "./api/auth/[...nextauth]";
 
 import NavigationBar from "../components/NavigationBar/NavigationBar";
 import Header from "../components/Header";
@@ -13,24 +16,24 @@ import Modal from "../components/Modal";
 import { StyledTextButton } from "../components/buttons/templates";
 import { getAllCategories } from "../services/categoryService";
 
-//TODO: Add session to serverSideProps and component
 //TODO: change all imports to relative path
 
 export async function getServerSideProps(context) {
-  // const session = await unstable_getServerSession(
-  //   context.req,
-  //   context.res,
-  //   authOptions
-  // );
-  // if (session) {
-  const categories = await getAllCategories();
-  return {
-    props: { loaded_categories: categories },
-  };
-  // } else return { props: {} };
+  const session = await unstable_getServerSession(
+    context.req,
+    context.res,
+    authOptions
+  );
+  if (session) {
+    const categories = await getAllCategories();
+    return {
+      props: { loaded_categories: categories },
+    };
+  } else return { props: {} };
 }
 
 export default function Add({ loaded_categories }) {
+  const { data: session } = useSession();
   //input values
   const [categories, setCategories] = useState(loaded_categories);
   const [itemInput, setItemInput] = useState("");
@@ -125,84 +128,94 @@ export default function Add({ loaded_categories }) {
       <Head>
         <title>Produkte hinzufügen</title>
       </Head>
-      <Header text="Produkte hinzufügen">
-        {/* <SignOutButton onSignOut={signOut} /> */}
-      </Header>
+
+      {session ? (
+        <Header text="Produkte hinzufügen">
+          <SignOutButton onSignOut={signOut} />
+        </Header>
+      ) : (
+        <Header text="MyShoppingManager" isOverlappingAnimation={true} />
+      )}
+
       <main>
         <Background opacity="0.7" />
-        <ContentWrapper gap="3rem">
-          <StyledForm
-            aria-label="Produkt speichern"
-            autoComplete="off"
-            onSubmit={handleItemSubmit}
-          >
-            <Input
-              id="item"
-              name="name"
-              labelText="Neues Produkt"
-              placeholderText="Gebe ein Produkt ein..."
-              value={itemInput}
-              onInput={(event) => setItemInput(event.target.value)}
-            />
-            <ChooseCategoryButton
-              type="button"
-              onClick={() => setShowCategoryModal(true)}
-            >
-              {clickedCategory != null
-                ? clickedCategory.name
-                : "Wähle eine Kategorie..."}
-            </ChooseCategoryButton>
-
-            {showCategoryModal && (
-              <Modal
-                onCloseModal={() => setShowCategoryModal(false)}
-                backgroundColor="var(--list-secondary)"
-              >
-                <StyledCategoryList>
-                  {categories.map((category) => (
-                    <li key={category.id}>
-                      <StyledCategoryButton
-                        type="button"
-                        onClick={() => onClickCategory(category)}
-                      >
-                        {category.name}
-                      </StyledCategoryButton>
-                    </li>
-                  ))}
-                </StyledCategoryList>
-              </Modal>
-            )}
-            <StyledTextButton
-              type="submit"
+        {session ? (
+          <ContentWrapper gap="3rem">
+            <StyledForm
               aria-label="Produkt speichern"
-              margin="1rem 0 0 0"
+              autoComplete="off"
+              onSubmit={handleItemSubmit}
             >
-              Hinzufügen
-            </StyledTextButton>
-          </StyledForm>
-          <StyledForm
-            aria-label="Produkt speichern"
-            autoComplete="off"
-            onSubmit={handleCategorySubmit}
-          >
-            <Input
-              id="new_category"
-              labelText="Neue Kategorie"
-              placeholderText="Kategorie nicht dabei?"
-              value={categoryInput}
-              onInput={(event) => setCategoryInput(event.target.value)}
-            />
-            <StyledTextButton
-              type="submit"
-              aria-label="Kategorie speichern"
-              margin="1rem 0 0 0"
+              <Input
+                id="item"
+                name="name"
+                labelText="Neues Produkt"
+                placeholderText="Gebe ein Produkt ein..."
+                value={itemInput}
+                onInput={(event) => setItemInput(event.target.value)}
+              />
+              <ChooseCategoryButton
+                type="button"
+                onClick={() => setShowCategoryModal(true)}
+              >
+                {clickedCategory != null
+                  ? clickedCategory.name
+                  : "Wähle eine Kategorie..."}
+              </ChooseCategoryButton>
+
+              {showCategoryModal && (
+                <Modal
+                  onCloseModal={() => setShowCategoryModal(false)}
+                  backgroundColor="var(--list-secondary)"
+                >
+                  <StyledCategoryList>
+                    {categories.map((category) => (
+                      <li key={category.id}>
+                        <StyledCategoryButton
+                          type="button"
+                          onClick={() => onClickCategory(category)}
+                        >
+                          {category.name}
+                        </StyledCategoryButton>
+                      </li>
+                    ))}
+                  </StyledCategoryList>
+                </Modal>
+              )}
+              <StyledTextButton
+                type="submit"
+                aria-label="Produkt speichern"
+                margin="1rem 0 0 0"
+              >
+                Hinzufügen
+              </StyledTextButton>
+            </StyledForm>
+            <StyledForm
+              aria-label="Produkt speichern"
+              autoComplete="off"
+              onSubmit={handleCategorySubmit}
             >
-              Hinzufügen
-            </StyledTextButton>
-          </StyledForm>
-        </ContentWrapper>
+              <Input
+                id="new_category"
+                labelText="Neue Kategorie"
+                placeholderText="Kategorie nicht dabei?"
+                value={categoryInput}
+                onInput={(event) => setCategoryInput(event.target.value)}
+              />
+              <StyledTextButton
+                type="submit"
+                aria-label="Kategorie speichern"
+                margin="1rem 0 0 0"
+              >
+                Hinzufügen
+              </StyledTextButton>
+            </StyledForm>
+          </ContentWrapper>
+        ) : (
+          <SignIn onSignIn={() => signIn("github")} />
+        )}
       </main>
-      <NavigationBar />
+      {session && <NavigationBar />}
     </>
   );
 }
