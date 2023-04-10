@@ -1,6 +1,10 @@
 import styled from "styled-components";
-import { useState } from "react";
 import Head from "next/head";
+import Image from "next/image";
+import { useState, useRef } from "react";
+import { useSession, signIn, signOut } from "next-auth/react";
+import { unstable_getServerSession } from "next-auth/next";
+import { authOptions } from "./api/auth/[...nextauth]";
 
 import NavigationBar from "../components/NavigationBar/NavigationBar";
 import Header from "../components/Header";
@@ -13,27 +17,27 @@ import Modal from "../components/Modal";
 import { StyledTextButton } from "../components/buttons/templates";
 import { getAllCategories } from "../services/categoryService";
 
-//TODO: Load Categories in item input when clicking button, so lately added categories are loaded !!!
-//TODO: reset form when sent
-//TODO: Add session to serverSideProps and component
 //TODO: change all imports to relative path
 
 export async function getServerSideProps(context) {
-  // const session = await unstable_getServerSession(
-  //   context.req,
-  //   context.res,
-  //   authOptions
-  // );
-  // if (session) {
-  const categories = await getAllCategories();
-  return {
-    props: { categories: categories },
-  };
-  // } else return { props: {} };
+  const session = await unstable_getServerSession(
+    context.req,
+    context.res,
+    authOptions
+  );
+  if (session) {
+    const categories = await getAllCategories();
+    return {
+      props: { loaded_categories: categories },
+    };
+  } else return { props: {} };
 }
 
-export default function Add({ categories }) {
+export default function Add({ loaded_categories }) {
+  const { data: session } = useSession();
+  const inputRef = useRef();
   //input values
+  const [categories, setCategories] = useState(loaded_categories);
   const [itemInput, setItemInput] = useState("");
   const [categoryInput, setCategoryInput] = useState("");
   //rendering
@@ -41,10 +45,8 @@ export default function Add({ categories }) {
   //buffer clicked elements
   const [clickedCategory, setClickedCategory] = useState(null);
 
-  //TODO: fix bug of not displaying "Leer" in shopping list if empty
-  //TODO: give all buttons font-family: 'Inter'
-  //TODO: Don't allow to submit data, when not picking category from dropDown -> show alter message to user
   //TODO: Refactor all methods of this kind to reduce redundancy
+  //TODO: display Icon in the Category Buttons in the Modal
 
   function onClickCategory(category) {
     setClickedCategory(category); //buffer category for rendering & POST request
@@ -63,6 +65,9 @@ export default function Add({ categories }) {
     }
 
     await addItem(itemInput, clickedCategory.id);
+    setItemInput("");
+    setClickedCategory(null);
+    inputRef.current.focus();
   }
 
   async function addItem(name, category_id) {
@@ -91,15 +96,17 @@ export default function Add({ categories }) {
     }
 
     await addCategory(categoryInput);
+    const fetched_categories = await getCategories();
+
+    setCategoryInput("");
+    setCategories(fetched_categories);
+    inputRef.current.focus();
   }
 
   async function addCategory(name) {
-    const data = {
-      name: name,
-    };
-    const response = await fetch("api/addCategory", {
+    const response = await fetch("api/categories", {
       method: "POST",
-      body: JSON.stringify(data),
+      body: JSON.stringify(name),
     });
     const response_data = await response.json();
     if (response.status === 201) {
@@ -109,89 +116,125 @@ export default function Add({ categories }) {
     }
   }
 
+  async function getCategories() {
+    const response = await fetch("api/categories", {
+      method: "GET",
+    });
+
+    const response_data = await response.json();
+    return response_data.categories;
+  }
+
   return (
     <>
       <Head>
         <title>Produkte hinzufügen</title>
       </Head>
-      <Header text="Produkte hinzufügen">
-        {/* <SignOutButton onSignOut={signOut} /> */}
-      </Header>
+
+      {session ? (
+        <Header text="Produkte hinzufügen">
+          <SignOutButton onSignOut={signOut} />
+        </Header>
+      ) : (
+        <Header text="MyShoppingManager" isOverlappingAnimation={true} />
+      )}
+
       <main>
         <Background opacity="0.7" />
-        <ContentWrapper gap="3rem">
-          <StyledForm
-            aria-label="Produkt speichern"
-            autoComplete="off"
-            onSubmit={handleItemSubmit}
-          >
-            <Input
-              id="item"
-              name="name"
-              labelText="Neues Produkt"
-              placeholderText="Gebe ein Produkt ein..."
-              value={itemInput}
-              onInput={(event) => setItemInput(event.target.value)}
-            />
-            <ChooseCategoryButton
-              type="button"
-              onClick={() => setShowCategoryModal(true)}
-            >
-              {clickedCategory != null
-                ? clickedCategory.name
-                : "Wähle eine Kategorie..."}
-            </ChooseCategoryButton>
-
-            {showCategoryModal && (
-              <Modal
-                onCloseModal={() => setShowCategoryModal(false)}
-                backgroundColor="var(--list-secondary)"
-              >
-                <StyledCategoryList>
-                  {categories.map((category) => (
-                    <li key={category.id}>
-                      <StyledCategoryButton
-                        type="button"
-                        onClick={() => onClickCategory(category)}
-                      >
-                        {category.name}
-                      </StyledCategoryButton>
-                    </li>
-                  ))}
-                </StyledCategoryList>
-              </Modal>
-            )}
-            <StyledTextButton
-              type="submit"
+        {session ? (
+          <ContentWrapper gap="3rem">
+            <StyledForm
               aria-label="Produkt speichern"
-              margin="1rem 0 0 0"
+              autoComplete="off"
+              onSubmit={handleItemSubmit}
             >
-              Hinzufügen
-            </StyledTextButton>
-          </StyledForm>
-          <StyledForm
-            aria-label="Produkt speichern"
-            autoComplete="off"
-            onSubmit={handleCategorySubmit}
-          >
-            <Input
-              id="new_category"
-              labelText="Neue Kategorie"
-              placeholderText="Kategorie nicht dabei?"
-              value={categoryInput}
-              onInput={(event) => setCategoryInput(event.target.value)}
-            />
-            <StyledTextButton
-              type="submit"
-              aria-label="Kategorie speichern"
-              margin="1rem 0 0 0"
+              <Input
+                id="item"
+                name="name"
+                labelText="Neues Produkt"
+                placeholderText="Gebe ein Produkt ein..."
+                value={itemInput}
+                onInput={(event) => setItemInput(event.target.value)}
+                reference={inputRef}
+              />
+              <ChooseCategoryButton
+                type="button"
+                onClick={() => setShowCategoryModal(true)}
+              >
+                {clickedCategory != null ? (
+                  <>
+                    <span>{clickedCategory.name}</span>
+                    <Image
+                      src={clickedCategory.icon_src}
+                      width={23}
+                      height={23}
+                      alt={`${clickedCategory.name} Icon`}
+                    />
+                  </>
+                ) : (
+                  "Wähle eine Kategorie..."
+                )}
+              </ChooseCategoryButton>
+
+              {showCategoryModal && (
+                <Modal
+                  onCloseModal={() => setShowCategoryModal(false)}
+                  backgroundColor="var(--list-secondary)"
+                >
+                  <StyledCategoryList>
+                    {categories.map((category) => (
+                      <li key={category.id}>
+                        <StyledCategoryButton
+                          type="button"
+                          onClick={() => onClickCategory(category)}
+                        >
+                          <span>{category.name}</span>
+                          <Image
+                            src={category.icon_src}
+                            width={23}
+                            height={23}
+                            alt={`${category.name} Icon`}
+                          />
+                        </StyledCategoryButton>
+                      </li>
+                    ))}
+                  </StyledCategoryList>
+                </Modal>
+              )}
+              <StyledTextButton
+                type="submit"
+                aria-label="Produkt speichern"
+                margin="1rem 0 0 0"
+              >
+                Hinzufügen
+              </StyledTextButton>
+            </StyledForm>
+            <StyledForm
+              aria-label="Produkt speichern"
+              autoComplete="off"
+              onSubmit={handleCategorySubmit}
             >
-              Hinzufügen
-            </StyledTextButton>
-          </StyledForm>
-        </ContentWrapper>
+              <Input
+                id="new_category"
+                labelText="Neue Kategorie"
+                placeholderText="Kategorie nicht dabei?"
+                value={categoryInput}
+                onInput={(event) => setCategoryInput(event.target.value)}
+              />
+              <StyledTextButton
+                type="submit"
+                aria-label="Kategorie speichern"
+                margin="1rem 0 0 0"
+              >
+                Hinzufügen
+              </StyledTextButton>
+            </StyledForm>
+          </ContentWrapper>
+        ) : (
+          <SignIn onSignIn={() => signIn("github")} />
+        )}
       </main>
-      <NavigationBar />
+      {session && <NavigationBar />}
     </>
   );
 }
@@ -210,6 +253,10 @@ const StyledForm = styled.form`
 `;
 
 const ChooseCategoryButton = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
   background: var(--list-primary__gradient);
   background-color: var(--list-primary);
   padding: 0.5rem 0;
@@ -225,8 +272,11 @@ const StyledCategoryList = styled.ul`
 `;
 
 const StyledCategoryButton = styled.button`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   width: 100%;
-  padding: 0.5rem;
+  padding: 0.5rem 1rem;
   background: var(--list-primary__gradient);
   background-color: var(--list-primary);
   border-radius: 0.5rem;

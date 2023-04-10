@@ -1,10 +1,10 @@
 import styled from "styled-components";
+import Link from "next/link";
+import Head from "next/head";
 import { useState } from "react";
 import { useSession, signIn, signOut } from "next-auth/react";
 import { unstable_getServerSession } from "next-auth/next";
 import { authOptions } from "./api/auth/[...nextauth]";
-import Link from "next/link";
-import Head from "next/head";
 
 import Header from "../components/Header";
 import SignIn from "../components/SignIn";
@@ -73,7 +73,7 @@ export default function Home({ shoppingItems }) {
     setListItems(shoppingItems);
   }
 
-  //TODO: change tab icon
+  //TODO: make list buttons bigger & add more space between them
   //TODO: get rid of component 'IconPlusTextButton' because it's basically just handing down properties to its nested 'StyledTextButton' component
   //TODO: add toast message for Einkauf beendet
 
