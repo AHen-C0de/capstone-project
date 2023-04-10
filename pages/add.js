@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import Head from "next/head";
-import { useState } from "react";
+import Image from "next/image";
+import { useState, useRef } from "react";
 import { useSession, signIn, signOut } from "next-auth/react";
 import { unstable_getServerSession } from "next-auth/next";
 import { authOptions } from "./api/auth/[...nextauth]";
@@ -34,6 +35,7 @@ export async function getServerSideProps(context) {
 
 export default function Add({ loaded_categories }) {
   const { data: session } = useSession();
+  const inputRef = useRef();
   //input values
   const [categories, setCategories] = useState(loaded_categories);
   const [itemInput, setItemInput] = useState("");
@@ -43,9 +45,7 @@ export default function Add({ loaded_categories }) {
   //buffer clicked elements
   const [clickedCategory, setClickedCategory] = useState(null);
 
-  //TODO: give all buttons font-family: 'Inter'
   //TODO: Refactor all methods of this kind to reduce redundancy
-  //TODO: set auto-focus to item input after submitting category
   //TODO: display Icon in the Category Buttons in the Modal
 
   function onClickCategory(category) {
@@ -67,6 +67,7 @@ export default function Add({ loaded_categories }) {
     await addItem(itemInput, clickedCategory.id);
     setItemInput("");
     setClickedCategory(null);
+    inputRef.current.focus();
   }
 
   async function addItem(name, category_id) {
@@ -99,6 +100,7 @@ export default function Add({ loaded_categories }) {
 
     setCategoryInput("");
     setCategories(fetched_categories);
+    inputRef.current.focus();
   }
 
   async function addCategory(name) {
@@ -153,14 +155,25 @@ export default function Add({ loaded_categories }) {
                 placeholderText="Gebe ein Produkt ein..."
                 value={itemInput}
                 onInput={(event) => setItemInput(event.target.value)}
+                reference={inputRef}
               />
               <ChooseCategoryButton
                 type="button"
                 onClick={() => setShowCategoryModal(true)}
               >
-                {clickedCategory != null
-                  ? clickedCategory.name
-                  : "Wähle eine Kategorie..."}
+                {clickedCategory != null ? (
+                  <>
+                    <span>{clickedCategory.name}</span>
+                    <Image
+                      src={clickedCategory.icon_src}
+                      width={23}
+                      height={23}
+                      alt={`${clickedCategory.name} Icon`}
+                    />
+                  </>
+                ) : (
+                  "Wähle eine Kategorie..."
+                )}
               </ChooseCategoryButton>
 
               {showCategoryModal && (
@@ -175,7 +188,13 @@ export default function Add({ loaded_categories }) {
                           type="button"
                           onClick={() => onClickCategory(category)}
                         >
-                          {category.name}
+                          <span>{category.name}</span>
+                          <Image
+                            src={category.icon_src}
+                            width={23}
+                            height={23}
+                            alt={`${category.name} Icon`}
+                          />
                         </StyledCategoryButton>
                       </li>
                     ))}
@@ -234,6 +253,10 @@ const StyledForm = styled.form`
 `;
 
 const ChooseCategoryButton = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
   background: var(--list-primary__gradient);
   background-color: var(--list-primary);
   padding: 0.5rem 0;
@@ -249,8 +272,11 @@ const StyledCategoryList = styled.ul`
 `;
 
 const StyledCategoryButton = styled.button`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   width: 100%;
-  padding: 0.5rem;
+  padding: 0.5rem 1rem;
   background: var(--list-primary__gradient);
   background-color: var(--list-primary);
   border-radius: 0.5rem;
