@@ -20,6 +20,7 @@ import ShowCategoriesButton from "../components/buttons/ShowCategoriesButton";
 import FinishButton from "../components/buttons/FinishButton";
 
 import { getShoppingItemsByUser } from "../services/shoppingItemService";
+import { toggleItemChecked } from "../utils/shoppingList";
 
 export async function getServerSideProps(context) {
   const session = await unstable_getServerSession(
@@ -42,14 +43,6 @@ export default function Home({ shoppingItems }) {
   let isEmpty = null;
   if (session) {
     isEmpty = listItems.length === 0;
-  }
-
-  function toggleItemChecked(id) {
-    setListItems((previousItems) =>
-      previousItems.map((item) =>
-        item.id === id ? { ...item, checked: !item.checked } : item
-      )
-    );
   }
 
   async function finishList() {

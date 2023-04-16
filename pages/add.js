@@ -17,7 +17,8 @@ import Modal from "../components/Modal";
 import { StyledTextButton } from "../components/buttons/templates";
 import { getAllCategories } from "../services/categoryService";
 
-//TODO: change all imports to relative path
+//TODO: Eingangsscreen mit 2 Buttons zum hinzufügen von entweder: Produkten oder Rezepten -> öffnen entsprechende Form
+//TODO: Refactor all methods of this kind to reduce redundancy
 
 export async function getServerSideProps(context) {
   const session = await unstable_getServerSession(
@@ -44,9 +45,6 @@ export default function Add({ loaded_categories }) {
   const [showCategoryModal, setShowCategoryModal] = useState(false);
   //buffer clicked elements
   const [clickedCategory, setClickedCategory] = useState(null);
-
-  //TODO: Refactor all methods of this kind to reduce redundancy
-  //TODO: display Icon in the Category Buttons in the Modal
 
   function onClickCategory(category) {
     setClickedCategory(category); //buffer category for rendering & POST request
