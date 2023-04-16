@@ -6,7 +6,7 @@ import FinishIcon from "../icons/FinishIcon";
 export default function FinishButton({ onFinish }) {
   return (
     <IconPlusTextButton
-      padding="0.2rem 0.5rem"
+      padding="0.3rem 0.5rem"
       width="fit-content"
       gap="0.5rem"
       left="0.2rem"
