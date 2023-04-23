@@ -66,8 +66,6 @@ export default function Home({ shoppingItems }) {
     setListItems(shoppingItems);
   }
 
-  //TODO: make list buttons bigger & add more space between them
-  //TODO: get rid of component 'IconPlusTextButton' because it's basically just handing down properties to its nested 'StyledTextButton' component
   //TODO: add toast message for Einkauf beendet
 
   return (

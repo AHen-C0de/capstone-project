@@ -1,17 +1,17 @@
-import { IconPlusTextButton } from "./templates";
+import { StyledTextButton } from "./templates";
 import { RiLoginBoxLine as SignInIcon } from "react-icons/ri";
 
 export default function SignInButton({ onSignIn }) {
   return (
-    <IconPlusTextButton
+    <StyledTextButton
       padding="1rem"
       gap="1rem"
       borderRadius="0.5rem"
       fontWeight={600}
-      onButtonClick={onSignIn}
+      onClick={onSignIn}
     >
       <SignInIcon fill={"white"} size={30} />
       <span>Sign In</span>
-    </IconPlusTextButton>
+    </StyledTextButton>
   );
 }

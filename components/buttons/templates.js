@@ -43,31 +43,4 @@ const StyledIconButton = styled.button`
   }
 `;
 
-function IconPlusTextButton({
-  children,
-  padding,
-  width,
-  gap,
-  left,
-  margin,
-  borderRadius,
-  fontWeight,
-  onButtonClick,
-}) {
-  return (
-    <StyledTextButton
-      padding={padding}
-      width={width}
-      gap={gap}
-      left={left}
-      margin={margin}
-      borderRadius={borderRadius}
-      fontWeight={fontWeight}
-      onClick={onButtonClick}
-    >
-      {children}
-    </StyledTextButton>
-  );
-}
-
-export { StyledTextButton, StyledIconButton, IconPlusTextButton };
+export { StyledTextButton, StyledIconButton };
