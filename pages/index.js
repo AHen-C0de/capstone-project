@@ -20,6 +20,7 @@ import ShowCategoriesButton from "../components/buttons/ShowCategoriesButton";
 import FinishButton from "../components/buttons/FinishButton";
 
 import { getShoppingItemsByUser } from "../services/shoppingItemService";
+import { toggleItemChecked } from "../utils/shoppingList";
 
 export async function getServerSideProps(context) {
   const session = await unstable_getServerSession(
@@ -44,14 +45,6 @@ export default function Home({ shoppingItems }) {
     isEmpty = listItems.length === 0;
   }
 
-  function toggleItemChecked(id) {
-    setListItems((previousItems) =>
-      previousItems.map((item) =>
-        item.id === id ? { ...item, checked: !item.checked } : item
-      )
-    );
-  }
-
   async function finishList() {
     const checkedItem_ids = listItems
       .filter((item) => item.checked)
@@ -73,8 +66,6 @@ export default function Home({ shoppingItems }) {
     setListItems(shoppingItems);
   }
 
-  //TODO: make list buttons bigger & add more space between them
-  //TODO: get rid of component 'IconPlusTextButton' because it's basically just handing down properties to its nested 'StyledTextButton' component
   //TODO: add toast message for Einkauf beendet
 
   return (

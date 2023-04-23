@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 import DeleteButton from "../buttons/DeleteButton";
-import { IconPlusTextButton } from "../buttons/templates";
+import { StyledTextButton } from "../buttons/templates";
 import { GiCheckMark as CheckIcon } from "react-icons/gi";
 
 export default function RecipeModalContent({ recipe, onAdd, onDelete }) {
@@ -25,15 +25,15 @@ export default function RecipeModalContent({ recipe, onAdd, onDelete }) {
         ))}
       </RecipeItemsList>
       <ButtonWrapper>
-        <IconPlusTextButton
+        <StyledTextButton
           aria-label="Items zu Liste hizufügen"
           padding="0.3rem 0.8rem"
           gap="0.7rem"
-          onButtonClick={() => onAdd(recipe)}
+          onClick={() => onAdd(recipe)}
         >
           <p>Check-In</p>
           <CheckIcon alt="Checkmark Icon" />
-        </IconPlusTextButton>
+        </StyledTextButton>
       </ButtonWrapper>
     </ModalWrapper>
   );

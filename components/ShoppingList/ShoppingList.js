@@ -15,7 +15,7 @@ export default function ShoppingList({
           id={id}
           text={name}
           isChecked={checked}
-          onToggleItemChecked={() => onToggleItemChecked(id)}
+          onToggleItemChecked={() => onToggleItemChecked(id, listItemSetter)}
         />
       ))}
     </StyledList>

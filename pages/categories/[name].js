@@ -23,6 +23,7 @@ import ShowCategoriesButton from "../../components/buttons/ShowCategoriesButton"
 import AllItemsButton from "../../components/buttons/AllItemsButton";
 import { getShoppingItemsByUser } from "../../services/shoppingItemService";
 import { getCategoryByName } from "../../services/categoryService";
+import { toggleItemChecked } from "../../utils/shoppingList";
 
 export async function getServerSideProps(context) {
   const { name } = context.params;
