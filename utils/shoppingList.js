@@ -6,4 +6,15 @@ function toggleItemChecked(id, listItemSetter) {
   );
 }
 
-export { toggleItemChecked };
+async function createListItem(item_id) {
+  const data = {
+    item: item_id,
+    checked: false,
+  };
+  await fetch("api/shoppingItems", {
+    method: "POST",
+    body: JSON.stringify(data),
+  });
+}
+
+export { toggleItemChecked, createListItem };

@@ -14,6 +14,7 @@ import ShoppingListEditor from "../components/ShoppingListEditor/ShoppingListEdi
 import { getAllItems } from "../services/itemService";
 import { getAllRecipes } from "../services/recipeService";
 import { getShoppingItemsByUser } from "../services/shoppingItemService";
+import { createListItem } from "../utils/shoppingList";
 
 export async function getServerSideProps(context) {
   const session = await unstable_getServerSession(
@@ -36,14 +37,7 @@ export default function Edit({ items, recipes, shoppingItems }) {
   const [listItems, setListItems] = useState(shoppingItems);
 
   async function addItem(item) {
-    const data = {
-      item: item.id,
-      checked: false,
-    };
-    await fetch("api/shoppingItems", {
-      method: "POST",
-      body: JSON.stringify(data),
-    });
+    await createListItem(item.id);
     //fetch all shoppingItems after POST, because returned POST
     //document does only contain name ref, but not its String value
     const response = await fetch("api/shoppingItems", {

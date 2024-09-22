@@ -16,6 +16,7 @@ import Input from "../components/Input/Input";
 import Modal from "../components/Modal";
 import { StyledTextButton } from "../components/buttons/templates";
 import { getAllCategories } from "../services/categoryService";
+import { createListItem } from "../utils/shoppingList";
 
 //TODO: Eingangsscreen mit 2 Buttons zum hinzufügen von entweder: Produkten oder Rezepten -> öffnen entsprechende Form
 //TODO: Refactor all methods of this kind to reduce redundancy
@@ -41,6 +42,7 @@ export default function Add({ loaded_categories }) {
   const [categories, setCategories] = useState(loaded_categories);
   const [itemInput, setItemInput] = useState("");
   const [categoryInput, setCategoryInput] = useState("");
+  const [productOnList, setProductOnList] = useState(true);
   //rendering
   const [showCategoryModal, setShowCategoryModal] = useState(false);
   //buffer clicked elements
@@ -62,13 +64,16 @@ export default function Add({ loaded_categories }) {
       return;
     }
 
-    await addItem(itemInput, clickedCategory.id);
+    const createdItem = await createItem(itemInput, clickedCategory.id);
+    if (productOnList) {
+      createListItem(createdItem._id);
+    }
     setItemInput("");
     setClickedCategory(null);
     inputRef.current.focus();
   }
 
-  async function addItem(name, category_id) {
+  async function createItem(name, category_id) {
     const data = {
       name: name,
       category: category_id,
@@ -80,6 +85,7 @@ export default function Add({ loaded_categories }) {
     const response_data = await response.json();
     if (response.status === 201) {
       alert(`${response_data.message}`);
+      return response_data.createdItem;
     } else {
       alert(`${response_data.error} ${response_data.message}`);
     }
@@ -93,7 +99,7 @@ export default function Add({ loaded_categories }) {
       return;
     }
 
-    await addCategory(categoryInput);
+    await createCategory(categoryInput);
     const fetched_categories = await getCategories();
 
     setCategoryInput("");
@@ -101,7 +107,7 @@ export default function Add({ loaded_categories }) {
     inputRef.current.focus();
   }
 
-  async function addCategory(name) {
+  async function createCategory(name) {
     const response = await fetch("api/categories", {
       method: "POST",
       body: JSON.stringify(name),
@@ -122,6 +128,10 @@ export default function Add({ loaded_categories }) {
     const response_data = await response.json();
     return response_data.categories;
   }
+
+  const onChangeProductCheckbox = () => {
+    setProductOnList(!productOnList);
+  };
 
   return (
     <>
@@ -173,7 +183,11 @@ export default function Add({ loaded_categories }) {
                   "Wähle eine Kategorie..."
                 )}
               </ChooseCategoryButton>
-
+              <FormCheckbox
+                label="Produkt auf die Liste"
+                value={productOnList}
+                onChange={onChangeProductCheckbox}
+              />
               {showCategoryModal && (
                 <Modal
                   onCloseModal={() => setShowCategoryModal(false)}
@@ -237,6 +251,15 @@ export default function Add({ loaded_categories }) {
   );
 }
 
+const FormCheckbox = ({ label, value, onChange }) => {
+  return (
+    <StyledLabel>
+      <StyledCheckbox type="checkbox" checked={value} onChange={onChange} />
+      {label}
+    </StyledLabel>
+  );
+};
+
 const StyledForm = styled.form`
   display: flex;
   flex-direction: column;
@@ -254,7 +277,7 @@ const ChooseCategoryButton = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 1rem;
+  gap: 0.5rem;
   background: var(--list-primary__gradient);
   background-color: var(--list-primary);
   padding: 0.5rem 0;
@@ -279,4 +302,16 @@ const StyledCategoryButton = styled.button`
   background-color: var(--list-primary);
   border-radius: 0.5rem;
   font-family: "Inter";
+`;
+
+const StyledCheckbox = styled.input`
+  margin-right: 0.6rem;
+  heigth: 1rem;
+  transform: scale(1.3);
+`;
+
+const StyledLabel = styled.label`
+  font-size: 1.15rem;
+  align-self: flex-start;
+  margin-left: 1.3rem;
 `;
