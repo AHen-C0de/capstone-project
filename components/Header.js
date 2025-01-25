@@ -1,22 +1,22 @@
 import styled from "styled-components";
 import { useRef, useEffect } from "react";
-import lottie from "lottie-web";
+// import lottie from "lottie-web";
 import { signOut } from "next-auth/react";
 import SignOutButton from "./buttons/SignOutButton";
 
 export default function Header({ children, text, isOverlappingAnimation }) {
   const animationRef = useRef(null);
 
-  useEffect(() => {
-    const instance = lottie.loadAnimation({
-      container: animationRef.current,
-      renderer: "svg",
-      loop: false,
-      autoplay: true,
-      animationData: require("/public/assets/animations/shoppingCart.json"),
-    });
-    return () => instance.destroy();
-  }, []);
+  // useEffect(() => {
+  //   const instance = lottie.loadAnimation({
+  //     container: animationRef.current,
+  //     renderer: "svg",
+  //     loop: false,
+  //     autoplay: true,
+  //     animationData: require("/public/assets/animations/shoppingCart.json"),
+  //   });
+  //   return () => instance.destroy();
+  // }, []);
 
   return (
     <StyledHeader>
